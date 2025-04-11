@@ -1,0 +1,682 @@
+CREATE DATABASE Formula1;
+USE Formula1;
+
+CREATE TABLE Scuderie (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nome_scuderia VARCHAR(255) NOT NULL,
+    nazionalita_scuderia VARCHAR(100)
+);
+
+CREATE TABLE Piloti (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(255) NOT NULL,
+    cognome VARCHAR(255) NOT NULL,
+    nazionalita VARCHAR(100)
+);
+
+CREATE TABLE Piloti_Scuderie (
+    pilota_id INT,  
+    scuderia_id INT,  
+    anno_inizio INT,  
+    anno_fine INT,  -- Anno in cui il pilota ha lasciato la scuderia (NULL se è ancora con la scuderia)
+    FOREIGN KEY (pilota_id) REFERENCES Piloti(id),  
+    FOREIGN KEY (scuderia_id) REFERENCES Scuderie(id),
+    PRIMARY KEY (pilota_id, scuderia_id, anno_inizio)
+);
+
+
+CREATE TABLE Campionati (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    anno INT NOT NULL
+);
+
+CREATE TABLE Classifiche_Piloti (
+    campionati_id INT NOT NULL,  
+    posizione INT NOT NULL,  
+    pilota_id INT,  
+    punteggio_totale INT,  
+    scuderia_id INT,  
+    FOREIGN KEY (campionati_id) REFERENCES Campionati(id),
+    FOREIGN KEY (pilota_id) REFERENCES Piloti(id),
+    FOREIGN KEY (scuderia_id) REFERENCES Scuderie(id),
+    PRIMARY KEY (campionati_id, posizione, pilota_id)
+);
+
+CREATE TABLE Classifiche_Costruttori (
+    campionati_id INT NOT NULL,
+    posizione INT NOT NULL,
+    scuderia_id INT NOT NULL,
+    punteggio_totale INT NOT NULL,
+    PRIMARY KEY (campionati_id, posizione),
+    FOREIGN KEY (scuderia_id) REFERENCES Scuderie(id)
+);
+
+CREATE TABLE Circuiti (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(255) NOT NULL,
+    paese VARCHAR(100),
+    lunghezza_km DECIMAL(5,2),
+    tipo_circuito VARCHAR(100)
+);
+
+CREATE TABLE Gare (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    campionato_id INT NOT NULL, 
+    circuito_id INT, 
+    data DATE,
+	 FOREIGN KEY (campionato_id) REFERENCES Campionati(id),
+    FOREIGN KEY (circuito_id) REFERENCES Circuiti(id)
+);
+
+CREATE TABLE PunteggiGara_2025 (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    gara_id INT, 
+    pilota_id INT,  
+    punti INT,  
+    posizione INT, 
+	 punteggio_sprint INT, 
+    FOREIGN KEY (gara_id) REFERENCES Gare(id),  
+    FOREIGN KEY (pilota_id) REFERENCES Piloti(id)  
+);
+
+INSERT INTO Campionati (anno)
+VALUES
+    (2020),
+    (2021),
+    (2022),
+    (2023),
+    (2024),
+    (2025);
+
+
+
+
+
+-- Circuiti 2020-2025 con lunghezza e tipo
+INSERT INTO Circuiti (id, nome, paese, lunghezza_km, tipo_circuito)
+VALUES
+(1, 'Melbourne Grand Prix Circuit', 'Australia', 5.303, 'Autodromo'), -- Australian Grand Prix
+(2, 'Bahrain International Circuit', 'Bahrain', 5.412, 'Autodromo'), -- Bahrain Grand Prix
+(3, 'Vietnam Grand Prix Circuit', 'Vietnam', 5.607, 'Strada'), -- Vietnam Grand Prix
+(4, 'Shanghai International Circuit', 'China', 5.451, 'Autodromo'), -- Chinese Grand Prix
+(5, 'Zandvoort Circuit', 'Netherlands', 4.259, 'Autodromo'), -- Dutch Grand Prix
+(6, 'Circuit de Barcelona-Catalunya', 'Spain', 4.675, 'Autodromo'), -- Spanish Grand Prix
+(7, 'Circuit de Monaco', 'Monaco', 3.337, 'Strada'), -- Monaco Grand Prix
+(8, 'Baku City Circuit', 'Azerbaijan', 6.003, 'Strada'), -- Azerbaijan Grand Prix
+(9, 'Circuit Gilles Villeneuve', 'Canada', 4.361, 'Autodromo'), -- Canadian Grand Prix
+(10, 'Circuit de la Sarthe', 'France', 13.626, 'Strada'), -- French Grand Prix (Le Mans)
+(11, 'Red Bull Ring', 'Austria', 4.318, 'Autodromo'), -- Austrian Grand Prix
+(12, 'Silverstone Circuit', 'United Kingdom', 5.891, 'Autodromo'), -- British Grand Prix
+(13, 'Hungaroring', 'Hungary', 4.381, 'Autodromo'), -- Hungarian Grand Prix
+(14, 'Circuit de Spa-Francorchamps', 'Belgium', 7.004, 'Autodromo'), -- Belgian Grand Prix
+(15, 'Autodromo Nazionale Monza', 'Italy', 5.793, 'Autodromo'), -- Italian Grand Prix
+(16, 'Mugello Circuit', 'Italy', 5.245, 'Autodromo'), -- Toscana Grand Prix
+(17, 'Sochi Autodrom', 'Russia', 5.848, 'Autodromo'), -- Russian Grand Prix
+(18, 'Nurburgring Circuit', 'Germany', 5.148, 'Autodromo'), -- Eifel Grand Prix
+(19, 'Autodromo Internacional do Algarve', 'Portugal', 4.684, 'Autodromo'), -- Portuguese Grand Prix
+(20, 'Autodromo Enzo e Dino Ferrari', 'Italy', 4.909, 'Autodromo'), -- Emilia Romagna Grand Prix
+(21, 'Istanbul Park', 'Turkey', 5.338, 'Autodromo'), -- Turkish Grand Prix
+(22, 'Yas Marina Circuit', 'UAE', 5.281, 'Autodromo'), -- Abu Dhabi Grand Prix
+(23, 'Circuit of the Americas', 'United States', 5.513, 'Autodromo'), -- United States Grand Prix
+(24, 'Autodromo Hermanos Rodriguez', 'Mexico', 4.304, 'Autodromo'), -- Mexican Grand Prix
+(25, 'Interlagos Circuit', 'Brazil', 4.309, 'Autodromo'), -- Brazilian Grand Prix
+(26, 'Losail International Circuit', 'Qatar', 5.380, 'Autodromo'), -- Qatar Grand Prix
+(27, 'Jeddah Street Circuit', 'Saudi Arabia', 6.174, 'Strada'), -- Saudi Arabian Grand Prix
+(28, 'Miami International Autodrome', 'United States', 5.410, 'Strada'), -- Miami Grand Prix
+(29, 'Marina Bay Street Circuit', 'Singapore', 5.063, 'Strada'), -- Singapore Grand Prix
+(30, 'Suzuka Circuit', 'Japan', 5.807, 'Autodromo'), -- Japanese Grand Prix
+(31, 'Las Vegas Grand Prix', 'United States', 6.120, 'Strada'), -- Las Vegas Grand Prix
+(32, 'Circuit de Las Vegas', 'United States', 6.120, 'Strada'); -- Las Vegas Grand Prix (2023-2025)
+
+
+-- Gare del 2020
+-- Inserimento delle gare del campionato 2020
+INSERT INTO Gare (campionato_id, circuito_id, data)
+VALUES
+(1, 1, '2020-03-15'), -- Australian Grand Prix
+(1, 2, '2020-03-22'), -- Bahrain Grand Prix
+(1, 3, '2020-04-05'), -- Vietnam Grand Prix
+(1, 4, '2020-04-19'), -- Chinese Grand Prix
+(1, 5, '2020-05-03'), -- Dutch Grand Prix
+(1, 6, '2020-05-10'), -- Spanish Grand Prix
+(1, 7, '2020-05-24'), -- Monaco Grand Prix
+(1, 8, '2020-06-07'), -- Azerbaijan Grand Prix
+(1, 9, '2020-06-14'), -- Canadian Grand Prix
+(1, 10, '2020-06-28'), -- French Grand Prix
+(1, 11, '2020-07-05'), -- Styrian Grand Prix
+(1, 11, '2020-07-12'), -- Austrian Grand Prix
+(1, 12, '2020-08-02'), -- British Grand Prix
+(1, 13, '2020-08-02'), -- Hungarian Grand Prix
+(1, 14, '2020-08-30'), -- Belgian Grand Prix
+(1, 15, '2020-09-06'), -- Italian Grand Prix
+(1, 16, '2020-09-13'), -- Toscana Grand Prix
+(1, 17, '2020-09-27'), -- Russian Grand Prix
+(1, 18, '2020-10-11'), -- Eifel Grand Prix
+(1, 19, '2020-10-25'), -- Portuguese Grand Prix
+(1, 20, '2020-11-01'), -- Emilia Romagna Grand Prix
+(1, 21, '2020-11-15'), -- Turkish Grand Prix
+(1, 2, '2020-11-29'), -- Bahrain Grand Prix (seconda gara)
+(1, 22, '2020-12-13'); -- Abu Dhabi Grand Prix
+
+
+-- Gare del 2021
+-- Inserimento delle gare del campionato 2021
+INSERT INTO Gare (campionato_id, circuito_id, data)
+VALUES
+(2, 2, '2021-03-28'), -- Bahrain Grand Prix
+(2, 20, '2021-04-18'), -- Emilia Romagna Grand Prix
+(2, 19, '2021-05-02'), -- Portuguese Grand Prix
+(2, 6, '2021-05-09'), -- Spanish Grand Prix
+(2, 7, '2021-05-23'), -- Monaco Grand Prix
+(2, 8, '2021-06-06'), -- Azerbaijan Grand Prix
+(2, 10, '2021-06-20'), -- French Grand Prix
+(2, 11, '2021-06-27'), -- Styrian Grand Prix
+(2, 11, '2021-07-04'), -- Austrian Grand Prix
+(2, 12, '2021-07-18'), -- British Grand Prix
+(2, 13, '2021-08-01'), -- Hungarian Grand Prix
+(2, 14, '2021-08-29'), -- Belgian Grand Prix
+(2, 5, '2021-09-05'), -- Dutch Grand Prix
+(2, 15, '2021-09-12'), -- Italian Grand Prix
+(2, 17, '2021-09-26'), -- Russian Grand Prix
+(2, 21, '2021-10-10'), -- Turkish Grand Prix
+(2, 23, '2021-10-24'), -- United States Grand Prix
+(2, 24, '2021-10-31'), -- Mexican Grand Prix
+(2, 25, '2021-11-07'), -- Brazilian Grand Prix
+(2, 26, '2021-11-21'), -- Qatar Grand Prix
+(2, 27, '2021-12-05'), -- Saudi Arabian Grand Prix
+(2, 22, '2021-12-12'); -- Abu Dhabi Grand Prix
+
+
+-- Gare del 2022
+-- Inserimento delle gare del campionato 2022
+INSERT INTO Gare (campionato_id, circuito_id, data)
+VALUES
+(3, 2, '2022-03-20'), -- Bahrain Grand Prix
+(3, 27, '2022-03-27'), -- Saudi Arabian Grand Prix
+(3, 1, '2022-04-10'), -- Australian Grand Prix
+(3, 20, '2022-04-24'), -- Emilia Romagna Grand Prix
+(3, 28, '2022-05-08'), -- Miami Grand Prix
+(3, 6, '2022-05-22'), -- Spanish Grand Prix
+(3, 7, '2022-05-29'), -- Monaco Grand Prix
+(3, 8, '2022-06-12'), -- Azerbaijan Grand Prix
+(3, 9, '2022-06-19'), -- Canadian Grand Prix
+(3, 12, '2022-07-03'), -- British Grand Prix
+(3, 11, '2022-07-10'), -- Austrian Grand Prix
+(3, 10, '2022-07-24'), -- French Grand Prix
+(3, 13, '2022-07-31'), -- Hungarian Grand Prix
+(3, 14, '2022-08-28'), -- Belgian Grand Prix
+(3, 5, '2022-09-04'), -- Dutch Grand Prix
+(3, 15, '2022-09-11'), -- Italian Grand Prix
+(3, 17, '2022-09-25'), -- Russian Grand Prix
+(3, 29, '2022-10-02'), -- Singapore Grand Prix
+(3, 30, '2022-10-09'), -- Japanese Grand Prix
+(3, 23, '2022-10-23'), -- United States Grand Prix
+(3, 24, '2022-10-30'), -- Mexican Grand Prix
+(3, 25, '2022-11-13'), -- Brazilian Grand Prix
+(3, 22, '2022-11-20'); -- Abu Dhabi Grand Prix
+
+
+-- Gare del 2023
+-- Inserimento delle gare del campionato 2023
+INSERT INTO Gare (campionato_id, circuito_id, data)
+VALUES
+(4, 2, '2023-03-05'), -- Bahrain Grand Prix
+(4, 27, '2023-03-19'), -- Saudi Arabian Grand Prix
+(4, 1, '2023-04-02'), -- Australian Grand Prix
+(4, 8, '2023-04-30'), -- Azerbaijan Grand Prix
+(4, 28, '2023-05-07'), -- Miami Grand Prix
+(4, 20, '2023-05-21'), -- Emilia Romagna Grand Prix (cancellato)
+(4, 7, '2023-05-28'), -- Monaco Grand Prix
+(4, 6, '2023-06-04'), -- Spanish Grand Prix
+(4, 9, '2023-06-18'), -- Canadian Grand Prix
+(4, 11, '2023-07-02'), -- Austrian Grand Prix
+(4, 12, '2023-07-09'), -- British Grand Prix
+(4, 13, '2023-07-23'), -- Hungarian Grand Prix
+(4, 14, '2023-07-30'), -- Belgian Grand Prix
+(4, 5, '2023-08-27'), -- Dutch Grand Prix
+(4, 15, '2023-09-03'), -- Italian Grand Prix
+(4, 29, '2023-09-17'), -- Singapore Grand Prix
+(4, 30, '2023-09-24'), -- Japanese Grand Prix
+(4, 31, '2023-10-08'), -- Qatar Grand Prix
+(4, 23, '2023-10-22'), -- United States Grand Prix
+(4, 24, '2023-10-29'), -- Mexican Grand Prix
+(4, 25, '2023-11-05'), -- Brazilian Grand Prix
+(4, 32, '2023-11-18'), -- Las Vegas Grand Prix
+(4, 22, '2023-11-26'); -- Abu Dhabi Grand Prix
+
+
+-- Gare del 2024
+-- Inserimento delle gare del campionato 2024
+INSERT INTO Gare (campionato_id, circuito_id, data)
+VALUES
+(5, 2, '2024-03-02'), -- Bahrain Grand Prix
+(5, 27, '2024-03-09'), -- Saudi Arabian Grand Prix
+(5, 1, '2024-03-24'), -- Australian Grand Prix
+(5, 30, '2024-04-07'), -- Japanese Grand Prix
+(5, 4, '2024-04-21'), -- Chinese Grand Prix
+(5, 28, '2024-05-05'), -- Miami Grand Prix
+(5, 20, '2024-05-19'), -- Emilia Romagna Grand Prix
+(5, 7, '2024-05-26'), -- Monaco Grand Prix
+(5, 9, '2024-06-09'), -- Canadian Grand Prix
+(5, 6, '2024-06-23'), -- Spanish Grand Prix
+(5, 11, '2024-06-30'), -- Austrian Grand Prix
+(5, 12, '2024-07-07'), -- British Grand Prix
+(5, 13, '2024-07-21'), -- Hungarian Grand Prix
+(5, 14, '2024-07-28'), -- Belgian Grand Prix
+(5, 5, '2024-08-25'), -- Dutch Grand Prix
+(5, 15, '2024-09-01'), -- Italian Grand Prix
+(5, 8, '2024-09-15'), -- Azerbaijan Grand Prix
+(5, 29, '2024-09-22'), -- Singapore Grand Prix
+(5, 23, '2024-10-20'), -- United States Grand Prix
+(5, 24, '2024-10-27'), -- Mexican Grand Prix
+(5, 25, '2024-11-03'), -- Brazilian Grand Prix
+(5, 32, '2024-11-24'), -- Las Vegas Grand Prix
+(5, 31, '2024-12-01'), -- Qatar Grand Prix
+(5, 22, '2024-12-08'); -- Abu Dhabi Grand Prix
+
+
+-- Gare del 2025
+-- Inserimento delle gare del campionato 2025
+INSERT INTO Gare (campionato_id, circuito_id, data)
+VALUES
+(6, 1, '2025-03-14'), -- Australian Grand Prix
+(6, 4, '2025-03-21'), -- Chinese Grand Prix
+(6, 30, '2025-04-04'), -- Japanese Grand Prix
+(6, 2, '2025-04-11'), -- Bahrain Grand Prix
+(6, 27, '2025-04-18'), -- Saudi Arabian Grand Prix
+(6, 28, '2025-05-02'), -- Miami Grand Prix
+(6, 20, '2025-05-16'), -- Emilia Romagna Grand Prix
+(6, 7, '2025-05-23'), -- Monaco Grand Prix
+(6, 6, '2025-05-30'), -- Spanish Grand Prix
+(6, 9, '2025-06-12'), -- Canadian Grand Prix
+(6, 11, '2025-06-28'), -- Austrian Grand Prix
+(6, 12, '2025-07-05'), -- British Grand Prix
+(6, 14, '2025-07-26'), -- Belgian Grand Prix
+(6, 13, '2025-08-02'), -- Hungarian Grand Prix
+(6, 5, '2025-08-30'), -- Dutch Grand Prix
+(6, 15, '2025-09-06'), -- Italian Grand Prix
+(6, 8, '2025-09-21'), -- Azerbaijan Grand Prix
+(6, 29, '2025-09-28'), -- Singapore Grand Prix
+(6, 23, '2025-10-19'), -- United States Grand Prix
+(6, 24, '2025-10-26'), -- Mexican Grand Prix
+(6, 25, '2025-11-02'), -- Brazilian Grand Prix
+(6, 32, '2025-11-23'), -- Las Vegas Grand Prix
+(6, 31, '2025-11-30'), -- Qatar Grand Prix
+(6, 22, '2025-12-07'); -- Abu Dhabi Grand Prix
+
+
+-- Inserimento dei piloti dal 2020 al 2025
+INSERT INTO Piloti (nome, cognome, nazionalita) 
+VALUES
+('Max', 'Verstappen', 'Olandese'),       -- ID 1
+('Sergio', 'Perez', 'Messicano'),        -- ID 2
+('Lando', 'Norris', 'Britannico'),       -- ID 3
+('Oscar', 'Piastri', 'Australiano'),    -- ID 4
+('Alexander', 'Albon', 'Thailandese'),  -- ID 5
+('Liam', 'Lawson', 'Neozelandese'),     -- ID 6
+('Lewis', 'Hamilton', 'Britannico'),    -- ID 7
+('Valtteri', 'Bottas', 'Finlandese'),   -- ID 8
+('George', 'Russell', 'Britannico'),    -- ID 9
+('Andrea Kimi', 'Antonelli', 'Italiano'), -- ID 10
+('Charles', 'Leclerc', 'Monegasco'),    -- ID 11
+('Carlos', 'Sainz Jr.', 'Spagnolo'),    -- ID 12
+('Sebastian', 'Vettel', 'Tedesco'),     -- ID 13
+('Daniel', 'Ricciardo', 'Australiano'), -- ID 14
+('Esteban', 'Ocon', 'Francese'),        -- ID 15
+('Pierre', 'Gasly', 'Francese'),        -- ID 16
+('Fernando', 'Alonso', 'Spagnolo'),     -- ID 17
+('Jack', 'Doohan', 'Australiano'),      -- ID 18
+('Lance', 'Stroll', 'Canadese'),        -- ID 19
+('Daniil', 'Kvyat', 'Russo'),           -- ID 20
+('Yuki', 'Tsunoda', 'Giapponese'),     -- ID 21
+('Nyck', 'de Vries', 'Olandese'),       -- ID 22
+('Antonio', 'Giovinazzi', 'Italiano'),  -- ID 23
+('Romain', 'Grosjean', 'Francese'),     -- ID 24
+('Kevin', 'Magnussen', 'Danese'),       -- ID 25
+('Mick', 'Schumacher', 'Tedesco'),      -- ID 26
+('Nico', 'Hulkenberg', 'Tedesco'),      -- ID 27
+('Oliver', 'Bearman', 'Britannico'),    -- ID 28
+('Logan', 'Sargeant', 'Americano'),     -- ID 29
+('Gabriel', 'Bortoleto', 'Brasiliano'), -- ID 30
+('Zhou', 'Guanyu', 'Cinese'),           -- ID 31
+('Isack', 'Hadjar', 'Francese'),        -- ID 32
+('Kimi', 'Raikkonen', 'Finlandese'),    -- ID 33
+('Nicholas', 'Latifi', 'Canadese');     -- ID 34
+
+
+INSERT INTO Scuderie (nome_scuderia, nazionalita_scuderia)
+VALUES
+    ('Mercedes', 'Germania'),
+    ('Red Bull Racing', 'Austria'),
+    ('Ferrari', 'Italia'),
+    ('McLaren', 'Gran Bretagna'),
+    ('Alpine', 'Francia'),
+    ('Aston Martin', 'Gran Bretagna'),
+    ('Alfa Romeo Racing', 'Svizzera'),
+    ('Williams', 'Gran Bretagna'),
+    ('Haas F1 Team', 'Stati Uniti'),
+    ('AlphaTauri', 'Austria');
+
+-- Inserimento dei piloti dal 2020 al 2025 con ID scuderie
+INSERT INTO Piloti_Scuderie (pilota_id, scuderia_id, anno_inizio, anno_fine)
+VALUES
+    (1, 2, 2020, NULL),  -- Max Verstappen in Red Bull Racing
+    (5, 2, 2020, 2021),  -- Alexander Albon in Red Bull Racing
+    (7, 1, 2020, 2025),  -- Lewis Hamilton in Mercedes
+    (8, 1, 2020, 2022),  -- Valtteri Bottas in Mercedes
+    (13, 3, 2020, 2021), -- Sebastian Vettel in Ferrari
+    (11, 3, 2020, NULL), -- Charles Leclerc in Ferrari
+    (12, 4, 2020, 2021), -- Carlos Sainz Jr. in McLaren
+    (3, 4, 2020, NULL),  -- Lando Norris in McLaren
+    (15, 5, 2020, 2025), -- Esteban Ocon in Alpine
+    (14, 5, 2020, 2021), -- Daniel Ricciardo in Alpine
+    (2, 6, 2020, 2021),  -- Sergio Pérez in Aston Martin
+    (19, 6, 2020, NULL), -- Lance Stroll in Aston Martin
+    (16, 10, 2020, 2023), -- Pierre Gasly in AlphaTauri
+    (20, 10, 2020, 2021), -- Daniil Kvyat in AlphaTauri
+    (33, 7, 2020, 2022), -- Kimi Räikkönen in Alfa Romeo Racing
+    (23, 7, 2020, 2022), -- Antonio Giovinazzi in Alfa Romeo Racing
+    (22, 9, 2020, 2021), -- Romain Grosjean in Haas
+    (25, 9, 2020, 2021), -- Kevin Magnussen in Haas
+    (9, 8, 2020, 2022), -- George Russell in Williams
+    (34, 8, 2020, 2023),-- Nicholas Latifi in Williams
+
+-- 2021
+    (2, 2, 2021, 2025),  -- Sergio Pérez in Red Bull Racing
+    (14, 4, 2021, 2023), -- Daniel Ricciardo in McLaren
+    (12, 3, 2021, 2025), -- Carlos Sainz Jr. in Ferrari
+    (17, 5, 2021, 2023), -- Fernando Alonso in Alpine
+    (13, 6, 2021, 2023), -- Sebastian Vettel in Aston Martin
+    (21, 10, 2021, NULL), -- Yuki Tsunoda in AlphaTauri
+    (27, 9, 2021, 2023), -- Mick Schumacher in Haas
+    (28, 9, 2021, 2022), -- Nikita Mazepin in Haas
+
+-- 2022
+    (9, 1, 2022, NULL),  -- George Russell in Mercedes
+    (8, 7, 2022, 2025),  -- Valtteri Bottas in Alfa Romeo Racing
+    (31, 7, 2022, 2025), -- Zhou Guanyu in Alfa Romeo Racing
+    (25, 9, 2022, 2025), -- Kevin Magnussen in Haas
+    (5, 8, 2022, NULL), -- Alexander Albon in Williams
+
+-- 2023
+    (4, 4, 2023, NULL),  -- Oscar Piastri in McLaren
+    (16, 5, 2023, NULL), -- Pierre Gasly in Alpine
+    (17, 6, 2023, NULL), -- Fernando Alonso in Aston Martin
+    (22, 10, 2023, 2024), -- Nyck de Vries in AlphaTauri
+    (26, 9, 2023, NULL), -- Nico Hülkenberg in Haas
+    (29, 8, 2023, NULL),-- Logan Sargeant in Williams
+
+-- 2024
+    (6, 10, 2024, 2025),  -- Liam Lawson in AlphaTauri
+
+-- 2025
+    (6, 1, 2025, NULL),  -- Liam Lawson in Red Bull Racing
+    (7, 3, 2025, NULL),  -- Lewis Hamilton in Ferrari
+    (10, 2, 2025, NULL), -- Kimi Antonelli in Mercedes
+    (32, 10, 2025, NULL), -- Isack Hadjar in AlphaTauri
+    (26, 7, 2025, NULL), -- Nico Hülkenberg in Sauber
+    (28, 7, 2025, NULL), -- Gabriel Bortoleto in Sauber
+    (18, 5, 2025, NULL), -- Jack Doohan in Alpine
+    (27, 9, 2025, NULL), -- Oliver Bearman in Haas
+    (15, 9, 2025, NULL), -- Esteban Ocon in Haas
+    (12, 8, 2025, NULL); -- Carlos Sainz Jr. in Williams
+
+
+-- Inserimenti 2020
+INSERT INTO Classifiche_Piloti (campionati_id, posizione, pilota_id, punteggio_totale, scuderia_id)
+VALUES
+(1, 1, 7, 347, 1),   -- Hamilton Lewis, posizione 1, 347 punti, scuderia Mercedes AMG Petronas Formula One Team
+(1, 2, 8, 223, 1),   -- Bottas Valtteri, posizione 2, 223 punti, scuderia Mercedes AMG Petronas Formula One Team
+(1, 3, 1, 214, 2),   -- Verstappen Max, posizione 3, 214 punti, scuderia Aston Martin Red Bull Racing
+(1, 4, 2, 125, 6),   -- Perez Sergio, posizione 4, 125 punti, scuderia SportPesa Racing Point F1 Team
+(1, 5, 14, 119, 5),  -- Ricciardo Daniel, posizione 5, 119 punti, scuderia Renault F1 Team
+(1, 6, 5, 105, 2),   -- Albon Alexander, posizione 6, 105 punti, scuderia Aston Martin Red Bull Racing
+(1, 7, 12, 105, 4),  -- Sainz Carlos Jr., posizione 7, 105 punti, scuderia McLaren F1 Team
+(1, 8, 11, 98, 3),   -- Leclerc Charles, posizione 8, 98 punti, scuderia Scuderia Ferrari Mission Winnow
+(1, 9, 3, 97, 4),    -- Norris Lando, posizione 9, 97 punti, scuderia McLaren F1 Team
+(1, 10, 19, 75, 6),  -- Stroll Lance, posizione 10, 75 punti, scuderia SportPesa Racing Point F1 Team
+(1, 11, 16, 75, 10),  -- Gasly Pierre, posizione 11, 75 punti, scuderia AlphaTauri
+(1, 12, 15, 62, 5),  -- Ocon Esteban, posizione 12, 62 punti, scuderia Renault F1 Team
+(1, 13, 13, 33, 3),  -- Vettel Sebastian, posizione 13, 33 punti, scuderia Scuderia Ferrari Mission Winnow
+(1, 14, 20, 32, 10),  -- Kvyat Daniil, posizione 14, 32 punti, scuderia AlphaTauri
+(1, 15, 27, 10, 6),  -- Hulkenberg Nico, posizione 15, 10 punti, scuderia SportPesa Racing Point F1 Team
+(1, 16, 23, 4, 7),   -- Giovinazzi Antonio, posizione 16, 4 punti, scuderia Alfa Romeo Racing
+(1, 17, 33, 4, 7), -- Raikkonen Kimi, posizione 17, 4 punti, scuderia Alfa Romeo Racing (non presente in `Piloti`)
+(1, 18, 9, 3, 8),    -- Russell George, posizione 18, 3 punti, scuderia Williams
+(1, 19, 24, 2, 9),   -- Grosjean Romain, posizione 19, 2 punti, scuderia Haas F1 Team
+(1, 20, 25, 1, 9);   -- Magnussen Kevin, posizione 20, 1 punto, scuderia Haas F1 Team
+-- 2021
+INSERT INTO Classifiche_Piloti (campionati_id, posizione, pilota_id, punteggio_totale, scuderia_id)
+VALUES
+(2, 1, 1, 395.5, 2),   -- Verstappen Max, posizione 1, 395.5 punti, scuderia Red Bull Racing
+(2, 2, 7, 387, 1),     -- Hamilton Lewis, posizione 2, 387 punti, scuderia Mercedes AMG Petronas Formula One Team
+(2, 3, 8, 226, 1),     -- Bottas Valtteri, posizione 3, 226 punti, scuderia Mercedes AMG Petronas Formula One Team
+(2, 4, 2, 190, 2),     -- Perez Sergio, posizione 4, 190 punti, scuderia Red Bull Racing
+(2, 5, 12, 164, 3),    -- Sainz Carlos Jr., posizione 5, 164 punti, scuderia Scuderia Ferrari Mission Winnow
+(2, 6, 3, 160, 4),     -- Norris Lando, posizione 6, 160 punti, scuderia McLaren F1 Team
+(2, 7, 11, 159, 3),    -- Leclerc Charles, posizione 7, 159 punti, scuderia Scuderia Ferrari Mission Winnow
+(2, 8, 14, 115, 4),    -- Ricciardo Daniel, posizione 8, 115 punti, scuderia McLaren F1 Team
+(2, 9, 16, 110, 10),    -- Gasly Pierre, posizione 9, 110 punti, scuderia AlphaTauri
+(2, 10, 17, 81, 5),    -- Alonso Fernando, posizione 10, 81 punti, scuderia Alpine F1 Team
+(2, 11, 15, 74, 5),    -- Ocon Esteban, posizione 11, 74 punti, scuderia Alpine F1 Team
+(2, 12, 13, 43, 6),    -- Vettel Sebastian, posizione 12, 43 punti, scuderia Aston Martin F1 Team
+(2, 13, 19, 34, 6),    -- Stroll Lance, posizione 13, 34 punti, scuderia Aston Martin F1 Team
+(2, 14, 21, 32, 10),    -- Tsunoda Yuki, posizione 14, 32 punti, scuderia AlphaTauri
+(2, 15, 9, 16, 8),     -- Russell George, posizione 15, 16 punti, scuderia Williams Racing
+(2, 16, 33, 10, 7),  -- Raikkonen Kimi, posizione 16, 10 punti, scuderia Alfa Romeo Racing (non presente in `Piloti`)
+(2, 17, 34, 7, 8),   -- Latifi Nicholas, posizione 17, 7 punti, scuderia Williams Racing (non presente in `Piloti`)
+(2, 18, 23, 3, 7);     -- Giovinazzi Antonio, posizione 18, 3 punti, scuderia Alfa Romeo Racing
+
+-- Inserimento dati per il campionato 2022
+INSERT INTO Classifiche_Piloti (campionati_id, posizione, pilota_id, punteggio_totale, scuderia_id)
+VALUES
+(3, 1, 1, 454, 2),  -- Verstappen Max, posizione 1, 454 punti, scuderia Oracle Red Bull Racing
+(3, 2, 12, 308, 3), -- Leclerc Charles, posizione 2, 308 punti, scuderia Scuderia Ferrari
+(3, 3, 2, 305, 2),  -- Perez Sergio, posizione 3, 305 punti, scuderia Oracle Red Bull Racing
+(3, 4, 16, 275, 1), -- Russell George, posizione 4, 275 punti, scuderia Mercedes AMG Petronas Formula One Team
+(3, 5, 14, 246, 3), -- Sainz Carlos Jr, posizione 5, 246 punti, scuderia Scuderia Ferrari
+(3, 6, 7, 240, 1),  -- Hamilton Lewis, posizione 6, 240 punti, scuderia Mercedes AMG Petronas Formula One Team
+(3, 7, 3, 122, 4),  -- Norris Lando, posizione 7, 122 punti, scuderia McLaren F1 Team
+(3, 8, 17, 92, 5),  -- Ocon Esteban, posizione 8, 92 punti, scuderia BWT Alpine F1 Team
+(3, 9, 8, 81, 5),   -- Alonso Fernando, posizione 9, 81 punti, scuderia BWT Alpine F1 Team
+(3, 10, 9, 49, 7),  -- Bottas Valtteri, posizione 10, 49 punti, scuderia Alfa Romeo F1 Team ORLEN
+(3, 11, 13, 37, 4), -- Ricciardo Daniel, posizione 11, 37 punti, scuderia McLaren F1 Team
+(3, 12, 17, 37, 6), -- Vettel Sebastian, posizione 12, 37 punti, scuderia Aston Martin Aramco Cognizant Formula One
+(3, 13, 22, 25, 9), -- Magnussen Kevin, posizione 13, 25 punti, scuderia Haas F1 Team
+(3, 14, 11, 23, 5), -- Gasly Pierre, posizione 14, 23 punti, scuderia Scuderia AlphaTauri
+(3, 15, 15, 18, 6), -- Stroll Lance, posizione 15, 18 punti, scuderia Aston Martin Aramco Cognizant Formula One
+(3, 16, 24, 12, 10), -- Tsunoda Yuki, posizione 16, 12 punti, scuderia Scuderia AlphaTauri
+(3, 17, 26, 6, 7),  -- Zhou Guanyu, posizione 17, 6 punti, scuderia Alfa Romeo F1 Team ORLEN
+(3, 18, 19, 4, 8),  -- Albon Alexander, posizione 18, 4 punti, scuderia Williams Racing
+(3, 19, 20, 2, 8),  -- Latifi Nicholas, posizione 19, 2 punti, scuderia Williams Racing
+(3, 20, 21, 2, 8),  -- de Vries Nyck, posizione 20, 2 punti, scuderia Williams Racing
+(3, 21, 30, 0, 6),  -- Hülkenberg Nico, posizione 21, 0 punti, scuderia Aston Martin Aramco Cognizant Formula One
+(3, 22, 27, 0, 9);  -- Schumacher Mick, posizione 22, 0 punti, scuderia Haas F1 Team
+
+-- Inserimento dati per il campionato 2023
+INSERT INTO Classifiche_Piloti (campionati_id, posizione, pilota_id, punteggio_totale, scuderia_id)
+VALUES
+(4, 1, 1, 575, 2),  -- Max Verstappen in Red Bull Racing
+(4, 2, 2, 285, 2),  -- Sergio Pérez in Red Bull Racing
+(4, 3, 7, 234, 1),  -- Lewis Hamilton in Mercedes
+(4, 4, 17, 206, 6),  -- Fernando Alonso in Aston Martin
+(4, 5, 11, 206, 3),  -- Charles Leclerc in Ferrari
+(4, 6, 3, 205, 4),  -- Lando Norris in McLaren
+(4, 7, 12, 200, 3),  -- Carlos Sainz Jr. in Ferrari
+(4, 8, 9, 175, 1),  -- George Russell in Mercedes
+(4, 9, 4, 97, 4),   -- Oscar Piastri in McLaren
+(4, 10, 19, 74, 6),  -- Lance Stroll in Aston Martin
+(4, 11, 16, 62, 5),  -- Pierre Gasly in Alpine
+(4, 12, 15, 58, 5),  -- Esteban Ocon in Alpine
+(4, 13, 5, 27, 8),   -- Alexander Albon in Williams
+(4, 14, 21, 17, 10),  -- Yuki Tsunoda in AlphaTauri
+(4, 15, 6, 10, 7),   -- Valtteri Bottas in Alfa Romeo Racing
+(4, 16, 26, 8, 6),   -- Nico Hülkenberg in Aston Martin
+(4, 17, 31, 6, 7),   -- Zhou Guanyu in Alfa Romeo Racing
+(4, 18, 30, 2, 10),   -- Liam Lawson in AlphaTauri
+(4, 19, 20, 2, 8),   -- Nyck de Vries in Williams
+(4, 20, 29, 1, 8),   -- Logan Sargeant in Williams
+(4, 21, 18, 0, 10),   -- Daniel Ricciardo in AlphaTauri
+(4, 22, 27, 0, 9);  -- Mick Schumacher in Haas
+
+-- Inserimento dati per il campionato 2024 (Piloti)
+INSERT INTO Classifiche_Piloti (campionati_id, posizione, pilota_id, punteggio_totale, scuderia_id)
+VALUES
+(5, 1, 1, 437, 2),  -- Max Verstappen in Oracle Red Bull Racing
+(5, 2, 3, 374, 4),  -- Lando Norris in McLaren F1 Team
+(5, 3, 11, 356, 3),  -- Charles Leclerc in Scuderia Ferrari
+(5, 4, 4, 292, 4),  -- Oscar Piastri in McLaren F1 Team
+(5, 5, 12, 290, 3),  -- Carlos Sainz Jr. in Scuderia Ferrari
+(5, 6, 9, 245, 1),  -- George Russell in Mercedes AMG Petronas Formula One Team
+(5, 7, 7, 223, 1),  -- Lewis Hamilton in Mercedes AMG Petronas Formula One Team
+(5, 8, 2, 152, 2),  -- Sergio Pérez in Oracle Red Bull Racing
+(5, 9, 17, 70, 6),  -- Fernando Alonso in Aston Martin Aramco Formula One Team
+(5, 10, 16, 42, 5),  -- Pierre Gasly in BWT Alpine F1 Team
+(5, 11, 26, 41, 9),  -- Nico Hülkenberg in MoneyGram Haas F1 Team
+(5, 12, 21, 30, 10),  -- Yuki Tsunoda in Visa Cash App RB F1 Team
+(5, 13, 19, 24, 6),  -- Lance Stroll in Aston Martin Aramco Formula One Team
+(5, 14, 15, 23, 5),  -- Esteban Ocon in BWT Alpine F1 Team
+(5, 15, 25, 16, 9),  -- Kevin Magnussen in MoneyGram Haas F1 Team
+(5, 16, 5, 12, 8),   -- Alexander Albon in Williams Racing
+(5, 17, 27, 12, 10),  -- Daniel Ricciardo in Visa Cash App RB F1 Team
+(5, 18, 30, 7, 9),   -- Oliver Bearman in MoneyGram Haas F1 Team
+(5, 19, 31, 5, 8),   -- Franco Colapinto in Williams Racing
+(5, 20, 32, 4, 9),  -- Zhou Guanyu in Stake F1 Team
+(5, 21, 6, 4, 10);    -- Liam Lawson in Visa Cash App RB F1 Team
+    
+
+-- Inserimento dati per il campionato 2020 (Costruttori)
+INSERT INTO Classifiche_Costruttori (campionati_id, posizione, scuderia_id, punteggio_totale)
+VALUES
+(1, 1, 1, 573),  -- Mercedes AMG Petronas Formula One Team
+(1, 2, 2, 319),  -- Aston Martin Red Bull Racing
+(1, 3, 4, 202),  -- McLaren F1 Team
+(1, 4, 6, 195),  -- Racing Point BWT Mercedes - Aston Martin 
+(1, 5, 5, 181),  -- Renault F1 Team - Alpine
+(1, 6, 3, 131),  -- Scuderia Ferrari Mission Winnow
+(1, 7, 10, 107),  -- AlphaTauri
+(1, 8, 7, 8),    -- Alfa Romeo Racing
+(1, 9, 9, 3),   -- Haas F1 Team
+(1, 10, 8, 0);  -- Williams Racing
+
+-- Inserimento dati per il campionato 2021 (Costruttori)
+INSERT INTO Classifiche_Costruttori (campionati_id, posizione, scuderia_id, punteggio_totale)
+VALUES
+(2, 1, 1, 613),  -- Mercedes (ID 1)
+(2, 2, 2, 585),  -- Red Bull Racing (ID 2)
+(2, 3, 3, 323),  -- Ferrari (ID 3)
+(2, 4, 4, 275),  -- McLaren (ID 4)
+(2, 5, 5, 155),  -- Alpine (ID 5)
+(2, 6, 7, 142),  -- AlphaTauri (ID 7)
+(2, 7, 6, 77),   -- Aston Martin (ID 6)
+(2, 8, 8, 23),   -- Williams (ID 8)
+(2, 9, 9, 13),   -- Alfa Romeo Racing (ID 9)
+(2, 10, 10, 0);  -- Haas F1 Team (ID 10)
+
+
+-- Inserimento dati per il campionato 2022 (Costruttori)
+INSERT INTO Classifiche_Costruttori (campionati_id, posizione, scuderia_id, punteggio_totale)
+VALUES
+(3, 1, 2, 759),  -- Oracle Red Bull Racing (ID 2)
+(3, 2, 3, 554),  -- Ferrari (ID 3)
+(3, 3, 1, 515),  -- Mercedes (ID 1)
+(3, 4, 5, 173),  -- Alpine (ID 5)
+(3, 5, 4, 158),  -- McLaren (ID 4)
+(3, 6, 6, 55),   -- Aston Martin (ID 6)
+(3, 7, 7, 55),   -- Alfa Romeo Racing (ID 7)
+(3, 8, 8, 37),   -- Haas F1 Team (ID 8)
+(3, 9, 9, 35),   -- AlphaTauri (ID 9)
+(3, 10, 10, 8);  -- Williams (ID 10)
+
+
+-- Inserimento dati per il campionato 2023 (Costruttori)
+INSERT INTO Classifiche_Costruttori (campionati_id, posizione, scuderia_id, punteggio_totale)
+VALUES
+(4, 1, 2, 850),  -- Oracle Red Bull Racing (ID 2)
+(4, 2, 1, 411),  -- Mercedes (ID 1)
+(4, 3, 3, 406),  -- Ferrari (ID 3)
+(4, 4, 6, 276),  -- Aston Martin (ID 6)
+(4, 5, 4, 215),  -- McLaren (ID 4)
+(4, 6, 5, 120),  -- Alpine (ID 5)
+(4, 7, 7, 60),   -- Alfa Romeo Racing (ID 7)
+(4, 8, 10, 50),  -- AlphaTauri (ID 10)
+(4, 9, 8, 35),   -- Williams (ID 8)
+(4, 10, 9, 10);  -- Haas F1 Team (ID 9)
+
+
+-- Inserimento dati per il campionato 2024 (Costruttori)
+INSERT INTO Classifiche_Costruttori (campionati_id, posizione, scuderia_id, punteggio_totale)
+VALUES
+(5, 1, 4, 666),   -- McLaren F1 Team
+(5, 2, 3, 652),   -- Scuderia Ferrari
+(5, 3, 2, 589),   -- Oracle Red Bull Racing
+(5, 4, 1, 468),   -- Mercedes AMG Petronas Formula One Team
+(5, 5, 6, 94),    -- Aston Martin Aramco Formula One Team
+(5, 6, 5, 65),    -- BWT Alpine F1 Team
+(5, 7, 9, 58),   -- MoneyGram Haas F1 Team
+(5, 8, 10, 46),    -- Visa Cash App RB F1 Team
+(5, 9, 8, 17),    -- Williams Racing
+(5, 10, 9, 4);    -- Stake F1 Team
+
+-- Gara 1: Gran Premio 2025
+INSERT INTO PunteggiGara_2025 (gara_id, pilota_id, posizione, punti, punteggio_sprint) VALUES
+    (1, 8, 1, 25, NULL),    -- Lando Norris (McLaren)
+    (1, 1, 2, 18, NULL),    -- Max Verstappen (Red Bull)
+    (1, 7, 3, 15, NULL),    -- George Russell (Mercedes)
+    (1, 6, 4, 12, NULL),    -- Andrea Kimi Antonelli (Mercedes)
+    (1, 3, 5, 10, NULL),    -- Alexander Albon (Williams)
+    (1, 12, 6, 8, NULL),    -- Lance Stroll (Aston Martin)
+    (1, 18, 7, 6, NULL),    -- Nico Hülkenberg (Stake F1 Team Kick Sauber)
+    (1, 10, 8, 4, NULL),    -- Charles Leclerc (Ferrari)
+    (1, 19, 9, 2, NULL),    -- Oscar Piastri (McLaren)
+    (1, 5, 10, 1, NULL),    -- Lewis Hamilton (Ferrari)
+    (1, 16, 11, 0, NULL),   -- Pierre Gasly (Alpine)
+    (1, 14, 12, 0, NULL),   -- Yuki Tsunoda (RB)
+    (1, 9, 13, 0, NULL),    -- Esteban Ocon (Haas)
+    (1, 20, 14, 0, NULL),   -- Oliver Bearman (Haas)
+    (1, 17, 15, 0, NULL),   -- Jack Doohan (Alpine, ritirato al giro 0)
+    (1, 15, 16, 0, NULL),   -- Gabriel Bortoleto (Stake F1 Team Kick Sauber, ritirato al giro 45)
+    (1, 7, 17, 0, NULL),    -- Carlos Sainz Jr. (Williams, ritirato al giro 0)
+    (1, 11, 18, 0, NULL),   -- Fernando Alonso (Aston Martin, ritirato al giro 32)
+    (1, 13, 19, 0, NULL),   -- Isack Hadjar (RB, ritirato al giro 0)
+    (1, 2, 20, 0, NULL);    -- Liam Lawson (Red Bull, ritirato al giro 46)
+
+
+-- Gara 2: Gran Premio d'Australia 2025
+INSERT INTO PunteggiGara_2025 (gara_id, pilota_id, posizione, punti, punteggio_sprint) VALUES
+    (2, 19, 1, 25, 7),    -- Oscar Piastri (McLaren), 2° nella Sprint
+    (2, 8, 2, 18, 1),     -- Lando Norris (McLaren), 8° nella Sprint
+    (2, 7, 3, 15, 5),     -- George Russell (Mercedes), 4° nella Sprint
+    (2, 1, 4, 12, 6),     -- Max Verstappen (Red Bull), 3° nella Sprint
+    (2, 9, 5, 10, 0),     -- Esteban Ocon (Haas), 16° nella Sprint
+    (2, 6, 6, 8, 3),      -- Andrea Kimi Antonelli (Mercedes), 7° nella Sprint
+    (2, 3, 7, 6, 0),      -- Alexander Albon (Williams), 11° nella Sprint
+    (2, 20, 8, 4, 0),     -- Oliver Bearman (Haas), 15° nella Sprint
+    (2, 12, 9, 2, 0),     -- Lance Stroll (Aston Martin), 9° nella Sprint
+    (2, 7, 10, 1, 0),     -- Carlos Sainz (Williams), 17° nella Sprint
+    (2, 13, 11, 0, 0),    -- Isack Hadjar (RB), 13° nella Sprint
+    (2, 2, 12, 0, 0),     -- Liam Lawson (Red Bull), 14° nella Sprint
+    (2, 17, 13, 0, 0),    -- Jack Doohan (Alpine), 20° nella Sprint
+    (2, 15, 14, 0, 0),    -- Gabriel Bortoleto (Stake F1 Team Kick Sauber), 18° nella Sprint
+    (2, 18, 15, 0, 0),    -- Nico Hülkenberg (Stake F1 Team Kick Sauber), 19° nella Sprint
+    (2, 14, 16, 0, 4),    -- Yuki Tsunoda (RB), 6° nella Sprint
+    (2, 10, 17, 0, 2),    -- Charles Leclerc (Ferrari), 5° nella Sprint
+    (2, 11, 18, 0, 0),    -- Fernando Alonso (Aston Martin), 10° nella Sprint
+    (2, 5, 19, 0, 8),     -- Lewis Hamilton (Ferrari), 1° nella Sprint
+    (2, 16, 20, 0, 0);    -- Pierre Gasly (Alpine), 12° nella Sprint
+    
+CREATE TABLE PasswordUtenti (
+	Email varchar(50) Primary KEY,
+    Password varchar(50)
+);
+CREATE TABLE Utenti (
+	Id_utenti int auto_increment primary key,
+	Email varchar(50) not null,
+    Nome varchar(50) not null,  
+    Cognome varchar(50) not null,  
+    Sesso varchar(10) not null,  
+    Nazione varchar(50) not null,
+    FOREIGN KEY (Email) REFERENCES PasswordUtenti(Email)
+);
+
+
