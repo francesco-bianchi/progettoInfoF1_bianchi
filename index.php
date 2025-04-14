@@ -8,7 +8,7 @@
     <title>Document</title>
 </head>
 <body class="bg-body-pagine">
-    <?php session_start(); ?>
+    <?php session_start(); include("connessione2.php");?>
     <!-- navbar -->
     <nav class="navbar navbar-expand bg-black">
         <div class="container-fluid">
@@ -90,122 +90,110 @@
       </nav><br>
 
       <!--notizie-->
-        <h2 class="text-danger fw-bold ms-4">Ultime notizie</h2>
-      <div class="container-fluid text-center m-auto">
+    
+      <?php
+    $query = "SELECT * FROM Card";
+    $result = mysqli_query($connessione2, $query)
+        or die("<br>Errore nella query: " . mysqli_error($connessione2) . " " . mysqli_errno($connessione2));
+
+    $resultset = [];
+    while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+        $resultset[] = $row;
+    }
+
+    // Array immagini statiche (una per ogni notizia, ordine importante)
+    $immagini = [
+        './images/tsunoda.jpeg',
+        './images/piastri_barhain.jpg',
+        './images/vittoria_max.jpeg',
+        './images/piastri_vince_cina.avif',
+        './images/norris_vince.avif',
+        './images/hamilton_bar.avif',
+        './images/yuky_giappone.avif',
+        './images/Antonelli.avif',
+        './images/norris_giorno.avif'
+    ];
+    ?>
+
+    <h2 class="text-danger fw-bold ms-4">Ultime notizie</h2>
+    <div class="container-fluid text-center m-auto">
         <div class="row">
+            <!-- Prima notizia grande -->
             <div class="col-sm-12 col-md-12 col-lg-6 mb-3">
                 <div class="card border-2 border-start-0 border-top-0 border-danger rounded-1 card-img-top pt-2 w-100 h-100">
-                    <img src="./images/tsunoda.jpeg" class="border rounded-1">
-                    <div class="card-body">
-                      <p class="card-text"><span class="fw-bold">Tsunoda in Red Bull è ufficiale!</span><br>La Red Bull ha deciso di agire rapidamente dopo il difficile inizio di stagione 2025 di Liam Lawson, declassandolo alla Racing Bulls e promuovendo Yuki Tsunoda al team senior insieme al campione del mondo in carica Max Verstappen. <br>
-                        È un compito che ora attende Yuki Tsunoda, con il 24enne pronto a correre al fianco di Verstappen alla Red Bull a partire dal Gran Premio di casa del Giappone! Come se la caverà rispetto a coloro che hanno assunto quel ruolo prima di lui?</p>
-                    </div>
+                    <?php if (isset($resultset[0])): ?>
+                        <img src="<?= $immagini[0] ?>" class="border rounded-1 h-50">
+                        <div class="card-body h-50 mt-3">
+                            <p class="card-text">
+                                <span class="fw-bold"><?= $resultset[0]['Titolo'] ?></span><br>
+                                <?= $resultset[0]['Descrizione'] ?>
+                            </p>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
+
+            <!-- Due notizie medie a destra -->
             <div class="col-12 col-md-12 col-lg-6">
                 <div class="row">
-                    <div class="col-sm-6 mb-3">
-                        <div class="card border-2 border-start-0 border-top-0 border-danger rounded-1 card-img-top pt-2 w-100 h-100">
-                            <img src="./images/piastri_vince_cina.avif" class="w-100 border rounded-1" >
-                            <div class="card-body">
-                              <p class="card-text"><span class="fw-bold">Oscar Piastri vince il GP della Cina!</span><br>Un super Piastri riesce a imporsi anche sul compagno di squadra e vince il suo terzo GP <br> Grande inizio per la McLaren che si riconferma la prima forza del campionato con un bellissimo 1-2</p>
+                    <?php for ($i = 1; $i <= 2; $i++): ?>
+                        <?php if (isset($resultset[$i])): ?>
+                            <div class="col-sm-6 mb-3">
+                                <div class="card border-2 border-start-0 border-top-0 border-danger rounded-1 card-img-top pt-2 w-100 h-100">
+                                    <img src="<?= $immagini[$i] ?>" class="w-100 border rounded-1 h-50">
+                                    <div class="card-body h-50">
+                                        <p class="card-text">
+                                            <span class="fw-bold"><?= $resultset[$i]['Titolo'] ?></span><br>
+                                            <?= $resultset[$i]['Descrizione'] ?>
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 mb-3">
-                        <div class="card border-2 border-start-0 border-top-0 border-danger rounded-1 card-img-top pt-2 w-100 h-100">
-                            <img src="./images/Antonelli.avif" class="w-100 border rounded-1" >
-                            <div class="card-body">
-                              <p class="card-text"><span class="fw-bold">Pilota del giorno!</span><br>Importante traguardo per Antonelli che nel GP della Cina riesce a ottenere un grande risultato (P5 per lui)</p>
-                            </div>
-                        </div>
-                    </div>
-                    
+                        <?php endif; ?>
+                    <?php endfor; ?>
                 </div>
+
                 <div class="row">
-                    <div class="col-sm-6 mb-3">
-                        <div class="card border-2 border-start-0 border-top-0 border-danger rounded-1 card-img-top pt-2 w-100 h-100">
-                            <img src="./images/norris_giorno.avif" class="w-100 border rounded-1" >
-                            <div class="card-body">
-                              <p class="card-text"><span class="fw-bold">Pilota del giorno!</span><br>Dopo una stupenda e dominante vittoria, Lando viene premiato dal pubblico. <br> Grande inizio per lui, dimostrando che sta maturando e migliorando sempre di più.</p>
+                    <?php for ($i = 3; $i <= 4; $i++): ?>
+                        <?php if (isset($resultset[$i])): ?>
+                            <div class="col-sm-6 mb-3">
+                                <div class="card border-2 border-start-0 border-top-0 border-danger rounded-1 card-img-top pt-2 w-100 h-100">
+                                    <img src="<?= $immagini[$i] ?>" class="w-100 border rounded-1 h-50">
+                                    <div class="card-body h-50">
+                                        <p class="card-text">
+                                            <span class="fw-bold"><?= $resultset[$i]['Titolo'] ?></span><br>
+                                            <?= $resultset[$i]['Descrizione'] ?>
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 mb-3">
-                        <div class="card border-2 border-start-0 border-top-0 border-danger rounded-1 card-img-top pt-2 w-100 h-100">
-                            <img src="./images/norris_vince.avif" class="w-100 border rounded-1" >
-                            <div class="card-body">
-                              <p class="card-text"><span class="fw-bold">Laaando Norris vince!</span><br>La McLaren rinizia a vincere subito con un grandissimo Lando Norris in Australia. <br> Che sia la sua stagione?</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    
+                        <?php endif; ?>
+                    <?php endfor; ?>
                 </div>
-                
             </div>
 
-            
-
+            <!-- Seconda riga completa, 4 card piccole -->
             <div class="container">
                 <div class="row">
-                    <div class="col-6">
-                        <p>Verstappen vince il Gp di Giappone!</p>
-                    </div>
-                    <div class="col-6">
-                        <img alt="Verstappen crosses the line to take his first victory of the season" src="https://media.formula1.com/image/upload/f_auto,c_limit,q_auto,w_640,t_16by9Centre/fom-website/2025/Promo atom images/Max_win_japan_06042025" class="f1-c-image w-full h-full rounded-r-lg">
-                    </div>
+                    <?php for ($i = 5; $i <= 8; $i++): ?>
+                        <?php if (isset($resultset[$i])): ?>
+                            <div class="col-sm-6 col-lg-3 mb-3">
+                                <div class="card border-2 border-start-0 border-top-0 border-danger rounded-1 card-img-top pt-2 w-100 h-100">
+                                    <img src="<?= $immagini[$i] ?>" class="w-100 border rounded-1">
+                                    <div class="card-body">
+                                        <p class="card-text">
+                                            <span class="fw-bold"><?= $resultset[$i]['Titolo'] ?></span><br>
+                                            <?= $resultset[$i]['Descrizione'] ?>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                    <?php endfor; ?>
                 </div>
             </div>
-
-
-
-            <!-- seconda riga-->
-            <div class="container">
-            <div class="row">
-                <div class="col-sm-6 col-lg-3 mb-3">
-                    <div class="card border-2 border-start-0 border-top-0 border-danger rounded-1 card-img-top pt-2 w-100 h-100">
-                        <img src="./images/tsunoda.jpeg" class="border rounded-1">
-                        <div class="card-body">
-                            <p class="card-text"><span class="fw-bold">Tsunoda in Red Bull è ufficiale!</span><br>La Red Bull ha deciso di agire rapidamente dopo il difficile inizio di stagione 2025 di Liam Lawson, declassandolo alla Racing Bulls e promuovendo Yuki Tsunoda al team senior insieme al campione del mondo in carica Max Verstappen. <br>
-                            È un compito che ora attende Yuki Tsunoda, con il 24enne pronto a correre al fianco di Verstappen alla Red Bull a partire dal Gran Premio di casa del Giappone! Come se la caverà rispetto a coloro che hanno assunto quel ruolo prima di lui?</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-lg-3 mb-3">
-                    <div class="card border-2 border-start-0 border-top-0 border-danger rounded-1 card-img-top pt-2 w-100 h-100">
-                        <img src="./images/piastri_vince_cina.avif" class="w-100 border rounded-1" >
-                        <div class="card-body">
-                            <p class="card-text"><span class="fw-bold">Oscar Piastri vince il GP della Cina!</span><br>Un super Piastri riesce a imporsi anche sul compagno di squadra e vince il suo terzo GP <br> Grande inizio per la McLaren che si riconferma la prima forza del campionato con un bellissimo 1-2</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-lg-3 mb-3">
-                    <div class="card border-2 border-start-0 border-top-0 border-danger rounded-1 card-img-top pt-2 w-100 h-100">
-                        <img src="./images/Antonelli.avif" class="w-100 border rounded-1" >
-                        <div class="card-body">
-                            <p class="card-text"><span class="fw-bold">Pilota del giorno!</span><br>Importante traguardo per Antonelli che nel GP della Cina riesce a ottenere un grande risultato (P5 per lui)</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-lg-3 mb-3">
-                    <div class="card border-2 border-start-0 border-top-0 border-danger rounded-1 card-img-top pt-2 w-100 h-100">
-                        <img src="./images/norris_giorno.avif" class="w-100 border rounded-1" >
-                        <div class="card-body">
-                            <p class="card-text"><span class="fw-bold">Pilota del giorno!</span><br>Dopo una stupenda e dominante vittoria, Lando viene premiato dal pubblico. <br> Grande inizio per lui, dimostrando che sta maturando e migliorando sempre di più.</p>
-                        </div>
-                    </div>
-                </div>
-                
-            </div>
-            </div>
-            
-          
         </div>
-      </div>
-      </div>
-    
-
+    </div>
      <!-- footer -->
      <footer>
 	    <div class="footerWrapper sticky-bottom h-25">
