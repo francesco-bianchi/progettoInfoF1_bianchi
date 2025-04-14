@@ -1,3 +1,12 @@
+CREATE DATABASE Formula1_news;
+USE Formula1_news;
+
+CREATE TABLE Card (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    Titolo VARCHAR(500),
+    Descrizione VARCHAR(1000)
+);
+
 INSERT INTO `card` (`Titolo`, `Descrizione`) VALUES ("Tsunoda in Red Bull e' ufficiale. È un compito che ora attende Yuki Tsunoda, con il 24enne pronto a correre al fianco di Verstappen alla Red Bull a partire dal Gran Premio di casa del Giappone! Come se la caverà rispetto a coloro che hanno assunto quel ruolo prima di lui?', 'La Red Bull ha deciso di agire rapidamente dopo il difficile inizio di stagione 2025 di Liam Lawson, declassandolo alla Racing Bulls e promuovendo Yuki Tsunoda al team senior insieme al campione del mondo in carica Max Verstappen.");
 INSERT INTO `card` (`Titolo`, `Descrizione`) VALUES ("Oscar Piastri vince!", "Dominante in Barhain, l'australiano ottiene la sua seconda vittoria di quest\'anno e conferma il grande momento della McLaren");
 INSERT INTO `card` (`Titolo`, `Descrizione`) VALUES ("Max vincee!", "Inaspettatamente Verstappen riesce a tenere a distanza i papaya, conquistando una grande rivincita nei confronti McLaren e avvicinandosi a Norris.');
