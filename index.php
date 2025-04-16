@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="./css/style.css">
@@ -120,10 +120,10 @@
         <div class="row">
             <!-- Prima notizia grande -->
             <div class="col-sm-12 col-md-12 col-lg-6 mb-3">
-                <div class="card border-2 border-start-0 border-top-0 border-danger rounded-1 card-img-top pt-2 w-100 h-100">
+                <div class="card border-2 border-start-0 border-top-0 border-danger rounded-1 w-100 h-100">
                     <?php if (isset($resultset[0])): ?>
                         <img src="<?= $immagini[0] ?>" class="border rounded-1 h-50">
-                        <div class="card-body h-50 mt-3">
+                        <div class="card-body h-50">
                             <p class="card-text">
                                 <span class="fw-bold"><?= $resultset[0]['Titolo'] ?></span><br>
                                 <?= $resultset[0]['Descrizione'] ?>
@@ -139,7 +139,7 @@
                     <?php for ($i = 1; $i <= 2; $i++): ?>
                         <?php if (isset($resultset[$i])): ?>
                             <div class="col-sm-6 mb-3">
-                                <div class="card border-2 border-start-0 border-top-0 border-danger rounded-1 card-img-top pt-2 w-100 h-100">
+                                <div class="card border-2 border-start-0 border-top-0 border-danger rounded-1 w-100 h-100">
                                     <img src="<?= $immagini[$i] ?>" class="w-100 border rounded-1 h-50">
                                     <div class="card-body h-50">
                                         <p class="card-text">
@@ -157,7 +157,7 @@
                     <?php for ($i = 3; $i <= 4; $i++): ?>
                         <?php if (isset($resultset[$i])): ?>
                             <div class="col-sm-6 mb-3">
-                                <div class="card border-2 border-start-0 border-top-0 border-danger rounded-1 card-img-top pt-2 w-100 h-100">
+                                <div class="card border-2 border-start-0 border-top-0 border-danger rounded-1 w-100 h-100">
                                     <img src="<?= $immagini[$i] ?>" class="w-100 border rounded-1 h-50">
                                     <div class="card-body h-50">
                                         <p class="card-text">
@@ -178,7 +178,7 @@
                     <?php for ($i = 5; $i <= 8; $i++): ?>
                         <?php if (isset($resultset[$i])): ?>
                             <div class="col-sm-6 col-lg-3 mb-3">
-                                <div class="card border-2 border-start-0 border-top-0 border-danger rounded-1 card-img-top pt-2 w-100 h-100">
+                                <div class="card border-2 border-start-0 border-top-0 border-danger rounded-1 w-100 h-100">
                                     <img src="<?= $immagini[$i] ?>" class="w-100 border rounded-1">
                                     <div class="card-body">
                                         <p class="card-text">

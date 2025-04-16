@@ -11,7 +11,8 @@ CREATE TABLE Piloti (
     id INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(255) NOT NULL,
     cognome VARCHAR(255) NOT NULL,
-    nazionalita VARCHAR(100)
+    nazionalita VARCHAR(100),
+    immagine VARCHAR(5000)
 );
 
 CREATE TABLE Piloti_Scuderie (
@@ -90,6 +91,43 @@ VALUES
 
 
 
+-- Inserimento dei piloti dal 2020 al 2025
+INSERT INTO Piloti (nome, cognome, nazionalita, immagine) 
+VALUES
+('Max', 'Verstappen', 'Olandese', "https://s.yimg.com/fz/api/res/1.2/hmlybqGqAgVh_dCbrUK6Yw--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTk2/https://s.yimg.com/zb/imgv1/d5fd381a-9619-3960-88d1-69754a3e34c8/t_500x300"),       -- ID 1
+('Sergio', 'Perez', 'Messicano', "https://s.yimg.com/fz/api/res/1.2/bdIGrFn26qFBv8qz116pHw--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTcy/https://s.yimg.com/zb/imgv1/f7200a26-cd27-3d73-a622-e88b6b0d4f4f/t_500x300"),        -- ID 2
+('Lando', 'Norris', 'Britannico', "https://s.yimg.com/fz/api/res/1.2/KdoSQtnIpL0jqrALVC1X4w--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTk0/https://s.yimg.com/zb/imgv1/1502aeae-dd0b-39a3-8274-e9214fe446b6/t_500x300"),       -- ID 3
+('Oscar', 'Piastri', 'Australiano', "https://s.yimg.com/fz/api/res/1.2/Ur7XgxzD0_bLhmAFN14lBw--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTcy/https://s.yimg.com/zb/imgv1/355356eb-abef-3218-bce2-6898255dec60/t_500x300"),    -- ID 4
+('Alexander', 'Albon', 'Thailandese', "https://s.yimg.com/fz/api/res/1.2/QhEYznXIay74cfRs1MYsfQ--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTg2/https://s.yimg.com/zb/imgv1/53d10e41-451e-34a0-b03f-c03214947732/t_500x300"),  -- ID 5
+('Liam', 'Lawson', 'Neozelandese', "https://s.yimg.com/fz/api/res/1.2/J56W_mpHwSWTQPXrHMIq1A--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTcy/https://s.yimg.com/zb/imgv1/25ebe2b4-b53a-3b1d-88d9-4baf8f13d761/t_500x300"),     -- ID 6
+('Lewis', 'Hamilton', 'Britannico', "https://s.yimg.com/fz/api/res/1.2/hNY0w04hSIpXnrqX6XcbBw--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTk0/https://s.yimg.com/zb/imgv1/f1cb95da-da1b-332c-928f-1871432edb0b/t_500x300"),    -- ID 7
+('Valtteri', 'Bottas', 'Finlandese', "https://s.yimg.com/fz/api/res/1.2/psyDy3ZhpT0Tg3XeY1G37g--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTcy/https://s.yimg.com/zb/imgv1/7c5bb1c8-6c9e-328b-9a29-44f226821d5d/t_500x300"),   -- ID 8
+('George', 'Russell', 'Britannico', "https://s.yimg.com/fz/api/res/1.2/5b7RQkt4b6.23CpnTONDJw--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTcy/https://s.yimg.com/zb/imgv1/e385c488-77eb-3e55-a70d-5e3d84d0f4ab/t_500x300"),    -- ID 9
+('Andrea Kimi', 'Antonelli', 'Italiano', "https://s.yimg.com/fz/api/res/1.2/dkdvhIo.INuMi3sGqpkzRw--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTg0/https://s.yimg.com/zb/imgv1/f5e2fd07-d4a8-36c7-835f-586f64232247/t_500x300"), -- ID 10
+('Charles', 'Leclerc', 'Monegasco', "https://s.yimg.com/fz/api/res/1.2/SGyPmxGDONrUGlJdr1SLOg--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTcy/https://s.yimg.com/zb/imgv1/bb1165a4-7c6e-384f-b713-5454b83b0fde/t_500x300"),    -- ID 11
+('Carlos', 'Sainz Jr.', 'Spagnolo', "https://s.yimg.com/fz/api/res/1.2/wYNoHXw7oF2TJMKUxS7RHA--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MjE2/https://s.yimg.com/zb/imgv1/6cff0775-eab2-336e-8618-ead03db4a226/t_500x300"),    -- ID 12
+('Sebastian', 'Vettel', 'Tedesco', "https://tse2.mm.bing.net/th?id=OIP.rQFwe93GdBX2TNESoevVowHaEK&pid=Api&P=0&h=180"),     -- ID 13
+('Daniel', 'Ricciardo', 'Australiano', "https://s.yimg.com/fz/api/res/1.2/fu5C.K7dtElZT8ioL8ldYg--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpbGw7aD0yMjA7cT04MDt3PTE0Ng--/https://s.yimg.com/zb/imgv1/4dabf081-e289-322f-b829-61b6a898adb6/t_500x300"), -- ID 14
+('Esteban', 'Ocon', 'Francese', "https://s.yimg.com/fz/api/res/1.2/rcU6ObSIj2lkhTRXEuLVow--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTk0/https://s.yimg.com/zb/imgv1/df1b7aff-de46-3f3b-8079-a3315d87e577/t_500x300"),        -- ID 15
+('Pierre', 'Gasly', 'Francese', "https://s.yimg.com/fz/api/res/1.2/3yKJBtwbUUwYhNhwtWuI6g--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTk0/https://s.yimg.com/zb/imgv1/15838ea6-e74a-37a2-af69-9814fb799e3a/t_500x300"),        -- ID 16
+('Fernando', 'Alonso', 'Spagnolo', "https://s.yimg.com/fz/api/res/1.2/QcoyUaeXMDekxh3wUH6NLw--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpbGw7aD0yMjA7cT04MDt3PTE0Ng--/https://s.yimg.com/zb/imgv1/70dcf7a8-413e-3a99-8553-041a6d440e3f/t_500x300"),     -- ID 17
+('Jack', 'Doohan', 'Australiano', "https://s.yimg.com/fz/api/res/1.2/kw8XkU.CW7awU.SDgU_sPA--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTU2/https://s.yimg.com/zb/imgv1/d4484849-0008-3c22-a7d2-6114c478839e/t_500x300"),      -- ID 18
+('Lance', 'Stroll', 'Canadese', "https://s.yimg.com/fz/api/res/1.2/LYevDSHYkhdssZDorwYF8g--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTcy/https://s.yimg.com/zb/imgv1/a6c2a33a-ad33-33c0-b4e6-0bde89ff40a3/t_500x300"),        -- ID 19
+('Daniil', 'Kvyat', 'Russo', "https://s.yimg.com/fz/api/res/1.2/M3.cZrT05KQIaH4fs4fqMg--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTcy/https://s.yimg.com/zb/imgv1/251f7f7e-8585-3775-9eab-d680d53c5bab/t_500x300"),           -- ID 20
+('Yuki', 'Tsunoda', 'Giapponese', "https://s.yimg.com/fz/api/res/1.2/7h4PiTFd4OQ9ktLCl1Oecw--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTk0/https://s.yimg.com/zb/imgv1/add3bf2c-0cb1-3375-9964-fa8c9943ac3e/t_500x300"),     -- ID 21
+('Nyck', 'de Vries', 'Olandese',"https://s.yimg.com/fz/api/res/1.2/dbqFUYOgjk.T1F2kV.yTWg--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTcy/https://s.yimg.com/zb/imgv1/913f561f-14b6-3258-a48b-fc3a5811868e/t_500x300"),       -- ID 22
+('Antonio', 'Giovinazzi', 'Italiano', "https://s.yimg.com/fz/api/res/1.2/0EkyfYjwkah5xuEvmg.Q5w--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MjIy/https://s.yimg.com/zb/imgv1/0f9ae684-1ec1-3d52-969d-453bb53c2aa4/t_500x300"),  -- ID 23
+('Romain', 'Grosjean', 'Francese', "https://s.yimg.com/fz/api/res/1.2/R5XffoF2clFc9uqTC9DO5A--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MjIw/https://s.yimg.com/zb/imgv1/b5eab2b9-4535-3853-b785-282e17bc011d/t_500x300"),     -- ID 24
+('Kevin', 'Magnussen', 'Danese', "https://s.yimg.com/fz/api/res/1.2/cJ.r7TNHdTtw4c_wUkqgJQ--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTgw/https://s.yimg.com/zb/imgv1/aa034863-ba58-387f-bf2b-c3024a40b2a3/t_500x300"),       -- ID 25
+('Mick', 'Schumacher', 'Tedesco', "https://s.yimg.com/fz/api/res/1.2/wmp0tlPEDbanyqlkSC0mQQ--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTcy/https://s.yimg.com/zb/imgv1/dff746a9-9e40-36da-aff6-22d2bfc02e39/t_500x300"),      -- ID 26
+('Nico', 'Hulkenberg', 'Tedesco', "https://s.yimg.com/fz/api/res/1.2/S.iSA36LWfvOcP6rQPNTgQ--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTcy/https://s.yimg.com/zb/imgv1/379ecaf2-00cc-37cb-9258-b7528c12063d/t_500x300"),      -- ID 27
+('Oliver', 'Bearman', 'Britannico', "https://s.yimg.com/fz/api/res/1.2/SC_3Nka0v7cC8qeJF5BJRA--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTgw/https://s.yimg.com/zb/imgv1/c9c41bcf-9900-3479-bf08-49d51abfb8d8/t_500x300"),    -- ID 28
+('Logan', 'Sargeant', 'Americano',"https://s.yimg.com/fz/api/res/1.2/ZHN7hTKDtVb4hPs9mDqe.w--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTc0/https://s.yimg.com/zb/imgv1/09c3da8d-da74-37cd-9c08-88af50e2a251/t_500x300"),     -- ID 29
+('Gabriel', 'Bortoleto', 'Brasiliano', "https://s.yimg.com/fz/api/res/1.2/GI8VjDZTVyqdH5S8EzzwwQ--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MjI0/https://s.yimg.com/zb/imgv1/b7bfae08-6db4-3fa4-972b-75a2b0bc692d/t_500x300"), -- ID 30
+('Zhou', 'Guanyu', 'Cinese',"https://s.yimg.com/fz/api/res/1.2/oiSV9xsuUAj1LV7VAVodFg--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTcy/https://s.yimg.com/zb/imgv1/cd28a829-6b0d-36fb-b97b-b8f046439fdc/t_500x300"),           -- ID 31
+('Isack', 'Hadjar', 'Francese',"https://s.yimg.com/fz/api/res/1.2/WW1RvePovRAHxjxq50.iJw--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTgy/https://s.yimg.com/zb/imgv1/57cbae5c-4f6c-3a7b-bb41-e208e8e416cc/t_500x300"),        -- ID 32
+('Kimi', 'Raikkonen', 'Finlandese', "https://s.yimg.com/fz/api/res/1.2/GXXy2uo5YbdEQjagZ_eqBg--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpbGw7aD0yMjA7cT04MDt3PTE0Ng--/https://s.yimg.com/zb/imgv1/c12a65c9-6541-3edf-9053-7e5d3ab943db/t_500x300"),    -- ID 33
+('Nicholas', 'Latifi', 'Canadese',"https://s.yimg.com/fz/api/res/1.2/IWQ9Jej1S0_0S6niJYfJHA--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MjE0/https://s.yimg.com/zb/imgv1/1683c000-2421-38a2-baaa-3eb142299350/t_500x300");     -- ID 34
 
 
 -- Circuiti 2020-2025 con lunghezza e tipo
@@ -303,46 +341,6 @@ VALUES
 (6, 32, '2025-11-23'), -- Las Vegas Grand Prix
 (6, 31, '2025-11-30'), -- Qatar Grand Prix
 (6, 22, '2025-12-07'); -- Abu Dhabi Grand Prix
-
-
--- Inserimento dei piloti dal 2020 al 2025
-INSERT INTO Piloti (nome, cognome, nazionalita) 
-VALUES
-('Max', 'Verstappen', 'Olandese'),       -- ID 1
-('Sergio', 'Perez', 'Messicano'),        -- ID 2
-('Lando', 'Norris', 'Britannico'),       -- ID 3
-('Oscar', 'Piastri', 'Australiano'),    -- ID 4
-('Alexander', 'Albon', 'Thailandese'),  -- ID 5
-('Liam', 'Lawson', 'Neozelandese'),     -- ID 6
-('Lewis', 'Hamilton', 'Britannico'),    -- ID 7
-('Valtteri', 'Bottas', 'Finlandese'),   -- ID 8
-('George', 'Russell', 'Britannico'),    -- ID 9
-('Andrea Kimi', 'Antonelli', 'Italiano'), -- ID 10
-('Charles', 'Leclerc', 'Monegasco'),    -- ID 11
-('Carlos', 'Sainz Jr.', 'Spagnolo'),    -- ID 12
-('Sebastian', 'Vettel', 'Tedesco'),     -- ID 13
-('Daniel', 'Ricciardo', 'Australiano'), -- ID 14
-('Esteban', 'Ocon', 'Francese'),        -- ID 15
-('Pierre', 'Gasly', 'Francese'),        -- ID 16
-('Fernando', 'Alonso', 'Spagnolo'),     -- ID 17
-('Jack', 'Doohan', 'Australiano'),      -- ID 18
-('Lance', 'Stroll', 'Canadese'),        -- ID 19
-('Daniil', 'Kvyat', 'Russo'),           -- ID 20
-('Yuki', 'Tsunoda', 'Giapponese'),     -- ID 21
-('Nyck', 'de Vries', 'Olandese'),       -- ID 22
-('Antonio', 'Giovinazzi', 'Italiano'),  -- ID 23
-('Romain', 'Grosjean', 'Francese'),     -- ID 24
-('Kevin', 'Magnussen', 'Danese'),       -- ID 25
-('Mick', 'Schumacher', 'Tedesco'),      -- ID 26
-('Nico', 'Hulkenberg', 'Tedesco'),      -- ID 27
-('Oliver', 'Bearman', 'Britannico'),    -- ID 28
-('Logan', 'Sargeant', 'Americano'),     -- ID 29
-('Gabriel', 'Bortoleto', 'Brasiliano'), -- ID 30
-('Zhou', 'Guanyu', 'Cinese'),           -- ID 31
-('Isack', 'Hadjar', 'Francese'),        -- ID 32
-('Kimi', 'Raikkonen', 'Finlandese'),    -- ID 33
-('Nicholas', 'Latifi', 'Canadese');     -- ID 34
-
 
 INSERT INTO Scuderie (nome_scuderia, nazionalita_scuderia)
 VALUES
