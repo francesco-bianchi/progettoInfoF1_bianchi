@@ -6,7 +6,7 @@
     </head>
 <body class="bg-body-pagine">
 <?php 
-        session_start();
+    session_start();
 ?>
 <nav class="navbar navbar-expand bg-black">
         <div class="container-fluid">
@@ -88,11 +88,72 @@
       </nav><br>
 
         <div class="container">
-        <?php
+            <?php
             include("connessione.php");
-            
+            if(isset($_GET["id"])){
+                $queryPiloti = "SELECT * FROM Classifiche_Piloti cp INNER JOIN Piloti p ON cp.pilota_id = p.id 
+                INNER JOIN Scuderie s ON cp.scuderia_id = s.id
+                WHERE p.id = $_GET[id]";
+                $resultPiloti = mysqli_query($connessione, $queryPiloti)
+                or die ("<br>Errore di chiusura" . mysqli_error($connessione) . " ". mysqli_errno($connessione));
+                $resultQueryPiloti = [];
+                while ($row = mysqli_fetch_array($resultPiloti, MYSQLI_ASSOC)) {
+                    $resultQueryPiloti[] = $row;
+                }
 
-                $query = "SELECT * FROM Classifiche_Piloti cp INNER JOIN Piloti p ON cp.pilota_id = p.id INNER JOIN Scuderie s ON cp.scuderia_id = s.id INNER JOIN Campionati c ON cp.campionati_id = c.id WHERE c.anno = '$_GET[anno]' ORDER BY cp.punteggio_totale DESC";
+                $queryScuderie = "SELECT * FROM Classifiche_Piloti cp INNER JOIN Piloti p ON cp.pilota_id = p.id 
+                INNER JOIN Scuderie s ON cp.scuderia_id = s.id
+                WHERE p.id = $_GET[id]";
+                $resultScuderie = mysqli_query($connessione, $queryScuderie)
+                or die ("<br>Errore di chiusura" . mysqli_error($connessione) . " ". mysqli_errno($connessione));
+                $resultQueryScuderie = [];
+                while ($row = mysqli_fetch_array($resultScuderie, MYSQLI_ASSOC)) {
+                    $resultQueryScuderie[] = $row;
+                }
+            }
+            ?>
+            <!-- MODAL (inizialmente nascosto finché una riga non viene cliccata) -->
+            <?php if (isset($resultQueryPiloti[0])): ?>
+                <div class="modal fade" id="modalPilota" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header row">
+                                <div class="col-6 text-start ps-4">
+                                    <h5 class="modal-title" id="modalPilotaLabel"><?= $resultQueryPiloti[0]['nome'] ?> <?= $resultQueryPiloti[0]['cognome']   ?>
+                                    <span id="nazionalita_id"><?= $resultQueryPiloti[0]['nazionalita'] ?></span></h5>
+                                </div>
+                                <div class="col-6 text-end">
+                                    <a href="./classifiche.php"><button type="button" class="btn-close" data-bs-dismiss="modal"></button></a>
+                                </div>
+                            </div>
+                            <div class="modal-body row">
+                                <div class="col-6">
+                                    <img src="<?= $resultQueryPiloti[0]['immagine'] ?>" alt="Immagine Pilota" class="img-fluid mt-3 dim_imm_piloti"><br>
+                                </div>
+                                <div class="col-6">
+                                    <p>Info</p>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                            <a href="./classifiche.php"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button></a>
+                            </div>
+                        </div>
+                    </div>
+            <?php endif; ?>
+        </div>
+        <div class="container">
+        <?php    
+                if(isset($_GET["anno"])){
+                    $anno = $_GET["anno"];
+                    $_SESSION["anno"] = $anno;
+                }
+                else{
+                    $anno = $_SESSION["anno"];
+                }
+
+                $query = "SELECT * FROM Classifiche_Piloti cp INNER JOIN Piloti p ON cp.pilota_id = p.id 
+                INNER JOIN Scuderie s ON cp.scuderia_id = s.id INNER JOIN Campionati c ON cp.campionati_id = c.id
+                WHERE c.anno = '$anno' ORDER BY cp.punteggio_totale DESC";
                 $result = mysqli_query($connessione, $query)
                 or die ("<br>Errore di chiusura" . mysqli_error($connessione) . " ". mysqli_errno($connessione));
                 echo"<h1 class='mx-auto text-center'> Classifica piloti </h1><br>";
@@ -111,7 +172,7 @@
                             echo"<tbody>";
                             while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) //solo associativo
                             {
-                                echo"<tr class='clickable-row' data-href='./profilo.php?id=$row[pilota_id]'>";
+                                echo"<tr onclick="."window.location.href='?id=$row[pilota_id]' style='cursor: pointer;''>";
                                     if($row["posizione"] == 1){
                                         echo"<td class='text-warning fw-bold px-3'>$row[posizione]</td>";
                                     }
@@ -135,7 +196,8 @@
                         echo"</div>";
                     echo"</div><br><br>";
 
-                        $query_scuderie = "SELECT * FROM Classifiche_Costruttori cc INNER JOIN Scuderie s ON cc.scuderia_id = s.id INNER JOIN Campionati c ON cc.campionati_id = c.id WHERE c.anno = '$_GET[anno]' ORDER BY cc.punteggio_totale DESC";
+                        $query_scuderie = "SELECT * FROM Classifiche_Costruttori cc INNER JOIN Scuderie s ON cc.scuderia_id = s.id 
+                        INNER JOIN Campionati c ON cc.campionati_id = c.id WHERE c.anno = '$_SESSION[anno]' ORDER BY cc.punteggio_totale DESC";
                         $result_scuderie = mysqli_query($connessione, $query_scuderie)
                         or die ("<br>Errore di chiusura" . mysqli_error($connessione) . " ". mysqli_errno($connessione));
                         
