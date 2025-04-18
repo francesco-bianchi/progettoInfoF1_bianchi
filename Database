@@ -88,6 +88,7 @@ VALUES
     (2023),
     (2024),
     (2025);
+ 
 
 
 
@@ -127,8 +128,266 @@ VALUES
 ('Zhou', 'Guanyu', 'Cinese',"https://s.yimg.com/fz/api/res/1.2/oiSV9xsuUAj1LV7VAVodFg--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTcy/https://s.yimg.com/zb/imgv1/cd28a829-6b0d-36fb-b97b-b8f046439fdc/t_500x300"),           -- ID 31
 ('Isack', 'Hadjar', 'Francese',"https://s.yimg.com/fz/api/res/1.2/WW1RvePovRAHxjxq50.iJw--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTgy/https://s.yimg.com/zb/imgv1/57cbae5c-4f6c-3a7b-bb41-e208e8e416cc/t_500x300"),        -- ID 32
 ('Kimi', 'Raikkonen', 'Finlandese', "https://s.yimg.com/fz/api/res/1.2/GXXy2uo5YbdEQjagZ_eqBg--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpbGw7aD0yMjA7cT04MDt3PTE0Ng--/https://s.yimg.com/zb/imgv1/c12a65c9-6541-3edf-9053-7e5d3ab943db/t_500x300"),    -- ID 33
-('Nicholas', 'Latifi', 'Canadese',"https://s.yimg.com/fz/api/res/1.2/IWQ9Jej1S0_0S6niJYfJHA--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MjE0/https://s.yimg.com/zb/imgv1/1683c000-2421-38a2-baaa-3eb142299350/t_500x300");     -- ID 34
+('Nicholas', 'Latifi', 'Canadese',"https://s.yimg.com/fz/api/res/1.2/IWQ9Jej1S0_0S6niJYfJHA--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MjE0/https://s.yimg.com/zb/imgv1/1683c000-2421-38a2-baaa-3eb142299350/t_500x300"),     -- ID 34
+('Nikita', 'Mazepin', 'Russo', "https://s.yimg.com/fz/api/res/1.2/8Ht05zW9DwQUMBni3_6LLg--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTc4/https://s.yimg.com/zb/imgv1/e66df8d2-0f93-3c43-9755-48e107dabb58/t_500x300"), -- ID 35
+('Franco', 'Colapinto', 'Argentino', "https://s.yimg.com/fz/api/res/1.2/lolcu6ZrWZpeqz6U2uTJvw--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTcy/https://s.yimg.com/zb/imgv1/5579df7e-6f6e-3ad5-b9b7-ebe66a9e2942/t_500x300"); -- ID 36
 
+ALTER TABLE Piloti
+  ADD COLUMN vittorie INT     NOT NULL DEFAULT 0,
+  ADD COLUMN gare_svolte INT  NOT NULL DEFAULT 0,
+  ADD COLUMN podi INT         NOT NULL DEFAULT 0;
+
+-- Max Verstappen (ID 1)
+UPDATE Piloti SET
+  vittorie     = 60,
+  gare_svolte  = 118,
+  podi         = 91
+WHERE id = 1;
+
+-- Sergio Perez (ID 2)
+UPDATE Piloti SET
+  vittorie     = 4,
+  gare_svolte  = 219,
+  podi         = 59
+WHERE id = 2;
+
+-- Lando Norris (ID 3)
+UPDATE Piloti SET
+  vittorie     = 0,
+  gare_svolte  = 100,
+  podi         = 16
+WHERE id = 3;
+
+-- Oscar Piastri (ID 4)
+UPDATE Piloti SET
+  vittorie     = 2,
+  gare_svolte  = 42,
+  podi         = 8
+WHERE id = 4;
+
+-- Alexander Albon (ID 5)
+UPDATE Piloti SET
+  vittorie     = 0,
+  gare_svolte  = 95,
+  podi         = 2
+WHERE id = 5;
+
+-- Liam Lawson (ID 6)
+UPDATE Piloti SET
+  vittorie     = 0,
+  gare_svolte  = 12,
+  podi         = 0
+WHERE id = 6;
+
+-- Lewis Hamilton (ID 7)
+UPDATE Piloti SET
+  vittorie     = 103,
+  gare_svolte  = 326,
+  podi         = 206
+WHERE id = 7;
+
+-- Valtteri Bottas (ID 8)
+UPDATE Piloti SET
+  vittorie     = 10,
+  gare_svolte  = 252,
+  podi         = 67
+WHERE id = 8;
+
+-- George Russell (ID 9)
+UPDATE Piloti SET
+  vittorie     = 0,
+  gare_svolte  = 125,
+  podi         = 8
+WHERE id = 9;
+
+-- Andrea Kimi Antonelli (ID 10)
+UPDATE Piloti SET
+  vittorie     = 0,
+  gare_svolte  = 2,
+  podi         = 0
+WHERE id = 10;
+
+-- Charles Leclerc (ID 11)
+UPDATE Piloti SET
+  vittorie     = 6,
+  gare_svolte  = 138,
+  podi         = 40
+WHERE id = 11;
+
+-- Carlos Sainz Jr. (ID 12)
+UPDATE Piloti SET
+  vittorie     = 1,
+  gare_svolte  = 198,
+  podi         = 25
+WHERE id = 12;
+
+-- Sebastian Vettel (ID 13)
+UPDATE Piloti SET
+  vittorie     = 53,
+  gare_svolte  = 323,
+  podi         = 122
+WHERE id = 13;
+
+-- Daniel Ricciardo (ID 14)
+UPDATE Piloti SET
+  vittorie     = 8,
+  gare_svolte  = 265,
+  podi         = 32
+WHERE id = 14;
+
+-- Esteban Ocon (ID 15)
+UPDATE Piloti SET
+  vittorie     = 1,
+  gare_svolte  = 144,
+  podi         = 6
+WHERE id = 15;
+
+-- Pierre Gasly (ID 16)
+UPDATE Piloti SET
+  vittorie     = 1,
+  gare_svolte  = 154,
+  podi         = 5
+WHERE id = 16;
+
+-- Fernando Alonso (ID 17)
+UPDATE Piloti SET
+  vittorie     = 32,
+  gare_svolte  = 373,
+  podi         = 98
+WHERE id = 17;
+
+-- Jack Doohan (ID 18)
+UPDATE Piloti SET
+  vittorie     = 0,
+  gare_svolte  = 4,
+  podi         = 0
+WHERE id = 18;
+
+-- Lance Stroll (ID 19)
+UPDATE Piloti SET
+  vittorie     = 1,
+  gare_svolte  = 104,
+  podi         = 3
+WHERE id = 19;
+
+-- Daniil Kvyat (ID 20)
+UPDATE Piloti SET
+  vittorie     = 0,
+  gare_svolte  = 126,
+  podi         = 3
+WHERE id = 20;
+
+-- Yuki Tsunoda (ID 21)
+UPDATE Piloti SET
+  vittorie     = 0,
+  gare_svolte  = 67,
+  podi         = 0
+WHERE id = 21;
+
+-- Nyck de Vries (ID 22)
+UPDATE Piloti SET
+  vittorie     = 0,
+  gare_svolte  = 3,
+  podi         = 0
+WHERE id = 22;
+
+-- Antonio Giovinazzi (ID 23)
+UPDATE Piloti SET
+  vittorie     = 0,
+  gare_svolte  = 57,
+  podi         = 0
+WHERE id = 23;
+
+-- Romain Grosjean (ID 24)
+UPDATE Piloti SET
+  vittorie     = 0,
+  gare_svolte  = 179,
+  podi         = 10
+WHERE id = 24;
+
+-- Kevin Magnussen (ID 25)
+UPDATE Piloti SET
+  vittorie     = 0,
+  gare_svolte  = 171,
+  podi         = 1
+WHERE id = 25;
+
+-- Mick Schumacher (ID 26)
+UPDATE Piloti SET
+  vittorie     = 0,
+  gare_svolte  = 38,
+  podi         = 1
+WHERE id = 26;
+
+-- Nico Hulkenberg (ID 27)
+UPDATE Piloti SET
+  vittorie     = 0,
+  gare_svolte  = 174,
+  podi         = 1
+WHERE id = 27;
+
+-- Oliver Bearman (ID 28)
+UPDATE Piloti SET
+  vittorie     = 0,
+  gare_svolte  = 5,
+  podi         = 0
+WHERE id = 28;
+
+-- Logan Sargeant (ID 29)
+UPDATE Piloti SET
+  vittorie     = 0,
+  gare_svolte  = 18,
+  podi         = 0
+WHERE id = 29;
+
+-- Gabriel Bortoleto (ID 30)
+UPDATE Piloti SET
+  vittorie     = 0,
+  gare_svolte  = 4,
+  podi         = 0
+WHERE id = 30;
+
+-- Zhou Guanyu (ID 31)
+UPDATE Piloti SET
+  vittorie     = 0,
+  gare_svolte  = 100,
+  podi         = 0
+WHERE id = 31;
+
+-- Isack Hadjar (ID 32)
+UPDATE Piloti SET
+  vittorie     = 0,
+  gare_svolte  = 4,
+  podi         = 0
+WHERE id = 32;
+
+-- Kimi Räikkönen (ID 33)
+UPDATE Piloti SET
+  vittorie     = 21,
+  gare_svolte  = 349,
+  podi         = 103
+WHERE id = 33;
+
+-- Nicholas Latifi (ID 34)
+UPDATE Piloti SET
+  vittorie     = 0,
+  gare_svolte  = 75,
+  podi         = 0
+WHERE id = 34;
+
+-- Nikita Mazepin (ID 35)
+UPDATE Piloti SET
+  vittorie     = 0,
+  gare_svolte  = 46,
+  podi         = 0
+WHERE id = 35;
+
+-- Franco Colapinto (ID 36)
+UPDATE Piloti SET
+  vittorie     = 0,
+  gare_svolte  = 20,
+  podi         = 0
+WHERE id = 36;
 
 -- Circuiti 2020-2025 con lunghezza e tipo
 INSERT INTO Circuiti (id, nome, paese, lunghezza_km, tipo_circuito)
@@ -355,6 +614,8 @@ VALUES
     ('Haas F1 Team', 'Stati Uniti'),
     ('AlphaTauri', 'Austria');
 
+
+
 -- Inserimento dei piloti dal 2020 al 2025 con ID scuderie
 INSERT INTO Piloti_Scuderie (pilota_id, scuderia_id, anno_inizio, anno_fine)
 VALUES
@@ -375,7 +636,7 @@ VALUES
     (33, 7, 2020, 2022), -- Kimi Räikkönen in Alfa Romeo Racing
     (23, 7, 2020, 2022), -- Antonio Giovinazzi in Alfa Romeo Racing
     (22, 9, 2020, 2021), -- Romain Grosjean in Haas
-    (25, 9, 2020, 2021), -- Kevin Magnussen in Haas
+    (25, 9, 2020, 2025), -- Kevin Magnussen in Haas
     (9, 8, 2020, 2022), -- George Russell in Williams
     (34, 8, 2020, 2023),-- Nicholas Latifi in Williams
 
@@ -386,14 +647,13 @@ VALUES
     (17, 5, 2021, 2023), -- Fernando Alonso in Alpine
     (13, 6, 2021, 2023), -- Sebastian Vettel in Aston Martin
     (21, 10, 2021, NULL), -- Yuki Tsunoda in AlphaTauri
-    (27, 9, 2021, 2023), -- Mick Schumacher in Haas
-    (28, 9, 2021, 2022), -- Nikita Mazepin in Haas
+    (26, 9, 2021, 2023), -- Mick Schumacher in Haas
+    (35, 9, 2021, 2021), -- Nikita Mazepin in Haas
 
 -- 2022
     (9, 1, 2022, NULL),  -- George Russell in Mercedes
     (8, 7, 2022, 2025),  -- Valtteri Bottas in Alfa Romeo Racing
     (31, 7, 2022, 2025), -- Zhou Guanyu in Alfa Romeo Racing
-    (25, 9, 2022, 2025), -- Kevin Magnussen in Haas
     (5, 8, 2022, NULL), -- Alexander Albon in Williams
 
 -- 2023
@@ -401,23 +661,25 @@ VALUES
     (16, 5, 2023, NULL), -- Pierre Gasly in Alpine
     (17, 6, 2023, NULL), -- Fernando Alonso in Aston Martin
     (22, 10, 2023, 2024), -- Nyck de Vries in AlphaTauri
-    (26, 9, 2023, NULL), -- Nico Hülkenberg in Haas
-    (29, 8, 2023, NULL),-- Logan Sargeant in Williams
+    (27, 9, 2023, 2025), -- Nico Hülkenberg in Haas
+    (29, 8, 2023, 2025),-- Logan Sargeant in Williams
 
 -- 2024
     (6, 10, 2024, 2025),  -- Liam Lawson in AlphaTauri
 
 -- 2025
-    (6, 1, 2025, NULL),  -- Liam Lawson in Red Bull Racing
+    (6, 2, 2025, 2025),  -- Liam Lawson in Red Bull Racing
     (7, 3, 2025, NULL),  -- Lewis Hamilton in Ferrari
-    (10, 2, 2025, NULL), -- Kimi Antonelli in Mercedes
+    (10, 1, 2025, NULL), -- Kimi Antonelli in Mercedes
     (32, 10, 2025, NULL), -- Isack Hadjar in AlphaTauri
-    (26, 7, 2025, NULL), -- Nico Hülkenberg in Sauber
-    (28, 7, 2025, NULL), -- Gabriel Bortoleto in Sauber
+    (27, 7, 2025, NULL), -- Nico Hülkenberg in Sauber
+    (30, 7, 2025, NULL), -- Gabriel Bortoleto in Sauber
     (18, 5, 2025, NULL), -- Jack Doohan in Alpine
-    (27, 9, 2025, NULL), -- Oliver Bearman in Haas
+    (28, 9, 2025, NULL), -- Oliver Bearman in Haas
     (15, 9, 2025, NULL), -- Esteban Ocon in Haas
-    (12, 8, 2025, NULL); -- Carlos Sainz Jr. in Williams
+    (12, 8, 2025, NULL), -- Carlos Sainz Jr. in Williams
+    (21, 2, 2025, NULL), -- Yuki Tsunoda in RedBull
+    (6, 10, 2025, 2025);  -- Liam Lawson in Red Bull Racing
 
 
 -- Inserimenti 2020
@@ -469,27 +731,27 @@ VALUES
 INSERT INTO Classifiche_Piloti (campionati_id, posizione, pilota_id, punteggio_totale, scuderia_id)
 VALUES
 (3, 1, 1, 454, 2),  -- Verstappen Max, posizione 1, 454 punti, scuderia Oracle Red Bull Racing
-(3, 2, 12, 308, 3), -- Leclerc Charles, posizione 2, 308 punti, scuderia Scuderia Ferrari
+(3, 2, 11, 308, 3), -- Leclerc Charles, posizione 2, 308 punti, scuderia Scuderia Ferrari
 (3, 3, 2, 305, 2),  -- Perez Sergio, posizione 3, 305 punti, scuderia Oracle Red Bull Racing
-(3, 4, 16, 275, 1), -- Russell George, posizione 4, 275 punti, scuderia Mercedes AMG Petronas Formula One Team
-(3, 5, 14, 246, 3), -- Sainz Carlos Jr, posizione 5, 246 punti, scuderia Scuderia Ferrari
+(3, 4, 9, 275, 1), -- Russell George, posizione 4, 275 punti, scuderia Mercedes AMG Petronas Formula One Team
+(3, 5, 12, 246, 3), -- Sainz Carlos Jr, posizione 5, 246 punti, scuderia Scuderia Ferrari
 (3, 6, 7, 240, 1),  -- Hamilton Lewis, posizione 6, 240 punti, scuderia Mercedes AMG Petronas Formula One Team
 (3, 7, 3, 122, 4),  -- Norris Lando, posizione 7, 122 punti, scuderia McLaren F1 Team
-(3, 8, 17, 92, 5),  -- Ocon Esteban, posizione 8, 92 punti, scuderia BWT Alpine F1 Team
-(3, 9, 8, 81, 5),   -- Alonso Fernando, posizione 9, 81 punti, scuderia BWT Alpine F1 Team
-(3, 10, 9, 49, 7),  -- Bottas Valtteri, posizione 10, 49 punti, scuderia Alfa Romeo F1 Team ORLEN
-(3, 11, 13, 37, 4), -- Ricciardo Daniel, posizione 11, 37 punti, scuderia McLaren F1 Team
-(3, 12, 17, 37, 6), -- Vettel Sebastian, posizione 12, 37 punti, scuderia Aston Martin Aramco Cognizant Formula One
-(3, 13, 22, 25, 9), -- Magnussen Kevin, posizione 13, 25 punti, scuderia Haas F1 Team
-(3, 14, 11, 23, 5), -- Gasly Pierre, posizione 14, 23 punti, scuderia Scuderia AlphaTauri
-(3, 15, 15, 18, 6), -- Stroll Lance, posizione 15, 18 punti, scuderia Aston Martin Aramco Cognizant Formula One
-(3, 16, 24, 12, 10), -- Tsunoda Yuki, posizione 16, 12 punti, scuderia Scuderia AlphaTauri
-(3, 17, 26, 6, 7),  -- Zhou Guanyu, posizione 17, 6 punti, scuderia Alfa Romeo F1 Team ORLEN
-(3, 18, 19, 4, 8),  -- Albon Alexander, posizione 18, 4 punti, scuderia Williams Racing
-(3, 19, 20, 2, 8),  -- Latifi Nicholas, posizione 19, 2 punti, scuderia Williams Racing
-(3, 20, 21, 2, 8),  -- de Vries Nyck, posizione 20, 2 punti, scuderia Williams Racing
-(3, 21, 30, 0, 6),  -- Hülkenberg Nico, posizione 21, 0 punti, scuderia Aston Martin Aramco Cognizant Formula One
-(3, 22, 27, 0, 9);  -- Schumacher Mick, posizione 22, 0 punti, scuderia Haas F1 Team
+(3, 8, 15, 92, 5),  -- Ocon Esteban, posizione 8, 92 punti, scuderia BWT Alpine F1 Team
+(3, 9, 17, 81, 5),   -- Alonso Fernando, posizione 9, 81 punti, scuderia BWT Alpine F1 Team
+(3, 10, 8, 49, 7),  -- Bottas Valtteri, posizione 10, 49 punti, scuderia Alfa Romeo F1 Team ORLEN
+(3, 11, 14, 37, 4), -- Ricciardo Daniel, posizione 11, 37 punti, scuderia McLaren F1 Team
+(3, 12, 13, 37, 6), -- Vettel Sebastian, posizione 12, 37 punti, scuderia Aston Martin Aramco Cognizant Formula One
+(3, 13, 25, 25, 9), -- Magnussen Kevin, posizione 13, 25 punti, scuderia Haas F1 Team
+(3, 14, 16, 23, 5), -- Gasly Pierre, posizione 14, 23 punti, scuderia Scuderia AlphaTauri
+(3, 15, 19, 18, 6), -- Stroll Lance, posizione 15, 18 punti, scuderia Aston Martin Aramco Cognizant Formula One
+(3, 16, 21, 12, 10), -- Tsunoda Yuki, posizione 16, 12 punti, scuderia Scuderia AlphaTauri
+(3, 17, 31, 6, 7),  -- Zhou Guanyu, posizione 17, 6 punti, scuderia Alfa Romeo F1 Team ORLEN
+(3, 18, 5, 4, 8),  -- Albon Alexander, posizione 18, 4 punti, scuderia Williams Racing
+(3, 19, 34, 2, 8),  -- Latifi Nicholas, posizione 19, 2 punti, scuderia Williams Racing
+(3, 20, 22, 2, 8),  -- de Vries Nyck, posizione 20, 2 punti, scuderia Williams Racing
+(3, 21, 35, 0, 9),  -- Mazepin, posizione 21, 0 punti, scuderia Haas F1 team
+(3, 22, 26, 0, 9);  -- Schumacher Mick, posizione 22, 0 punti, scuderia Haas F1 Team
 
 -- Inserimento dati per il campionato 2023
 INSERT INTO Classifiche_Piloti (campionati_id, posizione, pilota_id, punteggio_totale, scuderia_id)
@@ -508,14 +770,14 @@ VALUES
 (4, 12, 15, 58, 5),  -- Esteban Ocon in Alpine
 (4, 13, 5, 27, 8),   -- Alexander Albon in Williams
 (4, 14, 21, 17, 10),  -- Yuki Tsunoda in AlphaTauri
-(4, 15, 6, 10, 7),   -- Valtteri Bottas in Alfa Romeo Racing
-(4, 16, 26, 8, 6),   -- Nico Hülkenberg in Aston Martin
+(4, 15, 8, 10, 7),   -- Valtteri Bottas in Alfa Romeo Racing
+(4, 16, 27, 8, 6),   -- Nico Hülkenberg in Aston Martin
 (4, 17, 31, 6, 7),   -- Zhou Guanyu in Alfa Romeo Racing
-(4, 18, 30, 2, 10),   -- Liam Lawson in AlphaTauri
-(4, 19, 20, 2, 8),   -- Nyck de Vries in Williams
+(4, 18, 6, 2, 10),   -- Liam Lawson in AlphaTauri
+(4, 19, 22, 2, 8),   -- Nyck de Vries in Williams
 (4, 20, 29, 1, 8),   -- Logan Sargeant in Williams
-(4, 21, 18, 0, 10),   -- Daniel Ricciardo in AlphaTauri
-(4, 22, 27, 0, 9);  -- Mick Schumacher in Haas
+(4, 21, 14, 0, 10),   -- Daniel Ricciardo in AlphaTauri
+(4, 22, 26, 0, 9);  -- Mick Schumacher in Haas
 
 -- Inserimento dati per il campionato 2024 (Piloti)
 INSERT INTO Classifiche_Piloti (campionati_id, posizione, pilota_id, punteggio_totale, scuderia_id)
@@ -530,16 +792,16 @@ VALUES
 (5, 8, 2, 152, 2),  -- Sergio Pérez in Oracle Red Bull Racing
 (5, 9, 17, 70, 6),  -- Fernando Alonso in Aston Martin Aramco Formula One Team
 (5, 10, 16, 42, 5),  -- Pierre Gasly in BWT Alpine F1 Team
-(5, 11, 26, 41, 9),  -- Nico Hülkenberg in MoneyGram Haas F1 Team
+(5, 11, 27, 41, 9),  -- Nico Hülkenberg in MoneyGram Haas F1 Team
 (5, 12, 21, 30, 10),  -- Yuki Tsunoda in Visa Cash App RB F1 Team
 (5, 13, 19, 24, 6),  -- Lance Stroll in Aston Martin Aramco Formula One Team
 (5, 14, 15, 23, 5),  -- Esteban Ocon in BWT Alpine F1 Team
 (5, 15, 25, 16, 9),  -- Kevin Magnussen in MoneyGram Haas F1 Team
 (5, 16, 5, 12, 8),   -- Alexander Albon in Williams Racing
-(5, 17, 27, 12, 10),  -- Daniel Ricciardo in Visa Cash App RB F1 Team
-(5, 18, 30, 7, 9),   -- Oliver Bearman in MoneyGram Haas F1 Team
-(5, 19, 31, 5, 8),   -- Franco Colapinto in Williams Racing
-(5, 20, 32, 4, 9),  -- Zhou Guanyu in Stake F1 Team
+(5, 17, 14, 12, 10),  -- Daniel Ricciardo in Visa Cash App RB F1 Team
+(5, 18, 28, 7, 3),   -- Oliver Bearman in Ferrari
+(5, 19, 36, 5, 8),   -- Franco Colapinto in Williams Racing
+(5, 20, 31, 4, 9),  -- Zhou Guanyu in Stake F1 Team
 (5, 21, 6, 4, 10);    -- Liam Lawson in Visa Cash App RB F1 Team
     
 

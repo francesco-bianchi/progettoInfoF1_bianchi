@@ -111,8 +111,10 @@
                     $resultQueryScuderie[] = $row;
                 }
 
-                $queryPilScuderie = "SELECT p.*, s.* FROM Piloti_Scuderie p inner join Piloti pi ON p.pilota_id = pi.id inner join Scuderie s ON s.id = p.scuderia_id 
-                WHERE pi.id = $_GET[id]";
+                $queryPilScuderie = "SELECT p.*, s.* FROM Piloti_Scuderie p inner join Piloti pi ON p.pilota_id = pi.id 
+                inner join Scuderie s ON s.id = p.scuderia_id 
+                WHERE pi.id = $_GET[id]
+                ORDER BY p.anno_inizio";
                 $resultPilScuderie = mysqli_query($connessione, $queryPilScuderie)
                 or die ("<br>Errore di chiusura" . mysqli_error($connessione) . " ". mysqli_errno($connessione));
                 $resultQueryPilScuderie = [];
@@ -141,7 +143,10 @@
                                         <img src="<?= $resultQueryPiloti[0]['immagine'] ?>" alt="Immagine Pilota" class="img-fluid mt-3 dim_imm_piloti"><br>
                                     </div>
                                     <div class="col-6">
-                                        <p>Statistiche:</p>
+                                        <p class="fw-bold">Statistiche:</p>
+                                        <p>Vittorie in carriera: <?= $resultQueryPiloti[0]['vittorie']?></p>
+                                        <p>Gare: <?= $resultQueryPiloti[0]['gare_svolte']?></p>
+                                        <p>Podi: <?= $resultQueryPiloti[0]['podi']?></p>
                                     </div>
                                 </div><br>
                                 <div class="row">
@@ -178,12 +183,8 @@
                     $_SESSION["anno"] = $anno;
                 }
                 else{
-                    if(isset($_SESSION["anno"])){
-                        $anno = $_SESSION["anno"];
-                    }
-                    else{
-                        $anno = 2025;
-                    }
+                    $anno = $_SESSION["anno"];
+                    
                 }
                 
 

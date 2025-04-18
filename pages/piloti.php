@@ -120,8 +120,8 @@
                             echo"<td class='px-3 cell'>Nome pilota</td>";
                             echo"<td class='px-3 cell'>Cognome pilota</td>";
                             echo"<td class='px-3 cell'>Nazionalità pilota</td>";
-                            echo"<td class='px-3 cell'>Nome scuderia</td>";
                             echo"<td class='px-3 cell'>Anni</td>";
+                            echo"<td class='px-3 cell'>Nome scuderia</td>";
                             echo"<td class='px-3 cell'>Nazionalita scuderia</td>";
                         echo"</tr>";
                         echo"</thead>";
