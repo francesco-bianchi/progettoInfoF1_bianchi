@@ -110,6 +110,15 @@
                 while ($row = mysqli_fetch_array($resultScuderie, MYSQLI_ASSOC)) {
                     $resultQueryScuderie[] = $row;
                 }
+
+                $queryPilScuderie = "SELECT p.*, s.* FROM Piloti_Scuderie p inner join Piloti pi ON p.pilota_id = pi.id inner join Scuderie s ON s.id = p.scuderia_id 
+                WHERE pi.id = $_GET[id]";
+                $resultPilScuderie = mysqli_query($connessione, $queryPilScuderie)
+                or die ("<br>Errore di chiusura" . mysqli_error($connessione) . " ". mysqli_errno($connessione));
+                $resultQueryPilScuderie = [];
+                while ($row = mysqli_fetch_array($resultPilScuderie, MYSQLI_ASSOC)) {
+                    $resultQueryPilScuderie[] = $row;
+                }
             }
             ?>
             <!-- MODAL (inizialmente nascosto finché una riga non viene cliccata) -->
@@ -126,13 +135,34 @@
                                     <a href="./classifiche.php"><button type="button" class="btn-close" data-bs-dismiss="modal"></button></a>
                                 </div>
                             </div>
-                            <div class="modal-body row">
-                                <div class="col-6">
-                                    <img src="<?= $resultQueryPiloti[0]['immagine'] ?>" alt="Immagine Pilota" class="img-fluid mt-3 dim_imm_piloti"><br>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <img src="<?= $resultQueryPiloti[0]['immagine'] ?>" alt="Immagine Pilota" class="img-fluid mt-3 dim_imm_piloti"><br>
+                                    </div>
+                                    <div class="col-6">
+                                        <p>Statistiche:</p>
+                                    </div>
+                                </div><br>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <p class="fw-bold">Anno</p>
+                                    </div>
+                                    <div class="col-6">
+                                        <p class="fw-bold">Team</p>
+                                    </div>
                                 </div>
-                                <div class="col-6">
-                                    <p>Info</p>
-                                </div>
+                                <?php foreach($resultQueryPilScuderie as $annoPil): ?>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <p><?= $annoPil['anno_inizio'] .' - '. $annoPil['anno_fine'] ?></p>
+                                        </div>
+                                        <div class="col-6">
+                                            <p><?= $annoPil['nome_scuderia']?></p>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                                
                             </div>
                             <div class="modal-footer">
                             <a href="./classifiche.php"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button></a>
@@ -148,8 +178,14 @@
                     $_SESSION["anno"] = $anno;
                 }
                 else{
-                    $anno = $_SESSION["anno"];
+                    if(isset($_SESSION["anno"])){
+                        $anno = $_SESSION["anno"];
+                    }
+                    else{
+                        $anno = 2025;
+                    }
                 }
+                
 
                 $query = "SELECT * FROM Classifiche_Piloti cp INNER JOIN Piloti p ON cp.pilota_id = p.id 
                 INNER JOIN Scuderie s ON cp.scuderia_id = s.id INNER JOIN Campionati c ON cp.campionati_id = c.id

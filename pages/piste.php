@@ -89,7 +89,7 @@
         <div class="container">
         <?php
             include("connessione.php");
-            if($_GET["anno"] == "all"){
+            if($_GET["anno"] == "all" || !isset($_GET["anno"])){
                 $query = "SELECT * FROM Gare g INNER JOIN Circuiti c ON g.circuito_id = c.id ORDER BY g.data DESC";
             }
             else{

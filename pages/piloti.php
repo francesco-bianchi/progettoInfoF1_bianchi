@@ -90,7 +90,7 @@
         <?php
         $anno = $_GET["anno"];
         include("connessione.php");
-        if($anno == "all"){
+        if($anno == "all" || !isset($_GET["anno"])){
             $query = "SELECT * FROM Piloti_Scuderie p inner join Piloti pi ON p.pilota_id = pi.id inner join Scuderie s ON s.id = p.scuderia_id
             ORDER BY pi.nome, p.anno_inizio";
         }
