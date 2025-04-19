@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 
   document.addEventListener("DOMContentLoaded", function () {
-    const nazionalita_id = document.getElementById("nazionalita_id");
+    const nazionalita_id = document.querySelector(".nazionalita_id");
     const nazionalita = nazionalita_id.textContent.trim().toLowerCase();
     console.log(nazionalita);
   
@@ -33,7 +33,9 @@ document.addEventListener("DOMContentLoaded", function() {
     monegasco: "https://flagcdn.com/w40/mc.png",
     neozelandese: "https://flagcdn.com/w40/nz.png",
     canadese: "https://flagcdn.com/w40/ca.png",
-    russo: "https://flagcdn.com/w40/ru.png"
+    russo: "https://flagcdn.com/w40/ru.png",
+    austriaco: "https://flagcdn.com/w40/at.png",
+    svizzero: "https://flagcdn.com/w40/ch.png"
   };
     
     if (bandiere[nazionalita]) {
@@ -48,9 +50,17 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 
     document.addEventListener('DOMContentLoaded', () => {
-      const modalEl = document.getElementById('modalPilota');
-      const myModal = new bootstrap.Modal(modalEl, {
+      const modalPilota = document.getElementById('modalPilota');
+      const pilotaModal = new bootstrap.Modal(modalPilota, {
         focus: false   // disabilita lo scroll automatico
       });
-      myModal.show();
+      pilotaModal.show();
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const modalScuderia = document.getElementById('modalScuderia');
+      const scuderiaModal = new bootstrap.Modal(modalScuderia, {
+        focus: false   // disabilita lo scroll automatico
+      });
+      scuderiaModal.show();
     });

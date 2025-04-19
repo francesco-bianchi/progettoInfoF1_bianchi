@@ -4,7 +4,8 @@ USE Formula1;
 CREATE TABLE Scuderie (
     id INT PRIMARY KEY AUTO_INCREMENT,
     nome_scuderia VARCHAR(255) NOT NULL,
-    nazionalita_scuderia VARCHAR(100)
+    nazionalita_scuderia VARCHAR(100),
+    immagine_scuderia VARCHAR(5000)
 );
 
 CREATE TABLE Piloti (
@@ -601,18 +602,18 @@ VALUES
 (6, 31, '2025-11-30'), -- Qatar Grand Prix
 (6, 22, '2025-12-07'); -- Abu Dhabi Grand Prix
 
-INSERT INTO Scuderie (nome_scuderia, nazionalita_scuderia)
+INSERT INTO Scuderie (nome_scuderia, nazionalita_scuderia, immagine_scuderia)
 VALUES
-    ('Mercedes', 'Germania'),
-    ('Red Bull Racing', 'Austria'),
-    ('Ferrari', 'Italia'),
-    ('McLaren', 'Gran Bretagna'),
-    ('Alpine', 'Francia'),
-    ('Aston Martin', 'Gran Bretagna'),
-    ('Alfa Romeo Racing', 'Svizzera'),
-    ('Williams', 'Gran Bretagna'),
-    ('Haas F1 Team', 'Stati Uniti'),
-    ('AlphaTauri', 'Austria');
+    ('Mercedes', 'Tedesco', "https://media.formula1.com/image/upload/f_auto,c_limit,q_75,w_1320/content/dam/fom-website/2018-redesign-assets/team%20logos/mercedes"),
+    ('Red Bull Racing', 'Austriaco', "https://media.formula1.com/image/upload/f_auto,c_limit,q_75,w_1320/content/dam/fom-website/2018-redesign-assets/team%20logos/red%20bull"),
+    ('Ferrari', 'Italiano', "https://media.formula1.com/image/upload/f_auto,c_limit,q_auto,w_1320/content/dam/fom-website/2018-redesign-assets/team%20logos/ferrari"),
+    ('McLaren', 'Britannico', "https://media.formula1.com/image/upload/f_auto,c_limit,q_75,w_1320/content/dam/fom-website/2018-redesign-assets/team%20logos/mclaren"),
+    ('Alpine', 'Francese', "https://media.formula1.com/image/upload/f_auto,c_limit,q_75,w_1320/content/dam/fom-website/2018-redesign-assets/team%20logos/alpine"),
+    ('Aston Martin', 'Britannico', "https://media.formula1.com/image/upload/f_auto,c_limit,q_auto,w_1320/content/dam/fom-website/2018-redesign-assets/team%20logos/aston%20martin"),
+    ('Sauber F1 team', 'Svizzero', "https://media.formula1.com/image/upload/f_auto,c_limit,q_75,w_1320/content/dam/fom-website/2018-redesign-assets/team%20logos/kick%20sauber"),
+    ('Williams', 'Britannico', "https://media.formula1.com/image/upload/f_auto,c_limit,q_auto,w_1320/content/dam/fom-website/2018-redesign-assets/team%20logos/williams"),
+    ('Haas F1 Team', 'Americano', "https://media.formula1.com/image/upload/f_auto,c_limit,q_75,w_1320/content/dam/fom-website/2018-redesign-assets/team%20logos/haas"),
+    ('Racing bulls', 'Austriaco', "https://media.formula1.com/image/upload/f_auto,c_limit,q_auto,w_1320/fom-website/2018-redesign-assets/team%20logos/racing%20bulls");
 
 
 

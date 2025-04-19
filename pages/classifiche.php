@@ -101,16 +101,6 @@
                     $resultQueryPiloti[] = $row;
                 }
 
-                $queryScuderie = "SELECT * FROM Classifiche_Piloti cp INNER JOIN Piloti p ON cp.pilota_id = p.id 
-                INNER JOIN Scuderie s ON cp.scuderia_id = s.id
-                WHERE p.id = $_GET[id]";
-                $resultScuderie = mysqli_query($connessione, $queryScuderie)
-                or die ("<br>Errore di chiusura" . mysqli_error($connessione) . " ". mysqli_errno($connessione));
-                $resultQueryScuderie = [];
-                while ($row = mysqli_fetch_array($resultScuderie, MYSQLI_ASSOC)) {
-                    $resultQueryScuderie[] = $row;
-                }
-
                 $queryPilScuderie = "SELECT p.*, s.* FROM Piloti_Scuderie p inner join Piloti pi ON p.pilota_id = pi.id 
                 inner join Scuderie s ON s.id = p.scuderia_id 
                 WHERE pi.id = $_GET[id]
@@ -122,8 +112,21 @@
                     $resultQueryPilScuderie[] = $row;
                 }
             }
+
+            if(isset($_GET["id_scuderia"])){
+
+                $queryScuderie = "SELECT * FROM Classifiche_Piloti cp INNER JOIN Piloti p ON cp.pilota_id = p.id 
+                INNER JOIN Scuderie s ON cp.scuderia_id = s.id
+                WHERE s.id = $_GET[id_scuderia]";
+                $resultScuderie = mysqli_query($connessione, $queryScuderie)
+                or die ("<br>Errore di chiusura" . mysqli_error($connessione) . " ". mysqli_errno($connessione));
+                $resultQueryScuderie = [];
+                while ($row = mysqli_fetch_array($resultScuderie, MYSQLI_ASSOC)) {
+                    $resultQueryScuderie[] = $row;
+                }
+            }
             ?>
-            <!-- MODAL (inizialmente nascosto finché una riga non viene cliccata) -->
+            <!-- MODAL (inizialmente nascosto finché una riga non viene cliccata) per i piloti -->
             <?php if (isset($resultQueryPiloti[0])): ?>
                 <div class="modal fade" id="modalPilota" tabindex="-1" aria-hidden="true">
                     <div class="modal-dialog">
@@ -131,7 +134,7 @@
                             <div class="modal-header row">
                                 <div class="col-6 text-start ps-4">
                                     <h5 class="modal-title" id="modalPilotaLabel"><?= $resultQueryPiloti[0]['nome'] ?> <?= $resultQueryPiloti[0]['cognome']   ?>
-                                    <span id="nazionalita_id"><?= $resultQueryPiloti[0]['nazionalita'] ?></span></h5>
+                                    <span class="nazionalita_id"><?= $resultQueryPiloti[0]['nazionalita'] ?></span></h5>
                                 </div>
                                 <div class="col-6 text-end">
                                     <a href="./classifiche.php"><button type="button" class="btn-close" data-bs-dismiss="modal"></button></a>
@@ -232,52 +235,99 @@
                             echo"</table>";
                         echo"</div>";
                     echo"</div><br><br>";
+                    ?>
+    </div>
+<div class="container">
+<!--MODAL scuderie -->
+<?php if (isset($resultQueryScuderie[0])): ?>
+    <div class="modal fade" id="modalScuderia" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header row">
+                    <div class="col-6 text-start ps-4">
+                        <h5 class="modal-title" id="modalScuderiaLabel"><?= $resultQueryScuderie[0]['nome_scuderia'] ?>
+                        <span class="nazionalita_id"><?= $resultQueryScuderie[0]['nazionalita_scuderia'] ?></span></h5>
+                    </div>
+                    <div class="col-6 text-end">
+                        <a href="./classifiche.php"><button type="button" class="btn-close" data-bs-dismiss="modal"></button></a>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-6">
+                            <img src="<?= $resultQueryScuderie[0]['immagine_scuderia'] ?>" alt="Immagine Pilota" class="img-fluid mt-3 dim_imm_scuderie"><br>
 
-                        $query_scuderie = "SELECT * FROM Classifiche_Costruttori cc INNER JOIN Scuderie s ON cc.scuderia_id = s.id 
-                        INNER JOIN Campionati c ON cc.campionati_id = c.id WHERE c.anno = '$_SESSION[anno]' ORDER BY cc.punteggio_totale DESC";
-                        $result_scuderie = mysqli_query($connessione, $query_scuderie)
-                        or die ("<br>Errore di chiusura" . mysqli_error($connessione) . " ". mysqli_errno($connessione));
-                        
-                        echo"<h1 class='mx-auto text-center'> Classifica costruttori </h1><br>";
-                        echo"<div class='row'>";
-                        echo"<div class='container col-12'>";
-                            echo "<table class='text-center table-css mx-auto'>";
-                            echo"<thead>";
-                                echo"<tr class='table-header'>";
-                                    echo"<td class='px-3 cell'>Posizione</td>";
-                                    echo"<td class='px-3 cell'>Nome scuderia</td>";
-                                    echo"<td class='px-3 cell'>Punteggio totale</td>";
-                                echo"</tr>";
-                                echo"</thead>";
-                                echo"<tbody>";
-                            while ($row = mysqli_fetch_array($result_scuderie, MYSQLI_ASSOC)) //solo associativo
-                            {
-                                echo"<tr>";
-                                if($row["posizione"] == 1){
-                                    echo"<td class='text-warning fw-bold px-3'>$row[posizione]</td>";
-                                }
-                                else if($row["posizione"] == 2){
-                                    echo"<td class='text-secondary fw-bold px-3'>$row[posizione]</td>";
-                                }
-                                else if($row["posizione"] == 3){
-                                    echo"<td class='text-brown-css fw-bold px-3'>$row[posizione]</td>";
-                                }
-                                else{
-                                    echo"<td class='text-black px-3'>$row[posizione]</td>";
-                                }
-                                    echo"<td class='px-3'>$row[nome_scuderia]</td>";
-                                    echo"<td class='px-3'>$row[punteggio_totale]</td>";
-                                echo"</tr>";
-                            }
-                            echo"</tbody>";
-                            echo"</table><br><br>";
-                        echo"</div>";
-                        echo "<span class='mx-auto text-center'>Torna alla <a href='../index.php' class='link-opacity-50-hover link-underline-danger link-offset-2 visited text-black'>home</a></span><br><br>";
-                        echo "<span></span>";
-                    echo"</div>";
+                        </div>
+                        <div class="col-6">
+                            
+                        </div>
+                    </div><br>
+                    <div class="row">
+                        <div class="col-6">
+                            <p class="fw-bold">Anno</p>
+                        </div>
+                        <div class="col-6">
+                            <p class="fw-bold">Team</p>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+                <div class="modal-footer">
+                <a href="./classifiche.php"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>
+</div>
+<div class="container">                           
+        <?php
+                $query_scuderie = "SELECT * FROM Classifiche_Costruttori cc INNER JOIN Scuderie s ON cc.scuderia_id = s.id 
+                INNER JOIN Campionati c ON cc.campionati_id = c.id WHERE c.anno = '$anno' ORDER BY cc.punteggio_totale DESC";
+                $result_scuderie = mysqli_query($connessione, $query_scuderie)
+                or die ("<br>Errore di chiusura" . mysqli_error($connessione) . " ". mysqli_errno($connessione));
+                
+                echo"<h1 class='mx-auto text-center'> Classifica costruttori </h1><br>";
+                echo"<div class='row'>";
+                echo"<div class='container col-12'>";
+                    echo "<table class='text-center table-css mx-auto'>";
+                    echo"<thead>";
+                        echo"<tr class='table-header'>";
+                            echo"<td class='px-3 cell'>Posizione</td>";
+                            echo"<td class='px-3 cell'>Nome scuderia</td>";
+                            echo"<td class='px-3 cell'>Punteggio totale</td>";
+                        echo"</tr>";
+                        echo"</thead>";
+                        echo"<tbody>";
+                    while ($row = mysqli_fetch_array($result_scuderie, MYSQLI_ASSOC)) //solo associativo
+                    {
+                        echo"<tr onclick="."window.location.href='?id_scuderia=$row[scuderia_id]' style='cursor: pointer;''>";
+                        if($row["posizione"] == 1){
+                            echo"<td class='text-warning fw-bold px-3'>$row[posizione]</td>";
+                        }
+                        else if($row["posizione"] == 2){
+                            echo"<td class='text-secondary fw-bold px-3'>$row[posizione]</td>";
+                        }
+                        else if($row["posizione"] == 3){
+                            echo"<td class='text-brown-css fw-bold px-3'>$row[posizione]</td>";
+                        }
+                        else{
+                            echo"<td class='text-black px-3'>$row[posizione]</td>";
+                        }
+                            echo"<td class='px-3'>$row[nome_scuderia]</td>";
+                            echo"<td class='px-3'>$row[punteggio_totale]</td>";
+                        echo"</tr>";
+                    }
+                    echo"</tbody>";
+                    echo"</table><br><br>";
+                echo"</div>";
+                echo "<span class='mx-auto text-center'>Torna alla <a href='../index.php' class='link-opacity-50-hover link-underline-danger link-offset-2 visited text-black'>home</a></span><br><br>";
+                echo "<span></span>";
+            echo"</div>";
 
         ?>
-        </div>
+</div>
 
 
 <script src="../script.js"></script>
