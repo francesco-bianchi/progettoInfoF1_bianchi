@@ -54,7 +54,6 @@
                         <li><a class="dropdown-item visited dropdown-link" href="./piloti.php?anno=2023">Piloti del 2023</a></li>
                         <li><a class="dropdown-item visited dropdown-link" href="./piloti.php?anno=2024">Piloti del 2024</a></li>
                         <li><a class="dropdown-item visited dropdown-link" href="./piloti.php?anno=2025"> Piloti del 2025</a></li>
-                        <li><a class="dropdown-item visited dropdown-link" href="./piloti.php?anno=all">Visualizza tutti</a></li>
                     </ul>
                 </li>
             </ul>
@@ -256,21 +255,22 @@
                     <div class="row">
                         <div class="col-6">
                             <img src="<?= $resultQueryScuderie[0]['immagine_scuderia'] ?>" alt="Immagine Pilota" class="img-fluid mt-3 dim_imm_scuderie"><br>
-
                         </div>
                         <div class="col-6">
-                            
+                            <p class="fw-bold">Statistiche:</p>
+                            <p>Podi: <?= $resultQueryScuderie[0]['podi'] ?></p>
+                            <p>Vittorie: <?= $resultQueryScuderie[0]['vittorie'] ?></p>
+                            <p>Campionati: <?= $resultQueryScuderie[0]['campionati_vinti'] ?></p>
                         </div>
                     </div><br>
                     <div class="row">
-                        <div class="col-6">
-                            <p class="fw-bold">Anno</p>
+                        <div class="col-12 text-start px-4">
+                            <p class="fw-bold">Informazioni sul team:</p>
+                            <p>Presidente: <?= $resultQueryScuderie[0]['presidente'] ?></p>
+                            <p>Direttore: <?= $resultQueryScuderie[0]['direttore'] ?></p>
+                            <p>Manager tecnico: <?= $resultQueryScuderie[0]['manager_tecnico'] ?></p>
                         </div>
-                        <div class="col-6">
-                            <p class="fw-bold">Team</p>
-                        </div>
-                    </div>
-                    
+                    </div><br>
                     
                 </div>
                 <div class="modal-footer">

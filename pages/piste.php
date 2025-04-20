@@ -54,7 +54,6 @@
                         <li><a class="dropdown-item visited dropdown-link" href="./piloti.php?anno=2023">Piloti del 2023</a></li>
                         <li><a class="dropdown-item visited dropdown-link" href="./piloti.php?anno=2024">Piloti del 2024</a></li>
                         <li><a class="dropdown-item visited dropdown-link" href="./piloti.php?anno=2025"> Piloti del 2025</a></li>
-                        <li><a class="dropdown-item visited dropdown-link" href="./piloti.php?anno=all">Visualizza tutti</a></li>
                     </ul>
                 </li>
             </ul>
@@ -89,22 +88,87 @@
         <div class="container">
         <?php
             include("connessione.php");
-            if($_GET["anno"] == "all" || !isset($_GET["anno"])){
+
+            if(isset($_GET["id_circuito"])){
+
+                $queryScuderie = "SELECT * FROM Circuiti c INNER JOIN Gare g ON c.id = g.circuito_id 
+                WHERE g.id = $_GET[id_circuito]";
+                $resultScuderie = mysqli_query($connessione, $queryScuderie)
+                or die ("<br>Errore di chiusura" . mysqli_error($connessione) . " ". mysqli_errno($connessione));
+                $resultQueryPiste = [];
+                while ($row = mysqli_fetch_array($resultScuderie, MYSQLI_ASSOC)) {
+                    $resultQueryPiste[] = $row;
+                }
+            }
+        ?>
+        <!-- MODAL (inizialmente nascosto finché una riga non viene cliccata) per le piste -->
+        <?php if (isset($resultQueryPiste[0])): ?>
+                <div class="modal fade" id="modalPilota" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header row">
+                                <div class="col-6 text-start ps-4">
+                                    <h5 class="modal-title" id="modalPilotaLabel"><?= $resultQueryPiste[0]['nome'] ?>
+                                    <span class="nazionalita_id"><?= $resultQueryPiste[0]['paese'] ?></span></h5>
+                                </div>
+                                <div class="col-6 text-end">
+                                    <a href="./piste.php"><button type="button" class="btn-close" data-bs-dismiss="modal"></button></a>
+                                </div>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <img src="<?= $resultQueryPiste[0]['immagine_circuito'] ?>" alt="Immagine Pilota" class="img-fluid mt-3 dim_imm_piste"><br>
+                                    </div>
+                                    <div class="col-6">
+                                        <p class="fw-bold">Statistiche:</p>
+                                    </div>
+                                </div><br>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <p class="fw-bold">Anno</p>
+                                    </div>
+                                    <div class="col-6">
+                                        <p class="fw-bold">Team</p>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="modal-footer">
+                            <a href="./piste.php"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button></a>
+                            </div>
+                        </div>
+                    </div>
+            <?php endif; ?>
+        </div>
+    <div class="container">
+        <?php
+        
+            if(isset($_GET["anno"])){
+                $anno = $_GET["anno"];
+                $_SESSION["anno"] = $anno;
+            }
+            else{
+                $anno = $_SESSION["anno"];
+                
+            }
+
+            if($anno == "all" || !isset($anno)){
                 $query = "SELECT * FROM Gare g INNER JOIN Circuiti c ON g.circuito_id = c.id ORDER BY g.data DESC";
             }
             else{
-                $query = "SELECT * FROM Gare g INNER JOIN Circuiti c ON g.circuito_id = c.id INNER JOIN Campionati ca ON g.campionato_id = ca.id WHERE ca.anno = '$_GET[anno]' ORDER BY g.data DESC";
+                $query = "SELECT * FROM Gare g INNER JOIN Circuiti c ON g.circuito_id = c.id 
+                INNER JOIN Campionati ca ON g.campionato_id = ca.id WHERE ca.anno = '$anno' ORDER BY g.data DESC";
             }
             $result = mysqli_query($connessione, $query)
             or die ("<br>Errore di chiusura" . mysqli_error($connessione) . " ". mysqli_errno($connessione));
-            echo"<h1 class='mx-auto text-center'> Gare </h1><br>";
+            echo"<h1 class='mx-auto text-center'> Gare $anno</h1><br>";
             echo"<div class='row'>
                     <div class='col-12'>";
                         echo "<table class='text-center mx-auto'>";
                         echo"<thead>";
                             echo"<tr class='table-header'>";
                                 echo"<td class='px-3 cell'>Nome gara</td>";
-                                echo"<td class='px-3 cell'>Paese</td>";
                                 echo"<td class='px-3 cell'>Lunghezza (in km)</td>";
                                 echo"<td class='px-3 cell'>Tipo circuito</td>";
                                 echo"<td class='px-3 cell'>Data</td>";
@@ -113,9 +177,8 @@
                             echo"<tbody>";
                         while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) //solo associativo
                         {
-                            echo"<tr>";
+                            echo"<tr onclick="."window.location.href='?id_circuito=$row[circuito_id]' style='cursor: pointer;''>";
                                 echo"<td class='px-3'>$row[nome]</td>";
-                                echo"<td class='px-3'>$row[paese]</td>";
                                 echo"<td class='px-3'>$row[lunghezza_km]</td>";
                                 echo"<td class='px-3'>$row[tipo_circuito]</td>";
                                 echo"<td class='px-3'>$row[data]</td>";
@@ -134,7 +197,7 @@
         </div>
 
 
-
+<script src="../script.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

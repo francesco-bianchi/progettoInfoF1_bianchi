@@ -110,6 +110,14 @@ tbody tr:hover {
 }
 
 .dim_imm_scuderie{
-  width: 300px;
+  width: 400px;
   height: 150px;
+}
+.dim_pagina_piloti{
+  width: 350px;
+  height: 300px;
+}
+.dim_imm_piste{
+  width: 450px;
+  height: 200px;
 }

@@ -56,7 +56,6 @@
                         <li><a class="dropdown-item visited dropdown-link" href="./pages/piloti.php?anno=2023">Piloti del 2023</a></li>
                         <li><a class="dropdown-item visited dropdown-link" href="./pages/piloti.php?anno=2024">Piloti del 2024</a></li>
                         <li><a class="dropdown-item visited dropdown-link" href="./pages/piloti.php?anno=2025"> Piloti del 2025</a></li>
-                        <li><a class="dropdown-item visited dropdown-link" href="./pages/piloti.php?anno=all">Visualizza tutti</a></li>
                     </ul>
                 </li>
             </ul>
