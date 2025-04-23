@@ -1,0 +1,16 @@
+CREATE DATABASE Utenti_f1;
+USE Utenti_f1;
+
+CREATE TABLE PasswordUtenti (
+	Email varchar(50) Primary KEY,
+    Password varchar(50)
+);
+CREATE TABLE Utenti (
+	Id_utenti int auto_increment primary key,
+	Email varchar(50) not null,
+    Nome varchar(50) not null,  
+    Cognome varchar(50) not null,  
+    Sesso varchar(10) not null,  
+    Nazione varchar(50) not null,
+    FOREIGN KEY (Email) REFERENCES PasswordUtenti(Email)
+);

@@ -12,8 +12,8 @@
 
         $query = "SELECT * FROM utenti u INNER JOIN passwordUtenti p ON u.Email = p.Email WHERE u.Email = '$email' and p.password = '$password'";
 
-        $result = mysqli_query($connessione, $query)
-        or die ("<br>Errore di chiusura" . mysqli_error($connessione) . " ". mysqli_errno($connessione));
+        $result = mysqli_query($connessione_utenti, $query)
+        or die ("<br>Errore di chiusura" . mysqli_error($connessione_utenti) . " ". mysqli_errno($connessione_utenti));
 
         if(mysqli_num_rows($result) > 0){
             $_SESSION["utenti"] = [

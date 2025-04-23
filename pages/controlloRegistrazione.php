@@ -16,8 +16,8 @@
 
         $query = "SELECT * FROM utenti u INNER JOIN passwordUtenti p ON u.Email = p.Email WHERE u.Email = '$email'";
 
-        $result = mysqli_query($connessione, $query)
-        or die ("<br>Errore di chiusura" . mysqli_error($connessione) . " ". mysqli_errno($connessione));
+        $result = mysqli_query($connessione_utenti, $query)
+        or die ("<br>Errore di chiusura" . mysqli_error($connessione_utenti) . " ". mysqli_errno($connessione_utenti));
 
         if(mysqli_num_rows($result) > 0){
             header("Location: registrati.php?negato=true");
@@ -26,14 +26,14 @@
             $query2 = "INSERT INTO PasswordUtenti(Email, Password)
             VALUES('$email', '$password')";
 
-            $result2 = mysqli_query($connessione, $query2)
-            or die ("<br>Errore di chiusura" . mysqli_error($connessione) . " ". mysqli_errno($connessione));
+            $result2 = mysqli_query($connessione_utenti, $query2)
+            or die ("<br>Errore di chiusura" . mysqli_error($connessione_utenti) . " ". mysqli_errno($connessione_utenti));
 
             $query3 = "INSERT INTO Utenti(Email, Nome, Cognome, Sesso, Nazione)
                         VALUES('$email', '$nome', '$cognome', '$sesso', '$nazione')";
 
-            $result3 = mysqli_query($connessione, $query3)
-            or die ("<br>Errore di chiusura" . mysqli_error($connessione) . " ". mysqli_errno($connessione));
+            $result3 = mysqli_query($connessione_utenti, $query3)
+            or die ("<br>Errore di chiusura" . mysqli_error($connessione_utenti) . " ". mysqli_errno($connessione_utenti));
             header("Location: accedi.php");
         }
 

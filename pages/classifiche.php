@@ -18,7 +18,7 @@
                 </li>
                 <li class="nav-item dropdown px-2">
                     <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Classifiche
+                    Albo
                     </a>
                     <ul class="dropdown-menu bg-black">
                         <li><a class="dropdown-item visited dropdown-link" href="./classifiche.php?anno=2020">Classifica 2020</a></li>
@@ -26,7 +26,6 @@
                         <li><a class="dropdown-item visited dropdown-link" href="./classifiche.php?anno=2022">Classifica 2022</a></li>
                         <li><a class="dropdown-item visited dropdown-link" href="./classifiche.php?anno=2023">Classifica 2023</a></li>
                         <li><a class="dropdown-item visited dropdown-link" href="./classifiche.php?anno=2024">Classifica 2024</a></li>
-                        <li><a class="dropdown-item visited dropdown-link" href="./classifiche.php?anno=2024">Classifica 2025</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown px-2">
@@ -39,8 +38,6 @@
                         <li><a class="dropdown-item visited dropdown-link" href="./piste.php?anno=2022">Piste del 2022</a></li>
                         <li><a class="dropdown-item visited dropdown-link" href="./piste.php?anno=2023">Piste del 2023</a></li>
                         <li><a class="dropdown-item visited dropdown-link" href="./piste.php?anno=2024">Piste del 2024</a></li>
-                        <li><a class="dropdown-item visited dropdown-link" href="./piste.php?anno=2025"> Piste del 2025</a></li>
-                        <li><a class="dropdown-item visited dropdown-link" href="./piste.php?anno=all">Visualizza tutte</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown px-2">
@@ -53,7 +50,16 @@
                         <li><a class="dropdown-item visited dropdown-link" href="./piloti.php?anno=2022">Piloti del 2022</a></li>
                         <li><a class="dropdown-item visited dropdown-link" href="./piloti.php?anno=2023">Piloti del 2023</a></li>
                         <li><a class="dropdown-item visited dropdown-link" href="./piloti.php?anno=2024">Piloti del 2024</a></li>
-                        <li><a class="dropdown-item visited dropdown-link" href="./piloti.php?anno=2025"> Piloti del 2025</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown px-2">
+                    <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    2025
+                    </a>
+                    <ul class="dropdown-menu bg-black">
+                        <li><a class="dropdown-item visited dropdown-link" href="./classifiche.php?anno=2025">Classifica</a></li>
+                        <li><a class="dropdown-item visited dropdown-link" href="./piloti.php?anno=2025">Piloti</a></li>
+                        <li><a class="dropdown-item visited dropdown-link" href="./piste.php?anno=2025">Piste</a></li>
                     </ul>
                 </li>
             </ul>
@@ -186,9 +192,9 @@
                 }
                 else{
                     $anno = $_SESSION["anno"];
-                    
+
                 }
-                
+                $counter =0;
 
                 $query = "SELECT * FROM Classifiche_Piloti cp INNER JOIN Piloti p ON cp.pilota_id = p.id 
                 INNER JOIN Scuderie s ON cp.scuderia_id = s.id INNER JOIN Campionati c ON cp.campionati_id = c.id
@@ -211,18 +217,19 @@
                             echo"<tbody>";
                             while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) //solo associativo
                             {
+                                $counter++;
                                 echo"<tr onclick="."window.location.href='?id=$row[pilota_id]' style='cursor: pointer;''>";
-                                    if($row["posizione"] == 1){
-                                        echo"<td class='text-warning fw-bold px-3'>$row[posizione]</td>";
+                                    if($counter == 1){
+                                        echo"<td class='text-warning fw-bold px-3'>$counter</td>";
                                     }
-                                    else if($row["posizione"] == 2){
-                                        echo"<td class='text-secondary fw-bold px-3'>$row[posizione]</td>";
+                                    else if($counter == 2){
+                                        echo"<td class='text-secondary fw-bold px-3'>$counter</td>";
                                     }
-                                    else if($row["posizione"] == 3){
-                                        echo"<td class='text-brown-css fw-bold px-3'>$row[posizione]</td>";
+                                    else if($counter == 3){
+                                        echo"<td class='text-brown-css fw-bold px-3'>$counter</td>";
                                     }
                                     else{
-                                        echo"<td class='text-black px-3'>$row[posizione]</td>";
+                                        echo"<td class='text-black px-3'>$counter</td>";
                                     }
                                     echo"<td class='px-3'>$row[nome]</td>";
                                     echo"<td class='px-3'>$row[cognome]</td>";
@@ -283,6 +290,7 @@
 </div>
 <div class="container">                           
         <?php
+            $counterScuderie=0;
                 $query_scuderie = "SELECT * FROM Classifiche_Costruttori cc INNER JOIN Scuderie s ON cc.scuderia_id = s.id 
                 INNER JOIN Campionati c ON cc.campionati_id = c.id WHERE c.anno = '$anno' ORDER BY cc.punteggio_totale DESC";
                 $result_scuderie = mysqli_query($connessione, $query_scuderie)
@@ -302,18 +310,19 @@
                         echo"<tbody>";
                     while ($row = mysqli_fetch_array($result_scuderie, MYSQLI_ASSOC)) //solo associativo
                     {
+                        $counterScuderie++;
                         echo"<tr onclick="."window.location.href='?id_scuderia=$row[scuderia_id]' style='cursor: pointer;''>";
-                        if($row["posizione"] == 1){
-                            echo"<td class='text-warning fw-bold px-3'>$row[posizione]</td>";
+                        if($counterScuderie == 1){
+                            echo"<td class='text-warning fw-bold px-3'>$counterScuderie</td>";
                         }
-                        else if($row["posizione"] == 2){
-                            echo"<td class='text-secondary fw-bold px-3'>$row[posizione]</td>";
+                        else if($counterScuderie == 2){
+                            echo"<td class='text-secondary fw-bold px-3'>$counterScuderie</td>";
                         }
-                        else if($row["posizione"] == 3){
-                            echo"<td class='text-brown-css fw-bold px-3'>$row[posizione]</td>";
+                        else if($counterScuderie == 3){
+                            echo"<td class='text-brown-css fw-bold px-3'>$counterScuderie</td>";
                         }
                         else{
-                            echo"<td class='text-black px-3'>$row[posizione]</td>";
+                            echo"<td class='text-black px-3'>$counterScuderie</td>";
                         }
                             echo"<td class='px-3'>$row[nome_scuderia]</td>";
                             echo"<td class='px-3'>$row[punteggio_totale]</td>";

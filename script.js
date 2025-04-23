@@ -13,30 +13,41 @@ document.addEventListener("DOMContentLoaded", function() {
     const nazionalita = nazionalita_id.textContent.trim().toLowerCase();
     console.log(nazionalita);
   
+    const bandiere = {
+      italiano: "https://flagcdn.com/w40/it.png",
+      francese: "https://flagcdn.com/w40/fr.png",
+      tedesco: "https://flagcdn.com/w40/de.png",
+      spagnolo: "https://flagcdn.com/w40/es.png",
+      britannico: "https://flagcdn.com/w40/gb.png",
+      finlandese: "https://flagcdn.com/w40/fi.png",
+      olandese: "https://flagcdn.com/w40/nl.png",
+      messicano: "https://flagcdn.com/w40/mx.png",
+      cinese: "https://flagcdn.com/w40/cn.png",
+      giapponese: "https://flagcdn.com/w40/jp.png",
+      thailandese: "https://flagcdn.com/w40/th.png",
+      americano: "https://flagcdn.com/w40/us.png",
+      brasiliano: "https://flagcdn.com/w40/br.png",
+      danese: "https://flagcdn.com/w40/dk.png",
+      australiano: "https://flagcdn.com/w40/au.png",
+      monegasco: "https://flagcdn.com/w40/mc.png",
+      neozelandese: "https://flagcdn.com/w40/nz.png",
+      canadese: "https://flagcdn.com/w40/ca.png",
+      russo: "https://flagcdn.com/w40/ru.png",
+      austriaco: "https://flagcdn.com/w40/at.png",
+      svizzero: "https://flagcdn.com/w40/ch.png",
+      turco: "https://flagcdn.com/w40/tr.png",
+      qatariota: "https://flagcdn.com/w40/qa.png",
+      vietnamita: "https://flagcdn.com/w40/vn.png",
+      azerbaijan: "https://flagcdn.com/w40/az.png",
+      ungherese: "https://flagcdn.com/w40/hu.png",
+      belga: "https://flagcdn.com/w40/be.png",
+      portoghese: "https://flagcdn.com/w40/pt.png",
+      arabo: "https://flagcdn.com/w40/sa.png",
+      singapore: "https://flagcdn.com/w40/sg.png",
+      emiratino: "https://flagcdn.com/w40/ae.png"
+    };
     
-  const bandiere = {
-    italiano: "https://flagcdn.com/w40/it.png",
-    francese: "https://flagcdn.com/w40/fr.png",
-    tedesco: "https://flagcdn.com/w40/de.png",
-    spagnolo: "https://flagcdn.com/w40/es.png",
-    britannico: "https://flagcdn.com/w40/gb.png",
-    finlandese: "https://flagcdn.com/w40/fi.png",
-    olandese: "https://flagcdn.com/w40/nl.png",
-    messicano: "https://flagcdn.com/w40/mx.png",
-    cinese: "https://flagcdn.com/w40/cn.png",
-    giapponese: "https://flagcdn.com/w40/jp.png",
-    thailandese: "https://flagcdn.com/w40/th.png",
-    americano: "https://flagcdn.com/w40/us.png",
-    brasiliano: "https://flagcdn.com/w40/br.png",
-    danese: "https://flagcdn.com/w40/dk.png",
-    australiano: "https://flagcdn.com/w40/au.png",
-    monegasco: "https://flagcdn.com/w40/mc.png",
-    neozelandese: "https://flagcdn.com/w40/nz.png",
-    canadese: "https://flagcdn.com/w40/ca.png",
-    russo: "https://flagcdn.com/w40/ru.png",
-    austriaco: "https://flagcdn.com/w40/at.png",
-    svizzero: "https://flagcdn.com/w40/ch.png"
-  };
+    
     
     if (bandiere[nazionalita]) {
       const img = document.createElement("img");
@@ -63,4 +74,12 @@ document.addEventListener("DOMContentLoaded", function() {
         focus: false   // disabilita lo scroll automatico
       });
       scuderiaModal.show();
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const modalPilota = document.getElementById('modalPista');
+      const pilotaModal = new bootstrap.Modal(modalPilota, {
+        focus: false   // disabilita lo scroll automatico
+      });
+      pilotaModal.show();
     });

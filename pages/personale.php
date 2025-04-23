@@ -35,8 +35,8 @@
 
         $query = "SELECT u.* FROM utenti u INNER JOIN passwordUtenti p ON u.Email = p.Email WHERE p.Email = '$email' AND p.Password = '$password'";
 
-        $result = mysqli_query($connessione, $query)
-        or die ("<br>Errore di chiusura" . mysqli_error($connessione) . " ". mysqli_errno($connessione));
+        $result = mysqli_query($connessione_utenti, $query)
+        or die ("<br>Errore di chiusura" . mysqli_error($connessione_utenti) . " ". mysqli_errno($connessione_utenti));
 
         echo"<div class='row'>
 		        <span class='col-3'></span>

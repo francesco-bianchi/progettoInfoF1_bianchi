@@ -18,7 +18,7 @@
                 </li>
                 <li class="nav-item dropdown px-2">
                     <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Classifiche
+                    Albo
                     </a>
                     <ul class="dropdown-menu bg-black">
                         <li><a class="dropdown-item visited dropdown-link" href="./classifiche.php?anno=2020">Classifica 2020</a></li>
@@ -26,7 +26,6 @@
                         <li><a class="dropdown-item visited dropdown-link" href="./classifiche.php?anno=2022">Classifica 2022</a></li>
                         <li><a class="dropdown-item visited dropdown-link" href="./classifiche.php?anno=2023">Classifica 2023</a></li>
                         <li><a class="dropdown-item visited dropdown-link" href="./classifiche.php?anno=2024">Classifica 2024</a></li>
-                        <li><a class="dropdown-item visited dropdown-link" href="./classifiche.php?anno=2024">Classifica 2025</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown px-2">
@@ -39,8 +38,6 @@
                         <li><a class="dropdown-item visited dropdown-link" href="./piste.php?anno=2022">Piste del 2022</a></li>
                         <li><a class="dropdown-item visited dropdown-link" href="./piste.php?anno=2023">Piste del 2023</a></li>
                         <li><a class="dropdown-item visited dropdown-link" href="./piste.php?anno=2024">Piste del 2024</a></li>
-                        <li><a class="dropdown-item visited dropdown-link" href="./piste.php?anno=2025"> Piste del 2025</a></li>
-                        <li><a class="dropdown-item visited dropdown-link" href="./piste.php?anno=all">Visualizza tutte</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown px-2">
@@ -53,7 +50,16 @@
                         <li><a class="dropdown-item visited dropdown-link" href="./piloti.php?anno=2022">Piloti del 2022</a></li>
                         <li><a class="dropdown-item visited dropdown-link" href="./piloti.php?anno=2023">Piloti del 2023</a></li>
                         <li><a class="dropdown-item visited dropdown-link" href="./piloti.php?anno=2024">Piloti del 2024</a></li>
-                        <li><a class="dropdown-item visited dropdown-link" href="./piloti.php?anno=2025"> Piloti del 2025</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown px-2">
+                    <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    2025
+                    </a>
+                    <ul class="dropdown-menu bg-black">
+                        <li><a class="dropdown-item visited dropdown-link" href="./classifiche.php?anno=2025">Classifica</a></li>
+                        <li><a class="dropdown-item visited dropdown-link" href="./piloti.php?anno=2025">Piloti</a></li>
+                        <li><a class="dropdown-item visited dropdown-link" href="./piste.php?anno=2025">Piste</a></li>
                     </ul>
                 </li>
             </ul>

@@ -5,7 +5,13 @@ CREATE TABLE Scuderie (
     id INT PRIMARY KEY AUTO_INCREMENT,
     nome_scuderia VARCHAR(255) NOT NULL,
     nazionalita_scuderia VARCHAR(100),
-    immagine_scuderia VARCHAR(5000)
+    immagine_scuderia VARCHAR(5000),
+    presidente VARCHAR(100),
+	 direttore VARCHAR(100),
+	 manager_tecnico VARCHAR(100),
+	 podi_scuderia INT,
+	 vittorie_scuderia INT,
+	 campionati_vinti INT
 );
 
 CREATE TABLE Piloti (
@@ -13,7 +19,10 @@ CREATE TABLE Piloti (
     nome VARCHAR(255) NOT NULL,
     cognome VARCHAR(255) NOT NULL,
     nazionalita VARCHAR(100),
-    immagine VARCHAR(5000)
+    immagine VARCHAR(5000),
+    vittorie INT,
+    gare_svolte INT,
+    podi INT
 );
 
 CREATE TABLE Piloti_Scuderie (
@@ -55,10 +64,11 @@ CREATE TABLE Classifiche_Costruttori (
 
 CREATE TABLE Circuiti (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    nome VARCHAR(255) NOT NULL,
+    nome_circuito VARCHAR(255) NOT NULL,
     paese VARCHAR(100),
     lunghezza_km DECIMAL(5,2),
-    tipo_circuito VARCHAR(100)
+    tipo_circuito VARCHAR(100),
+    immagine_circuito VARCHAR(5000)
 );
 
 CREATE TABLE Gare (
@@ -66,8 +76,10 @@ CREATE TABLE Gare (
     campionato_id INT NOT NULL, 
     circuito_id INT, 
     data DATE,
+    vincitore_id INT,
 	 FOREIGN KEY (campionato_id) REFERENCES Campionati(id),
-    FOREIGN KEY (circuito_id) REFERENCES Circuiti(id)
+    FOREIGN KEY (circuito_id) REFERENCES Circuiti(id),
+    FOREIGN KEY (vincitore_id) REFERENCES Piloti(id)
 );
 
 CREATE TABLE PunteggiGara_2025 (
@@ -91,530 +103,242 @@ VALUES
     (2025);
  
 
-
-
--- Inserimento dei piloti dal 2020 al 2025
-INSERT INTO Piloti (nome, cognome, nazionalita, immagine) 
+-- Inserimento completo dei piloti dal 2020 al 2025 con tutti i dati
+INSERT INTO Piloti (nome, cognome, nazionalita, immagine, vittorie, gare_svolte, podi) 
 VALUES
-('Max', 'Verstappen', 'Olandese', "https://s.yimg.com/fz/api/res/1.2/hmlybqGqAgVh_dCbrUK6Yw--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTk2/https://s.yimg.com/zb/imgv1/d5fd381a-9619-3960-88d1-69754a3e34c8/t_500x300"),       -- ID 1
-('Sergio', 'Perez', 'Messicano', "https://s.yimg.com/fz/api/res/1.2/bdIGrFn26qFBv8qz116pHw--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTcy/https://s.yimg.com/zb/imgv1/f7200a26-cd27-3d73-a622-e88b6b0d4f4f/t_500x300"),        -- ID 2
-('Lando', 'Norris', 'Britannico', "https://s.yimg.com/fz/api/res/1.2/KdoSQtnIpL0jqrALVC1X4w--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTk0/https://s.yimg.com/zb/imgv1/1502aeae-dd0b-39a3-8274-e9214fe446b6/t_500x300"),       -- ID 3
-('Oscar', 'Piastri', 'Australiano', "https://s.yimg.com/fz/api/res/1.2/Ur7XgxzD0_bLhmAFN14lBw--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTcy/https://s.yimg.com/zb/imgv1/355356eb-abef-3218-bce2-6898255dec60/t_500x300"),    -- ID 4
-('Alexander', 'Albon', 'Thailandese', "https://s.yimg.com/fz/api/res/1.2/QhEYznXIay74cfRs1MYsfQ--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTg2/https://s.yimg.com/zb/imgv1/53d10e41-451e-34a0-b03f-c03214947732/t_500x300"),  -- ID 5
-('Liam', 'Lawson', 'Neozelandese', "https://s.yimg.com/fz/api/res/1.2/J56W_mpHwSWTQPXrHMIq1A--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTcy/https://s.yimg.com/zb/imgv1/25ebe2b4-b53a-3b1d-88d9-4baf8f13d761/t_500x300"),     -- ID 6
-('Lewis', 'Hamilton', 'Britannico', "https://s.yimg.com/fz/api/res/1.2/hNY0w04hSIpXnrqX6XcbBw--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTk0/https://s.yimg.com/zb/imgv1/f1cb95da-da1b-332c-928f-1871432edb0b/t_500x300"),    -- ID 7
-('Valtteri', 'Bottas', 'Finlandese', "https://s.yimg.com/fz/api/res/1.2/psyDy3ZhpT0Tg3XeY1G37g--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTcy/https://s.yimg.com/zb/imgv1/7c5bb1c8-6c9e-328b-9a29-44f226821d5d/t_500x300"),   -- ID 8
-('George', 'Russell', 'Britannico', "https://s.yimg.com/fz/api/res/1.2/5b7RQkt4b6.23CpnTONDJw--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTcy/https://s.yimg.com/zb/imgv1/e385c488-77eb-3e55-a70d-5e3d84d0f4ab/t_500x300"),    -- ID 9
-('Andrea Kimi', 'Antonelli', 'Italiano', "https://s.yimg.com/fz/api/res/1.2/dkdvhIo.INuMi3sGqpkzRw--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTg0/https://s.yimg.com/zb/imgv1/f5e2fd07-d4a8-36c7-835f-586f64232247/t_500x300"), -- ID 10
-('Charles', 'Leclerc', 'Monegasco', "https://s.yimg.com/fz/api/res/1.2/SGyPmxGDONrUGlJdr1SLOg--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTcy/https://s.yimg.com/zb/imgv1/bb1165a4-7c6e-384f-b713-5454b83b0fde/t_500x300"),    -- ID 11
-('Carlos', 'Sainz Jr.', 'Spagnolo', "https://s.yimg.com/fz/api/res/1.2/wYNoHXw7oF2TJMKUxS7RHA--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MjE2/https://s.yimg.com/zb/imgv1/6cff0775-eab2-336e-8618-ead03db4a226/t_500x300"),    -- ID 12
-('Sebastian', 'Vettel', 'Tedesco', "https://tse2.mm.bing.net/th?id=OIP.rQFwe93GdBX2TNESoevVowHaEK&pid=Api&P=0&h=180"),     -- ID 13
-('Daniel', 'Ricciardo', 'Australiano', "https://s.yimg.com/fz/api/res/1.2/fu5C.K7dtElZT8ioL8ldYg--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpbGw7aD0yMjA7cT04MDt3PTE0Ng--/https://s.yimg.com/zb/imgv1/4dabf081-e289-322f-b829-61b6a898adb6/t_500x300"), -- ID 14
-('Esteban', 'Ocon', 'Francese', "https://s.yimg.com/fz/api/res/1.2/rcU6ObSIj2lkhTRXEuLVow--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTk0/https://s.yimg.com/zb/imgv1/df1b7aff-de46-3f3b-8079-a3315d87e577/t_500x300"),        -- ID 15
-('Pierre', 'Gasly', 'Francese', "https://s.yimg.com/fz/api/res/1.2/3yKJBtwbUUwYhNhwtWuI6g--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTk0/https://s.yimg.com/zb/imgv1/15838ea6-e74a-37a2-af69-9814fb799e3a/t_500x300"),        -- ID 16
-('Fernando', 'Alonso', 'Spagnolo', "https://s.yimg.com/fz/api/res/1.2/QcoyUaeXMDekxh3wUH6NLw--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpbGw7aD0yMjA7cT04MDt3PTE0Ng--/https://s.yimg.com/zb/imgv1/70dcf7a8-413e-3a99-8553-041a6d440e3f/t_500x300"),     -- ID 17
-('Jack', 'Doohan', 'Australiano', "https://s.yimg.com/fz/api/res/1.2/kw8XkU.CW7awU.SDgU_sPA--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTU2/https://s.yimg.com/zb/imgv1/d4484849-0008-3c22-a7d2-6114c478839e/t_500x300"),      -- ID 18
-('Lance', 'Stroll', 'Canadese', "https://s.yimg.com/fz/api/res/1.2/LYevDSHYkhdssZDorwYF8g--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTcy/https://s.yimg.com/zb/imgv1/a6c2a33a-ad33-33c0-b4e6-0bde89ff40a3/t_500x300"),        -- ID 19
-('Daniil', 'Kvyat', 'Russo', "https://s.yimg.com/fz/api/res/1.2/M3.cZrT05KQIaH4fs4fqMg--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTcy/https://s.yimg.com/zb/imgv1/251f7f7e-8585-3775-9eab-d680d53c5bab/t_500x300"),           -- ID 20
-('Yuki', 'Tsunoda', 'Giapponese', "https://s.yimg.com/fz/api/res/1.2/7h4PiTFd4OQ9ktLCl1Oecw--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTk0/https://s.yimg.com/zb/imgv1/add3bf2c-0cb1-3375-9964-fa8c9943ac3e/t_500x300"),     -- ID 21
-('Nyck', 'de Vries', 'Olandese',"https://s.yimg.com/fz/api/res/1.2/dbqFUYOgjk.T1F2kV.yTWg--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTcy/https://s.yimg.com/zb/imgv1/913f561f-14b6-3258-a48b-fc3a5811868e/t_500x300"),       -- ID 22
-('Antonio', 'Giovinazzi', 'Italiano', "https://s.yimg.com/fz/api/res/1.2/0EkyfYjwkah5xuEvmg.Q5w--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MjIy/https://s.yimg.com/zb/imgv1/0f9ae684-1ec1-3d52-969d-453bb53c2aa4/t_500x300"),  -- ID 23
-('Romain', 'Grosjean', 'Francese', "https://s.yimg.com/fz/api/res/1.2/R5XffoF2clFc9uqTC9DO5A--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MjIw/https://s.yimg.com/zb/imgv1/b5eab2b9-4535-3853-b785-282e17bc011d/t_500x300"),     -- ID 24
-('Kevin', 'Magnussen', 'Danese', "https://s.yimg.com/fz/api/res/1.2/cJ.r7TNHdTtw4c_wUkqgJQ--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTgw/https://s.yimg.com/zb/imgv1/aa034863-ba58-387f-bf2b-c3024a40b2a3/t_500x300"),       -- ID 25
-('Mick', 'Schumacher', 'Tedesco', "https://s.yimg.com/fz/api/res/1.2/wmp0tlPEDbanyqlkSC0mQQ--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTcy/https://s.yimg.com/zb/imgv1/dff746a9-9e40-36da-aff6-22d2bfc02e39/t_500x300"),      -- ID 26
-('Nico', 'Hulkenberg', 'Tedesco', "https://s.yimg.com/fz/api/res/1.2/S.iSA36LWfvOcP6rQPNTgQ--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTcy/https://s.yimg.com/zb/imgv1/379ecaf2-00cc-37cb-9258-b7528c12063d/t_500x300"),      -- ID 27
-('Oliver', 'Bearman', 'Britannico', "https://s.yimg.com/fz/api/res/1.2/SC_3Nka0v7cC8qeJF5BJRA--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTgw/https://s.yimg.com/zb/imgv1/c9c41bcf-9900-3479-bf08-49d51abfb8d8/t_500x300"),    -- ID 28
-('Logan', 'Sargeant', 'Americano',"https://s.yimg.com/fz/api/res/1.2/ZHN7hTKDtVb4hPs9mDqe.w--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTc0/https://s.yimg.com/zb/imgv1/09c3da8d-da74-37cd-9c08-88af50e2a251/t_500x300"),     -- ID 29
-('Gabriel', 'Bortoleto', 'Brasiliano', "https://s.yimg.com/fz/api/res/1.2/GI8VjDZTVyqdH5S8EzzwwQ--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MjI0/https://s.yimg.com/zb/imgv1/b7bfae08-6db4-3fa4-972b-75a2b0bc692d/t_500x300"), -- ID 30
-('Zhou', 'Guanyu', 'Cinese',"https://s.yimg.com/fz/api/res/1.2/oiSV9xsuUAj1LV7VAVodFg--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTcy/https://s.yimg.com/zb/imgv1/cd28a829-6b0d-36fb-b97b-b8f046439fdc/t_500x300"),           -- ID 31
-('Isack', 'Hadjar', 'Francese',"https://s.yimg.com/fz/api/res/1.2/WW1RvePovRAHxjxq50.iJw--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTgy/https://s.yimg.com/zb/imgv1/57cbae5c-4f6c-3a7b-bb41-e208e8e416cc/t_500x300"),        -- ID 32
-('Kimi', 'Raikkonen', 'Finlandese', "https://s.yimg.com/fz/api/res/1.2/GXXy2uo5YbdEQjagZ_eqBg--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpbGw7aD0yMjA7cT04MDt3PTE0Ng--/https://s.yimg.com/zb/imgv1/c12a65c9-6541-3edf-9053-7e5d3ab943db/t_500x300"),    -- ID 33
-('Nicholas', 'Latifi', 'Canadese',"https://s.yimg.com/fz/api/res/1.2/IWQ9Jej1S0_0S6niJYfJHA--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MjE0/https://s.yimg.com/zb/imgv1/1683c000-2421-38a2-baaa-3eb142299350/t_500x300"),     -- ID 34
-('Nikita', 'Mazepin', 'Russo', "https://s.yimg.com/fz/api/res/1.2/8Ht05zW9DwQUMBni3_6LLg--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTc4/https://s.yimg.com/zb/imgv1/e66df8d2-0f93-3c43-9755-48e107dabb58/t_500x300"), -- ID 35
-('Franco', 'Colapinto', 'Argentino', "https://s.yimg.com/fz/api/res/1.2/lolcu6ZrWZpeqz6U2uTJvw--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTcy/https://s.yimg.com/zb/imgv1/5579df7e-6f6e-3ad5-b9b7-ebe66a9e2942/t_500x300"); -- ID 36
+('Max', 'Verstappen', 'Olandese', "https://s.yimg.com/fz/api/res/1.2/hmlybqGqAgVh_dCbrUK6Yw--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTk2/https://s.yimg.com/zb/imgv1/d5fd381a-9619-3960-88d1-69754a3e34c8/t_500x300", 60, 118, 91),
+('Sergio', 'Perez', 'Messicano', "https://s.yimg.com/fz/api/res/1.2/bdIGrFn26qFBv8qz116pHw--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTcy/https://s.yimg.com/zb/imgv1/f7200a26-cd27-3d73-a622-e88b6b0d4f4f/t_500x300", 4, 219, 59),
+('Lando', 'Norris', 'Britannico', "https://s.yimg.com/fz/api/res/1.2/KdoSQtnIpL0jqrALVC1X4w--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTk0/https://s.yimg.com/zb/imgv1/1502aeae-dd0b-39a3-8274-e9214fe446b6/t_500x300", 5, 100, 16),
+('Oscar', 'Piastri', 'Australiano', "https://s.yimg.com/fz/api/res/1.2/Ur7XgxzD0_bLhmAFN14lBw--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTcy/https://s.yimg.com/zb/imgv1/355356eb-abef-3218-bce2-6898255dec60/t_500x300", 5, 42, 8),
+('Alexander', 'Albon', 'Thailandese', "https://s.yimg.com/fz/api/res/1.2/QhEYznXIay74cfRs1MYsfQ--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTg2/https://s.yimg.com/zb/imgv1/53d10e41-451e-34a0-b03f-c03214947732/t_500x300", 0, 95, 2),
+('Liam', 'Lawson', 'Neozelandese', "https://s.yimg.com/fz/api/res/1.2/J56W_mpHwSWTQPXrHMIq1A--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTcy/https://s.yimg.com/zb/imgv1/25ebe2b4-b53a-3b1d-88d9-4baf8f13d761/t_500x300", 0, 12, 0),
+('Lewis', 'Hamilton', 'Britannico', "https://s.yimg.com/fz/api/res/1.2/hNY0w04hSIpXnrqX6XcbBw--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTk0/https://s.yimg.com/zb/imgv1/f1cb95da-da1b-332c-928f-1871432edb0b/t_500x300", 103, 326, 206),
+('Valtteri', 'Bottas', 'Finlandese', "https://s.yimg.com/fz/api/res/1.2/psyDy3ZhpT0Tg3XeY1G37g--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTcy/https://s.yimg.com/zb/imgv1/7c5bb1c8-6c9e-328b-9a29-44f226821d5d/t_500x300", 10, 252, 67),
+('George', 'Russell', 'Britannico', "https://s.yimg.com/fz/api/res/1.2/5b7RQkt4b6.23CpnTONDJw--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTcy/https://s.yimg.com/zb/imgv1/e385c488-77eb-3e55-a70d-5e3d84d0f4ab/t_500x300", 1, 125, 8),
+('Andrea Kimi', 'Antonelli', 'Italiano', "https://s.yimg.com/fz/api/res/1.2/dkdvhIo.INuMi3sGqpkzRw--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTg0/https://s.yimg.com/zb/imgv1/f5e2fd07-d4a8-36c7-835f-586f64232247/t_500x300", 0, 4, 0),
+('Charles', 'Leclerc', 'Monegasco', "https://s.yimg.com/fz/api/res/1.2/SGyPmxGDONrUGlJdr1SLOg--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTcy/https://s.yimg.com/zb/imgv1/bb1165a4-7c6e-384f-b713-5454b83b0fde/t_500x300", 9, 138, 40),
+('Carlos', 'Sainz Jr.', 'Spagnolo', "https://s.yimg.com/fz/api/res/1.2/wYNoHXw7oF2TJMKUxS7RHA--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MjE2/https://s.yimg.com/zb/imgv1/6cff0775-eab2-336e-8618-ead03db4a226/t_500x300", 3, 198, 25),
+('Sebastian', 'Vettel', 'Tedesco', "https://tse2.mm.bing.net/th?id=OIP.rQFwe93GdBX2TNESoevVowHaEK&pid=Api&P=0&h=180", 53, 323, 122),
+('Daniel', 'Ricciardo', 'Australiano', "https://s.yimg.com/fz/api/res/1.2/fu5C.K7dtElZT8ioL8ldYg--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpbGw7aD0yMjA7cT04MDt3PTE0Ng--/https://s.yimg.com/zb/imgv1/4dabf081-e289-322f-b829-61b6a898adb6/t_500x300", 8, 265, 32),
+('Esteban', 'Ocon', 'Francese', "https://s.yimg.com/fz/api/res/1.2/rcU6ObSIj2lkhTRXEuLVow--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTk0/https://s.yimg.com/zb/imgv1/df1b7aff-de46-3f3b-8079-a3315d87e577/t_500x300", 1, 144, 6),
+('Pierre', 'Gasly', 'Francese', "https://s.yimg.com/fz/api/res/1.2/3yKJBtwbUUwYhNhwtWuI6g--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTk0/https://s.yimg.com/zb/imgv1/15838ea6-e74a-37a2-af69-9814fb799e3a/t_500x300", 1, 154, 5),
+('Fernando', 'Alonso', 'Spagnolo', "https://s.yimg.com/fz/api/res/1.2/QcoyUaeXMDekxh3wUH6NLw--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpbGw7aD0yMjA7cT04MDt3PTE0Ng--/https://s.yimg.com/zb/imgv1/70dcf7a8-413e-3a99-8553-041a6d440e3f/t_500x300", 32, 373, 98),
+('Jack', 'Doohan', 'Australiano', "https://s.yimg.com/fz/api/res/1.2/kw8XkU.CW7awU.SDgU_sPA--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTU2/https://s.yimg.com/zb/imgv1/d4484849-0008-3c22-a7d2-6114c478839e/t_500x300", 0, 4, 0),
+('Lance', 'Stroll', 'Canadese', "https://s.yimg.com/fz/api/res/1.2/LYevDSHYkhdssZDorwYF8g--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTcy/https://s.yimg.com/zb/imgv1/a6c2a33a-ad33-33c0-b4e6-0bde89ff40a3/t_500x300", 1, 104, 3),
+('Daniil', 'Kvyat', 'Russo', "https://s.yimg.com/fz/api/res/1.2/M3.cZrT05KQIaH4fs4fqMg--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTcy/https://s.yimg.com/zb/imgv1/251f7f7e-8585-3775-9eab-d680d53c5bab/t_500x300", 0, 126, 3),
+('Yuki', 'Tsunoda', 'Giapponese', "https://s.yimg.com/fz/api/res/1.2/7h4PiTFd4OQ9ktLCl1Oecw--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTk0/https://s.yimg.com/zb/imgv1/add3bf2c-0cb1-3375-9964-fa8c9943ac3e/t_500x300", 0, 67, 0),
+('Nyck', 'de Vries', 'Olandese', "https://s.yimg.com/fz/api/res/1.2/dbqFUYOgjk.T1F2kV.yTWg--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTcy/https://s.yimg.com/zb/imgv1/913f561f-14b6-3258-a48b-fc3a5811868e/t_500x300", 0, 3, 0),
+('Antonio', 'Giovinazzi', 'Italiano', "https://s.yimg.com/fz/api/res/1.2/0EkyfYjwkah5xuEvmg.Q5w--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MjIy/https://s.yimg.com/zb/imgv1/0f9ae684-1ec1-3d52-969d-453bb53c2aa4/t_500x300", 0, 57, 0),
+('Romain', 'Grosjean', 'Francese', "https://s.yimg.com/fz/api/res/1.2/R5XffoF2clFc9uqTC9DO5A--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MjIw/https://s.yimg.com/zb/imgv1/b5eab2b9-4535-3853-b785-282e17bc011d/t_500x300", 0, 179, 10),
+('Kevin', 'Magnussen', 'Danese', "https://s.yimg.com/fz/api/res/1.2/cJ.r7TNHdTtw4c_wUkqgJQ--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTgw/https://s.yimg.com/zb/imgv1/aa034863-ba58-387f-bf2b-c3024a40b2a3/t_500x300", 0, 171, 1),
+('Mick', 'Schumacher', 'Tedesco', "https://s.yimg.com/fz/api/res/1.2/wmp0tlPEDbanyqlkSC0mQQ--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTcy/https://s.yimg.com/zb/imgv1/dff746a9-9e40-36da-aff6-22d2bfc02e39/t_500x300", 0, 38, 1),
+('Nico', 'Hulkenberg', 'Tedesco', "https://s.yimg.com/fz/api/res/1.2/S.iSA36LWfvOcP6rQPNTgQ--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTcy/https://s.yimg.com/zb/imgv1/379ecaf2-00cc-37cb-9258-b7528c12063d/t_500x300", 0, 174, 1),
+('Oliver', 'Bearman', 'Britannico', "https://s.yimg.com/fz/api/res/1.2/SC_3Nka0v7cC8qeJF5BJRA--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTgw/https://s.yimg.com/zb/imgv1/c9c41bcf-9900-3479-bf08-49d51abfb8d8/t_500x300", 0, 5, 0),
+('Logan', 'Sargeant', 'Americano', "https://s.yimg.com/fz/api/res/1.2/ZHN7hTKDtVb4hPs9mDqe.w--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTc0/https://s.yimg.com/zb/imgv1/09c3da8d-da74-37cd-9c08-88af50e2a251/t_500x300", 0, 18, 0),
+('Gabriel', 'Bortoleto', 'Brasiliano', "https://s.yimg.com/fz/api/res/1.2/GI8VjDZTVyqdH5S8EzzwwQ--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MjI0/https://s.yimg.com/zb/imgv1/b7bfae08-6db4-3fa4-972b-75a2b0bc692d/t_500x300", 0, 4, 0),
+('Zhou', 'Guanyu', 'Cinese', "https://s.yimg.com/fz/api/res/1.2/oiSV9xsuUAj1LV7VAVodFg--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTcy/https://s.yimg.com/zb/imgv1/cd28a829-6b0d-36fb-b97b-b8f046439fdc/t_500x300", 0, 100, 0),
+('Isack', 'Hadjar', 'Francese', "https://s.yimg.com/fz/api/res/1.2/WW1RvePovRAHxjxq50.iJw--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTgy/https://s.yimg.com/zb/imgv1/57cbae5c-4f6c-3a7b-bb41-e208e8e416cc/t_500x300", 0, 4, 0),
+('Kimi', 'Raikkonen', 'Finlandese', "https://s.yimg.com/fz/api/res/1.2/GXXy2uo5YbdEQjagZ_eqBg--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpbGw7aD0yMjA7cT04MDt3PTE0Ng--/https://s.yimg.com/zb/imgv1/c12a65c9-6541-3edf-9053-7e5d3ab943db/t_500x300", 21, 349, 103),
+('Nicholas', 'Latifi', 'Canadese', "https://s.yimg.com/fz/api/res/1.2/IWQ9Jej1S0_0S6niJYfJHA--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MjE0/https://s.yimg.com/zb/imgv1/1683c000-2421-38a2-baaa-3eb142299350/t_500x300", 0, 75, 0),
+('Nikita', 'Mazepin', 'Russo', "https://s.yimg.com/fz/api/res/1.2/8Ht05zW9DwQUMBni3_6LLg--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTc4/https://s.yimg.com/zb/imgv1/e66df8d2-0f93-3c43-9755-48e107dabb58/t_500x300", 0, 46, 0),
+('Franco', 'Colapinto', 'Argentino', "https://s.yimg.com/fz/api/res/1.2/lolcu6ZrWZpeqz6U2uTJvw--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTcy/https://s.yimg.com/zb/imgv1/5579df7e-6f6e-3ad5-b9b7-ebe66a9e2942/t_500x300", 0, 20, 0);
 
-ALTER TABLE Piloti
-  ADD COLUMN vittorie INT     NOT NULL DEFAULT 0,
-  ADD COLUMN gare_svolte INT  NOT NULL DEFAULT 0,
-  ADD COLUMN podi INT         NOT NULL DEFAULT 0;
-
--- Max Verstappen (ID 1)
-UPDATE Piloti SET
-  vittorie     = 60,
-  gare_svolte  = 118,
-  podi         = 91
-WHERE id = 1;
-
--- Sergio Perez (ID 2)
-UPDATE Piloti SET
-  vittorie     = 4,
-  gare_svolte  = 219,
-  podi         = 59
-WHERE id = 2;
-
--- Lando Norris (ID 3)
-UPDATE Piloti SET
-  vittorie     = 0,
-  gare_svolte  = 100,
-  podi         = 16
-WHERE id = 3;
-
--- Oscar Piastri (ID 4)
-UPDATE Piloti SET
-  vittorie     = 2,
-  gare_svolte  = 42,
-  podi         = 8
-WHERE id = 4;
-
--- Alexander Albon (ID 5)
-UPDATE Piloti SET
-  vittorie     = 0,
-  gare_svolte  = 95,
-  podi         = 2
-WHERE id = 5;
-
--- Liam Lawson (ID 6)
-UPDATE Piloti SET
-  vittorie     = 0,
-  gare_svolte  = 12,
-  podi         = 0
-WHERE id = 6;
-
--- Lewis Hamilton (ID 7)
-UPDATE Piloti SET
-  vittorie     = 103,
-  gare_svolte  = 326,
-  podi         = 206
-WHERE id = 7;
-
--- Valtteri Bottas (ID 8)
-UPDATE Piloti SET
-  vittorie     = 10,
-  gare_svolte  = 252,
-  podi         = 67
-WHERE id = 8;
-
--- George Russell (ID 9)
-UPDATE Piloti SET
-  vittorie     = 0,
-  gare_svolte  = 125,
-  podi         = 8
-WHERE id = 9;
-
--- Andrea Kimi Antonelli (ID 10)
-UPDATE Piloti SET
-  vittorie     = 0,
-  gare_svolte  = 2,
-  podi         = 0
-WHERE id = 10;
-
--- Charles Leclerc (ID 11)
-UPDATE Piloti SET
-  vittorie     = 6,
-  gare_svolte  = 138,
-  podi         = 40
-WHERE id = 11;
-
--- Carlos Sainz Jr. (ID 12)
-UPDATE Piloti SET
-  vittorie     = 1,
-  gare_svolte  = 198,
-  podi         = 25
-WHERE id = 12;
-
--- Sebastian Vettel (ID 13)
-UPDATE Piloti SET
-  vittorie     = 53,
-  gare_svolte  = 323,
-  podi         = 122
-WHERE id = 13;
-
--- Daniel Ricciardo (ID 14)
-UPDATE Piloti SET
-  vittorie     = 8,
-  gare_svolte  = 265,
-  podi         = 32
-WHERE id = 14;
-
--- Esteban Ocon (ID 15)
-UPDATE Piloti SET
-  vittorie     = 1,
-  gare_svolte  = 144,
-  podi         = 6
-WHERE id = 15;
-
--- Pierre Gasly (ID 16)
-UPDATE Piloti SET
-  vittorie     = 1,
-  gare_svolte  = 154,
-  podi         = 5
-WHERE id = 16;
-
--- Fernando Alonso (ID 17)
-UPDATE Piloti SET
-  vittorie     = 32,
-  gare_svolte  = 373,
-  podi         = 98
-WHERE id = 17;
-
--- Jack Doohan (ID 18)
-UPDATE Piloti SET
-  vittorie     = 0,
-  gare_svolte  = 4,
-  podi         = 0
-WHERE id = 18;
-
--- Lance Stroll (ID 19)
-UPDATE Piloti SET
-  vittorie     = 1,
-  gare_svolte  = 104,
-  podi         = 3
-WHERE id = 19;
-
--- Daniil Kvyat (ID 20)
-UPDATE Piloti SET
-  vittorie     = 0,
-  gare_svolte  = 126,
-  podi         = 3
-WHERE id = 20;
-
--- Yuki Tsunoda (ID 21)
-UPDATE Piloti SET
-  vittorie     = 0,
-  gare_svolte  = 67,
-  podi         = 0
-WHERE id = 21;
-
--- Nyck de Vries (ID 22)
-UPDATE Piloti SET
-  vittorie     = 0,
-  gare_svolte  = 3,
-  podi         = 0
-WHERE id = 22;
-
--- Antonio Giovinazzi (ID 23)
-UPDATE Piloti SET
-  vittorie     = 0,
-  gare_svolte  = 57,
-  podi         = 0
-WHERE id = 23;
-
--- Romain Grosjean (ID 24)
-UPDATE Piloti SET
-  vittorie     = 0,
-  gare_svolte  = 179,
-  podi         = 10
-WHERE id = 24;
-
--- Kevin Magnussen (ID 25)
-UPDATE Piloti SET
-  vittorie     = 0,
-  gare_svolte  = 171,
-  podi         = 1
-WHERE id = 25;
-
--- Mick Schumacher (ID 26)
-UPDATE Piloti SET
-  vittorie     = 0,
-  gare_svolte  = 38,
-  podi         = 1
-WHERE id = 26;
-
--- Nico Hulkenberg (ID 27)
-UPDATE Piloti SET
-  vittorie     = 0,
-  gare_svolte  = 174,
-  podi         = 1
-WHERE id = 27;
-
--- Oliver Bearman (ID 28)
-UPDATE Piloti SET
-  vittorie     = 0,
-  gare_svolte  = 5,
-  podi         = 0
-WHERE id = 28;
-
--- Logan Sargeant (ID 29)
-UPDATE Piloti SET
-  vittorie     = 0,
-  gare_svolte  = 18,
-  podi         = 0
-WHERE id = 29;
-
--- Gabriel Bortoleto (ID 30)
-UPDATE Piloti SET
-  vittorie     = 0,
-  gare_svolte  = 4,
-  podi         = 0
-WHERE id = 30;
-
--- Zhou Guanyu (ID 31)
-UPDATE Piloti SET
-  vittorie     = 0,
-  gare_svolte  = 100,
-  podi         = 0
-WHERE id = 31;
-
--- Isack Hadjar (ID 32)
-UPDATE Piloti SET
-  vittorie     = 0,
-  gare_svolte  = 4,
-  podi         = 0
-WHERE id = 32;
-
--- Kimi Räikkönen (ID 33)
-UPDATE Piloti SET
-  vittorie     = 21,
-  gare_svolte  = 349,
-  podi         = 103
-WHERE id = 33;
-
--- Nicholas Latifi (ID 34)
-UPDATE Piloti SET
-  vittorie     = 0,
-  gare_svolte  = 75,
-  podi         = 0
-WHERE id = 34;
-
--- Nikita Mazepin (ID 35)
-UPDATE Piloti SET
-  vittorie     = 0,
-  gare_svolte  = 46,
-  podi         = 0
-WHERE id = 35;
-
--- Franco Colapinto (ID 36)
-UPDATE Piloti SET
-  vittorie     = 0,
-  gare_svolte  = 20,
-  podi         = 0
-WHERE id = 36;
 
 -- Circuiti 2020-2025 con lunghezza e tipo
-INSERT INTO Circuiti (id, nome, paese, lunghezza_km, tipo_circuito)
+INSERT INTO Circuiti (nome_circuito, paese, lunghezza_km, tipo_circuito, immagine_circuito)
 VALUES
-(1, 'Melbourne Grand Prix Circuit', 'Australia', 5.303, 'Autodromo'), -- Australian Grand Prix
-(2, 'Bahrain International Circuit', 'Bahrain', 5.412, 'Autodromo'), -- Bahrain Grand Prix
-(3, 'Vietnam Grand Prix Circuit', 'Vietnam', 5.607, 'Strada'), -- Vietnam Grand Prix
-(4, 'Shanghai International Circuit', 'China', 5.451, 'Autodromo'), -- Chinese Grand Prix
-(5, 'Zandvoort Circuit', 'Netherlands', 4.259, 'Autodromo'), -- Dutch Grand Prix
-(6, 'Circuit de Barcelona-Catalunya', 'Spain', 4.675, 'Autodromo'), -- Spanish Grand Prix
-(7, 'Circuit de Monaco', 'Monaco', 3.337, 'Strada'), -- Monaco Grand Prix
-(8, 'Baku City Circuit', 'Azerbaijan', 6.003, 'Strada'), -- Azerbaijan Grand Prix
-(9, 'Circuit Gilles Villeneuve', 'Canada', 4.361, 'Autodromo'), -- Canadian Grand Prix
-(10, 'Circuit de la Sarthe', 'France', 13.626, 'Strada'), -- French Grand Prix (Le Mans)
-(11, 'Red Bull Ring', 'Austria', 4.318, 'Autodromo'), -- Austrian Grand Prix
-(12, 'Silverstone Circuit', 'United Kingdom', 5.891, 'Autodromo'), -- British Grand Prix
-(13, 'Hungaroring', 'Hungary', 4.381, 'Autodromo'), -- Hungarian Grand Prix
-(14, 'Circuit de Spa-Francorchamps', 'Belgium', 7.004, 'Autodromo'), -- Belgian Grand Prix
-(15, 'Autodromo Nazionale Monza', 'Italy', 5.793, 'Autodromo'), -- Italian Grand Prix
-(16, 'Mugello Circuit', 'Italy', 5.245, 'Autodromo'), -- Toscana Grand Prix
-(17, 'Sochi Autodrom', 'Russia', 5.848, 'Autodromo'), -- Russian Grand Prix
-(18, 'Nurburgring Circuit', 'Germany', 5.148, 'Autodromo'), -- Eifel Grand Prix
-(19, 'Autodromo Internacional do Algarve', 'Portugal', 4.684, 'Autodromo'), -- Portuguese Grand Prix
-(20, 'Autodromo Enzo e Dino Ferrari', 'Italy', 4.909, 'Autodromo'), -- Emilia Romagna Grand Prix
-(21, 'Istanbul Park', 'Turkey', 5.338, 'Autodromo'), -- Turkish Grand Prix
-(22, 'Yas Marina Circuit', 'UAE', 5.281, 'Autodromo'), -- Abu Dhabi Grand Prix
-(23, 'Circuit of the Americas', 'United States', 5.513, 'Autodromo'), -- United States Grand Prix
-(24, 'Autodromo Hermanos Rodriguez', 'Mexico', 4.304, 'Autodromo'), -- Mexican Grand Prix
-(25, 'Interlagos Circuit', 'Brazil', 4.309, 'Autodromo'), -- Brazilian Grand Prix
-(26, 'Losail International Circuit', 'Qatar', 5.380, 'Autodromo'), -- Qatar Grand Prix
-(27, 'Jeddah Street Circuit', 'Saudi Arabia', 6.174, 'Strada'), -- Saudi Arabian Grand Prix
-(28, 'Miami International Autodrome', 'United States', 5.410, 'Strada'), -- Miami Grand Prix
-(29, 'Marina Bay Street Circuit', 'Singapore', 5.063, 'Strada'), -- Singapore Grand Prix
-(30, 'Suzuka Circuit', 'Japan', 5.807, 'Autodromo'), -- Japanese Grand Prix
-(31, 'Las Vegas Grand Prix', 'United States', 6.120, 'Strada'), -- Las Vegas Grand Prix
-(32, 'Circuit de Las Vegas', 'United States', 6.120, 'Strada'); -- Las Vegas Grand Prix (2023-2025)
+('Melbourne Grand Prix Circuit', 'Australiano', 5.303, 'Autodromo', "https://images.daznservices.com/di/library/DAZN_News/3f/2a/circuito-albert-park-melbourne-gp-australia-f1_1dcht932nq1hd1kjdcg274wbkq.png?t=-18167313"), -- Australian Grand Prix
+('Bahrain International Circuit', 'Qatariota', 5.412, 'Autodromo', "https://images.daznservices.com/di/library/DAZN_News/d3/c0/sakhir-circuit-bahrain-gp-f1_111w5ugdzb3sj14yzns6g56u7a.png?t=551456263"), -- Bahrain Grand Prix
+('Vietnam Grand Prix Circuit', 'Vietnamita', 5.607, 'Strada', "https://tse3.mm.bing.net/th?id=OIP.17Wq5b-B5tbskDlOMJCJjgHaFf&pid=Api&P=0&h=180"), -- Vietnam Grand Prix
+('Shanghai International Circuit', 'Cinese', 5.451, 'Autodromo', "https://tse2.mm.bing.net/th?id=OIP.gVbXENXqfAIe_0N_Ai3RJwHaEK&pid=Api&P=0&h=180"), -- Chinese Grand Prix
+('Zandvoort Circuit', 'Olandese', 4.259, 'Autodromo', "https://tse1.mm.bing.net/th?id=OIP.h2gW7gJodXaqVFfJsx9vrgAAAA&pid=Api&P=0&h=180"), -- Dutch Grand Prix
+('Circuit de Barcelona-Catalunya', 'Spagnolo', 4.675, 'Autodromo', "https://tse2.mm.bing.net/th?id=OIP.9IwqTZ402ZvWnqS5cyeLrwHaEK&pid=Api&P=0&h=180"), -- Spanish Grand Prix
+('Circuit de Monaco', 'Monaghesco', 3.337, 'Strada', "https://tse3.mm.bing.net/th?id=OIP.C-aVFgtUiM-FgBzIXX3iRgHaEK&pid=Api&P=0&h=180"), -- Monaco Grand Prix
+('Baku City Circuit', 'Azerbaijan', 6.003, 'Strada', "https://tse3.mm.bing.net/th?id=OIP.Z4H3juSpD2u694nRH8YrlQHaEK&pid=Api&P=0&h=180"), -- Azerbaijan Grand Prix
+('Circuit Gilles Villeneuve', 'Canadese', 4.361, 'Autodromo', "https://tse3.mm.bing.net/th?id=OIP.hJDiwh8SZod5tUJ0odT41gHaEK&pid=Api&P=0&h=180"), -- Canadian Grand Prix
+('Circuit de la Sarthe', 'Francese', 13.626, 'Strada', "https://tse3.mm.bing.net/th?id=OIP.LsAvb38ewCABuB2PLkOOAwHaEK&pid=Api&P=0&h=180"), -- French Grand Prix (Le Mans)
+('Red Bull Ring', 'Austriaco', 4.318, 'Autodromo', "https://images.daznservices.com/di/library/DAZN_News/ac/5a/red-bull-ring-formula-1-automovilismo_tpudknw9lzqj1oljtle45l5p4.jpg?t=-839374871"), -- Austrian Grand Prix
+('Silverstone Circuit', 'Britannico', 5.891, 'Autodromo', "https://tse3.mm.bing.net/th?id=OIP.A5mGWqGjWaRHrIbPpXSgFgHaFD&pid=Api&P=0&h=180"), -- British Grand Prix
+('Hungaroring', 'Ungherese', 4.381, 'Autodromo', "https://tse3.mm.bing.net/th?id=OIP.Bh08FyW67VePN0wQidpPMwHaEK&pid=Api&P=0&h=180"), -- Hungarian Grand Prix
+('Circuit de Spa-Francorchamps', 'Belga', 7.004, 'Autodromo', "https://tse2.mm.bing.net/th?id=OIP.gmSCCxKG4eFb-B77LJI1HAHaEK&pid=Api&P=0&h=180"), -- Belgian Grand Prix
+('Autodromo Nazionale Monza', 'Italiano', 5.793, 'Autodromo', "https://tse1.mm.bing.net/th?id=OIP.vzk9CAM9aCiRw4h0LHulWAHaEK&pid=Api&P=0&h=180"), -- Italian Grand Prix
+('Mugello Circuit', 'Italiano', 5.245, 'Autodromo', "https://tse4.mm.bing.net/th?id=OIP._EWBEa6APlbKKz2VQPPhDwHaEK&pid=Api&P=0&h=180"), -- Toscana Grand Prix
+('Sochi Autodrom', 'Russo', 5.848, 'Autodromo', "https://tse3.mm.bing.net/th?id=OIP.8SC0Q44r8luIq2P6hvj9IgHaEK&pid=Api&P=0&h=180"), -- Russian Grand Prix
+('Nurburgring Circuit', 'Tedesco', 5.148, 'Autodromo', "https://tse1.mm.bing.net/th?id=OIP.-S-fqhnTe6a_gipR-IwRJAHaEK&pid=Api&P=0&h=180"), -- Eifel Grand Prix
+('Autodromo Internacional do Algarve', 'Portoghese', 4.684, 'Autodromo',"https://tse2.mm.bing.net/th?id=OIP.4-u72azjjtPvMNlQEyr_BgHaEK&pid=Api&P=0&h=180"), -- Portuguese Grand Prix
+('Autodromo Enzo e Dino Ferrari', 'Italiano', 4.909, 'Autodromo', "https://tse1.mm.bing.net/th?id=OIP.KhKwuF-OulJ9JQ1Ut6uIbQAAAA&pid=Api&P=0&h=180"), -- Emilia Romagna Grand Prix
+('Istanbul Park', 'Turco', 5.338, 'Autodromo', "https://tse4.mm.bing.net/th?id=OIP.Smp7rll_T3Vlghlxs6kAPgHaEK&pid=Api&P=0&h=180"), -- Turkish Grand Prix
+('Yas Marina Circuit', 'Emiratino', 5.281, 'Autodromo', "https://tse1.mm.bing.net/th?id=OIP.DmvlnCSYmE7EZyDU7PmpjwHaEK&pid=Api&P=0&h=180"), -- Abu Dhabi Grand Prix
+('Circuit of the Americas', 'Americano', 5.513, 'Autodromo',"https://tse3.mm.bing.net/th?id=OIP.Sszspac-W5jp8r5fQMbNuQHaEK&pid=Api&P=0&h=180"), -- United States Grand Prix
+('Autodromo Hermanos Rodriguez', 'Messicano', 4.304, 'Autodromo',"https://tse4.mm.bing.net/th?id=OIP.FPQWawDAPjdHHOZH0cODGgHaEK&pid=Api&P=0&h=180"), -- Mexican Grand Prix
+('Interlagos Circuit', 'Brasiliano', 4.309, 'Autodromo',"https://tse3.mm.bing.net/th?id=OIP.A5mGWqGjWaRHrIbPpXSgFgHaFD&pid=Api&P=0&h=180"), -- Brazilian Grand Prix
+('Losail International Circuit', 'Qatariota', 5.380, 'Autodromo', "https://tse4.mm.bing.net/th?id=OIP.8PS9L0h2KObHd-fH06pY_gHaEc&pid=Api&P=0&h=180"), -- Qatar Grand Prix
+('Jeddah Street Circuit', 'Arabo', 6.174, 'Strada', "https://tse1.mm.bing.net/th?id=OIP.aLM-XGZDgNiSx93qapfh7gHaEK&pid=Api&P=0&h=180"), -- Saudi Arabian Grand Prix
+('Miami International Autodrome', 'Americano', 5.410, 'Strada', "https://tse3.mm.bing.net/th?id=OIP.6WwOezioGSV1SqXn6oC-IAAAAA&pid=Api&P=0&h=180"), -- Miami Grand Prix
+('Marina Bay Street Circuit', 'Singapore', 5.063, 'Strada',"https://tse2.mm.bing.net/th?id=OIP.Z3AJOAnB82B95JBPTZUzDAHaEK&pid=Api&P=0&h=180"), -- Singapore Grand Prix
+('Suzuka Circuit', 'Giapponese', 5.807, 'Autodromo', "https://tse3.mm.bing.net/th?id=OIP.guWDCQRKpaB04FN5wb5BnAHaEK&pid=Api&P=0&h=180"), -- Japanese Grand Prix
+('Las Vegas Grand Prix', 'Americano', 6.120, 'Strada', "https://tse4.mm.bing.net/th?id=OIP.JqIzUFeWJsPZAWW7ZxkQCAHaEK&pid=Api&P=0&h=180"); -- Las Vegas Grand Prix
 
 
--- Gare del 2020
--- Inserimento delle gare del campionato 2020
-INSERT INTO Gare (campionato_id, circuito_id, data)
+INSERT INTO Gare (campionato_id, circuito_id, data, vincitore_id)
 VALUES
-(1, 1, '2020-03-15'), -- Australian Grand Prix
-(1, 2, '2020-03-22'), -- Bahrain Grand Prix
-(1, 3, '2020-04-05'), -- Vietnam Grand Prix
-(1, 4, '2020-04-19'), -- Chinese Grand Prix
-(1, 5, '2020-05-03'), -- Dutch Grand Prix
-(1, 6, '2020-05-10'), -- Spanish Grand Prix
-(1, 7, '2020-05-24'), -- Monaco Grand Prix
-(1, 8, '2020-06-07'), -- Azerbaijan Grand Prix
-(1, 9, '2020-06-14'), -- Canadian Grand Prix
-(1, 10, '2020-06-28'), -- French Grand Prix
-(1, 11, '2020-07-05'), -- Styrian Grand Prix
-(1, 11, '2020-07-12'), -- Austrian Grand Prix
-(1, 12, '2020-08-02'), -- British Grand Prix
-(1, 13, '2020-08-02'), -- Hungarian Grand Prix
-(1, 14, '2020-08-30'), -- Belgian Grand Prix
-(1, 15, '2020-09-06'), -- Italian Grand Prix
-(1, 16, '2020-09-13'), -- Toscana Grand Prix
-(1, 17, '2020-09-27'), -- Russian Grand Prix
-(1, 18, '2020-10-11'), -- Eifel Grand Prix
-(1, 19, '2020-10-25'), -- Portuguese Grand Prix
-(1, 20, '2020-11-01'), -- Emilia Romagna Grand Prix
-(1, 21, '2020-11-15'), -- Turkish Grand Prix
-(1, 2, '2020-11-29'), -- Bahrain Grand Prix (seconda gara)
-(1, 22, '2020-12-13'); -- Abu Dhabi Grand Prix
+-- Stagione 2020
+  (1, 11, '2020-07-05',  8),   -- Austria            - Valtteri Bottas
+  (1, 11, '2020-07-12',  7),   -- Austria             - Lewis Hamilton
+  (1, 13, '2020-07-19',  7),   -- Ungheria           - Lewis Hamilton
+  (1, 12, '2020-08-02',  7),   -- Gran Bretagna      - Lewis Hamilton
+  (1, 12, '2020-08-09',  1),   -- 70º Anniversario   - Max Verstappen
+  (1,  6, '2020-08-16',  7),   -- Spagna             - Lewis Hamilton
+  (1, 14, '2020-08-30',  7),   -- Belgio             - Lewis Hamilton
+  (1, 15, '2020-09-06', 16),   -- Italia             - Pierre Gasly
+  (1, 16, '2020-09-13',  7),   -- Toscana            - Lewis Hamilton
+  (1, 17, '2020-09-27',  8),   -- Russia             - Valtteri Bottas
+  (1, 18, '2020-10-11',  7),   -- Eifel              - Lewis Hamilton
+  (1, 19, '2020-10-25',  7),   -- Portogallo         - Lewis Hamilton
+  (1, 20, '2020-11-01',  7),   -- Emilia-Romagna     - Lewis Hamilton
+  (1, 21, '2020-11-15',  7),   -- Turchia            - Lewis Hamilton
+  (1,  2, '2020-11-29',  2),   -- Sakhir (Bahrain)   - Sergio Pérez
+  (1, 22, '2020-12-13',  1),   -- Emirati Arabi Unì - Max Verstappen
+ 
+
+-- Stagione 2021
+  (2,  2,  '2021-03-28',  7),  -- Bahrain             - Lewis Hamilton
+  (2, 20,  '2021-04-18',  1),  -- Italia (Emilia-Rom) - Max Verstappen
+  (2, 19,  '2021-05-02',  7),  -- Portogallo          - Lewis Hamilton
+  (2,  6,  '2021-05-09',  7),  -- Spagna              - Lewis Hamilton
+  (2,  7,  '2021-05-23',  1),  -- Monaco              - Max Verstappen
+  (2,  8,  '2021-06-06',  2),  -- Azerbaijan          - Sergio Pérez
+  (2, 10,  '2021-06-20',  1),  -- Francia             - Max Verstappen
+  (2, 11,  '2021-07-04',  1),  -- Austria             - Max Verstappen
+  (2, 12,  '2021-07-18',  7),  -- Regno Unito         - Lewis Hamilton
+  (2, 13,  '2021-08-01', 15),  -- Ungheria            - Esteban Ocon
+  (2, 14,  '2021-08-29',  1),  -- Belgio              - Max Verstappen
+  (2,  5,  '2021-09-05',  3),  -- Paesi Bassi         - Lando Norris
+  (2, 15,  '2021-09-12',  7),  -- Italia              - Lewis Hamilton
+  (2, 17,  '2021-09-26',  7),  -- Russia              - Lewis Hamilton
+  (2, 21,  '2021-10-10',  8),  -- Turchia             - Valtteri Bottas
+  (2, 23,  '2021-10-24',  1),  -- Stati Uniti         - Max Verstappen
+  (2, 24,  '2021-10-31',  8),  -- Messico             - Valtteri Bottas
+  (2, 25,  '2021-11-07',  8),  -- Brasile             - Valtteri Bottas
+  (2, 26,  '2021-11-21',  7),  -- Qatar               - Lewis Hamilton
+  (2, 27,  '2021-12-05',  7),  -- Arabia Saudita      - Lewis Hamilton
+  (2, 22,  '2021-12-12',  1),  -- Emirati Arabi Unì  - Max Verstappen
+ 
+
+-- Stagione 2022 
+(3,  2,  '2022-03-20', 11),  -- Bahrain             - Charles Leclerc  
+(3, 27,  '2022-03-27', 1),   -- Arabia Saudita      - Max Verstappen  
+(3,  1,  '2022-04-10', 11),  -- Australia           - Charles Leclerc  
+(3, 20,  '2022-04-24', 1),   -- Italia (Emilia-Rom) - Max Verstappen  
+(3, 28,  '2022-05-08', 1),   -- Stati Uniti (Miami) - Max Verstappen  
+(3,  6,  '2022-05-22', 11),  -- Spagna              - Charles Leclerc  
+(3,  7,  '2022-05-29', 11),  -- Monaco              - Charles Leclerc  
+(3,  8,  '2022-06-12', 11),  -- Azerbaijan          - Charles Leclerc  
+(3,  9,  '2022-06-19', 1),   -- Canada              - Max Verstappen  
+(3, 12,  '2022-07-03', 11),  -- Regno Unito         - Charles Leclerc  
+(3, 11,  '2022-07-10', 1),   -- Austria             - Max Verstappen  
+(3, 10,  '2022-07-24', 11),  -- Francia             - Charles Leclerc  
+(3, 13,  '2022-07-31', 11),  -- Ungheria            - Charles Leclerc  
+(3, 14,  '2022-08-28', 1),   -- Belgio              - Max Verstappen  
+(3,  5,  '2022-09-04', 11),  -- Paesi Bassi         - Charles Leclerc  
+(3, 15,  '2022-09-11', 11),  -- Italia              - Charles Leclerc  
+(3, 20,  '2022-09-25', 1),   -- Italia (Emilia-Rom) - Max Verstappen  
+(3, 29,  '2022-10-02', 11),  -- Singapore           - Charles Leclerc  
+(3, 30,  '2022-10-09', 1),   -- Giappone            - Max Verstappen  
+(3, 23,  '2022-10-23', 1),   -- Stati Uniti         - Max Verstappen  
+(3, 24,  '2022-10-30', 2),   -- Messico             - Sergio Perez  
+(3, 25,  '2022-11-13', 1),   -- Brasile             - Max Verstappen  
+(3, 22,  '2022-11-20', 1),   -- Emirati Arabi Unì  - Max Verstappen  
+
+-- Stagione 2023 
+(4,  2,  '2023-03-05', 1),   -- Bahrain             - Max Verstappen  
+(4, 27,  '2023-03-19', 2),   -- Arabia Saudita      - Sergio Perez  
+(4,  1,  '2023-04-02', 1),   -- Australia           - Max Verstappen  
+(4,  8,  '2023-04-30', 2),   -- Azerbaijan          - Sergio Perez  
+(4, 28,  '2023-05-07', 1),   -- Stati Uniti (Miami) - Max Verstappen  
+(4,  7,  '2023-05-28', 1),   -- Monaco              - Max Verstappen  
+(4,  6,  '2023-06-04', 1),   -- Spagna              - Max Verstappen  
+(4,  9,  '2023-06-18', 1),   -- Canada              - Max Verstappen  
+(4, 11,  '2023-07-02', 1),   -- Austria             - Max Verstappen  
+(4, 12,  '2023-07-09', 1),   -- Regno Unito         - Max Verstappen  
+(4, 13,  '2023-07-23', 1),   -- Ungheria            - Max Verstappen  
+(4, 14,  '2023-07-30', 1),   -- Belgio              - Max Verstappen  
+(4,  5,  '2023-08-27', 1),   -- Paesi Bassi         - Max Verstappen  
+(4, 15,  '2023-09-03', 1),   -- Italia              - Max Verstappen  
+(4, 29,  '2023-09-17', 12),   -- Singapore           - Carlos Sainz  
+(4, 30,  '2023-09-24', 1),   -- Giappone            - Max Verstappen  
+(4, 26,  '2023-10-08', 2),   -- Qatar               - Sergio Perez  
+(4, 23,  '2023-10-22', 1),   -- Stati Uniti         - Max Verstappen  
+(4, 24,  '2023-10-29', 1),   -- Messico             - Max Verstappen  
+(4, 25,  '2023-11-05', 1),   -- Brasile             - Max Verstappen  
+(4, 31,  '2023-11-18', 1),   -- Stati Uniti (Las Vegas) - Max Verstappen  
+(4, 22,  '2023-11-26', 1),   -- Emirati Arabi Unì  - Max Verstappen  
+
+-- Stagione 2024 
+(5,  2,  '2024-03-02', 1),   -- Bahrain             - Max Verstappen  
+(5, 27,  '2024-03-09', 1),   -- Arabia Saudita      - Max Verstappen  
+(5,  1,  '2024-03-24', 12),  -- Australia           - Carlos Sainz Jr.  
+(5, 30,  '2024-04-07', 1),   -- Giappone            - Max Verstappen  
+(5,  4,  '2024-04-21', 1),   -- Cina                - Max Verstappen  
+(5, 28,  '2024-05-05', 3),   -- Stati Uniti (Miami) - Lando Norris  
+(5, 20,  '2024-05-19', 1),   -- Italia (Emilia-Rom) - Max Verstappen  
+(5,  7,  '2024-05-26', 11),   -- Monaco              - Charles Leclerc  
+(5,  9,  '2024-06-09', 1),   -- Canada              - Max Verstappen  
+(5,  6,  '2024-06-23', 1),   -- Spagna              - Max Verstappen  
+(5, 11,  '2024-06-30', 1),   -- Austria             - George Russell 
+(5, 12,  '2024-07-07', 7),   -- Regno Unito         - Lewis Hamilton  
+(5, 13,  '2024-07-21', 4),   -- Ungheria            - Oscar Piastri  
+(5, 14,  '2024-07-28', 7),   -- Belgio              - Lewis Hamilton   
+(5,  5,  '2024-08-25', 3),   -- Paesi Bassi         - Lando Norris  
+(5, 15,  '2024-09-01', 11),  -- Italia              - Charles Leclerc  
+(5,  8,  '2024-09-15', 4),   -- Azerbaijan          - Oscar Piastri  
+(5, 29,  '2024-09-22', 3),   -- Singapore           - Lando Norris
+(5, 23,  '2024-10-20', 11),   -- Stati Uniti         - Charles Leclerc  
+(5, 24,  '2024-10-27', 12),  -- Messico             - Carlos Sainz jr.  
+(5, 25,  '2024-11-03', 1),   -- Brasile             - Max Verstappen  
+(5, 31,  '2024-11-24', 9),   -- Stati Uniti (Las Vegas) - George Russel  
+(5, 26,  '2024-12-01', 1),   -- Qatar               - Max Verstappen   
+(5, 22,  '2024-12-08', 3),   -- Emirati Arabi Unì  - Lando Norris  
+
+-- Stagione 2025
+(6,  1,  '2025-03-14', 3),   -- Australia           - Lando Norris  
+(6,  4,  '2025-03-21', 4),   -- Cina                - Oscar Piastri  
+(6, 30,  '2025-04-04', 1),   -- Giappone            - Max Verstappen  
+(6,  2,  '2025-04-11', 4),   -- Bahrain             - Oscar Piastri  
+(6, 27,  '2025-04-18', 4),   -- Arabia Saudita      - Oscar Piastri
+(6, 28, '2025-05-02', NULL), -- Miami Grand Prix
+(6, 20, '2025-05-16', NULL), -- Emilia Romagna Grand Prix
+(6, 7, '2025-05-23', NULL), -- Monaco Grand Prix
+(6, 6, '2025-05-30', NULL), -- Spanish Grand Prix
+(6, 9, '2025-06-12', NULL), -- Canadian Grand Prix
+(6, 11, '2025-06-28', NULL), -- Austrian Grand Prix
+(6, 12, '2025-07-05', NULL), -- British Grand Prix
+(6, 14, '2025-07-26', NULL), -- Belgian Grand Prix
+(6, 13, '2025-08-02', NULL), -- Hungarian Grand Prix
+(6, 5, '2025-08-30', NULL), -- Dutch Grand Prix
+(6, 15, '2025-09-06', NULL), -- Italian Grand Prix
+(6, 8, '2025-09-21', NULL), -- Azerbaijan Grand Prix
+(6, 29, '2025-09-28', NULL), -- Singapore Grand Prix
+(6, 23, '2025-10-19', NULL), -- United States Grand Prix
+(6, 24, '2025-10-26', NULL), -- Mexican Grand Prix
+(6, 25, '2025-11-02', NULL), -- Brazilian Grand Prix
+(6, 26, '2025-11-23', NULL), -- Qatar Grand Prix
+(6, 31, '2025-11-30', NULL), -- Las Vegas Grand Prix
+(6, 22, '2025-12-07', NULL); -- Abu Dhabi Grand Prix
 
 
--- Gare del 2021
--- Inserimento delle gare del campionato 2021
-INSERT INTO Gare (campionato_id, circuito_id, data)
+INSERT INTO Scuderie (nome_scuderia, nazionalita_scuderia, immagine_scuderia, podi_scuderia, vittorie_scuderia, campionati_vinti, presidente, direttore, manager_tecnico)
 VALUES
-(2, 2, '2021-03-28'), -- Bahrain Grand Prix
-(2, 20, '2021-04-18'), -- Emilia Romagna Grand Prix
-(2, 19, '2021-05-02'), -- Portuguese Grand Prix
-(2, 6, '2021-05-09'), -- Spanish Grand Prix
-(2, 7, '2021-05-23'), -- Monaco Grand Prix
-(2, 8, '2021-06-06'), -- Azerbaijan Grand Prix
-(2, 10, '2021-06-20'), -- French Grand Prix
-(2, 11, '2021-06-27'), -- Styrian Grand Prix
-(2, 11, '2021-07-04'), -- Austrian Grand Prix
-(2, 12, '2021-07-18'), -- British Grand Prix
-(2, 13, '2021-08-01'), -- Hungarian Grand Prix
-(2, 14, '2021-08-29'), -- Belgian Grand Prix
-(2, 5, '2021-09-05'), -- Dutch Grand Prix
-(2, 15, '2021-09-12'), -- Italian Grand Prix
-(2, 17, '2021-09-26'), -- Russian Grand Prix
-(2, 21, '2021-10-10'), -- Turkish Grand Prix
-(2, 23, '2021-10-24'), -- United States Grand Prix
-(2, 24, '2021-10-31'), -- Mexican Grand Prix
-(2, 25, '2021-11-07'), -- Brazilian Grand Prix
-(2, 26, '2021-11-21'), -- Qatar Grand Prix
-(2, 27, '2021-12-05'), -- Saudi Arabian Grand Prix
-(2, 22, '2021-12-12'); -- Abu Dhabi Grand Prix
-
-
--- Gare del 2022
--- Inserimento delle gare del campionato 2022
-INSERT INTO Gare (campionato_id, circuito_id, data)
-VALUES
-(3, 2, '2022-03-20'), -- Bahrain Grand Prix
-(3, 27, '2022-03-27'), -- Saudi Arabian Grand Prix
-(3, 1, '2022-04-10'), -- Australian Grand Prix
-(3, 20, '2022-04-24'), -- Emilia Romagna Grand Prix
-(3, 28, '2022-05-08'), -- Miami Grand Prix
-(3, 6, '2022-05-22'), -- Spanish Grand Prix
-(3, 7, '2022-05-29'), -- Monaco Grand Prix
-(3, 8, '2022-06-12'), -- Azerbaijan Grand Prix
-(3, 9, '2022-06-19'), -- Canadian Grand Prix
-(3, 12, '2022-07-03'), -- British Grand Prix
-(3, 11, '2022-07-10'), -- Austrian Grand Prix
-(3, 10, '2022-07-24'), -- French Grand Prix
-(3, 13, '2022-07-31'), -- Hungarian Grand Prix
-(3, 14, '2022-08-28'), -- Belgian Grand Prix
-(3, 5, '2022-09-04'), -- Dutch Grand Prix
-(3, 15, '2022-09-11'), -- Italian Grand Prix
-(3, 17, '2022-09-25'), -- Russian Grand Prix
-(3, 29, '2022-10-02'), -- Singapore Grand Prix
-(3, 30, '2022-10-09'), -- Japanese Grand Prix
-(3, 23, '2022-10-23'), -- United States Grand Prix
-(3, 24, '2022-10-30'), -- Mexican Grand Prix
-(3, 25, '2022-11-13'), -- Brazilian Grand Prix
-(3, 22, '2022-11-20'); -- Abu Dhabi Grand Prix
-
-
--- Gare del 2023
--- Inserimento delle gare del campionato 2023
-INSERT INTO Gare (campionato_id, circuito_id, data)
-VALUES
-(4, 2, '2023-03-05'), -- Bahrain Grand Prix
-(4, 27, '2023-03-19'), -- Saudi Arabian Grand Prix
-(4, 1, '2023-04-02'), -- Australian Grand Prix
-(4, 8, '2023-04-30'), -- Azerbaijan Grand Prix
-(4, 28, '2023-05-07'), -- Miami Grand Prix
-(4, 20, '2023-05-21'), -- Emilia Romagna Grand Prix (cancellato)
-(4, 7, '2023-05-28'), -- Monaco Grand Prix
-(4, 6, '2023-06-04'), -- Spanish Grand Prix
-(4, 9, '2023-06-18'), -- Canadian Grand Prix
-(4, 11, '2023-07-02'), -- Austrian Grand Prix
-(4, 12, '2023-07-09'), -- British Grand Prix
-(4, 13, '2023-07-23'), -- Hungarian Grand Prix
-(4, 14, '2023-07-30'), -- Belgian Grand Prix
-(4, 5, '2023-08-27'), -- Dutch Grand Prix
-(4, 15, '2023-09-03'), -- Italian Grand Prix
-(4, 29, '2023-09-17'), -- Singapore Grand Prix
-(4, 30, '2023-09-24'), -- Japanese Grand Prix
-(4, 31, '2023-10-08'), -- Qatar Grand Prix
-(4, 23, '2023-10-22'), -- United States Grand Prix
-(4, 24, '2023-10-29'), -- Mexican Grand Prix
-(4, 25, '2023-11-05'), -- Brazilian Grand Prix
-(4, 32, '2023-11-18'), -- Las Vegas Grand Prix
-(4, 22, '2023-11-26'); -- Abu Dhabi Grand Prix
-
-
--- Gare del 2024
--- Inserimento delle gare del campionato 2024
-INSERT INTO Gare (campionato_id, circuito_id, data)
-VALUES
-(5, 2, '2024-03-02'), -- Bahrain Grand Prix
-(5, 27, '2024-03-09'), -- Saudi Arabian Grand Prix
-(5, 1, '2024-03-24'), -- Australian Grand Prix
-(5, 30, '2024-04-07'), -- Japanese Grand Prix
-(5, 4, '2024-04-21'), -- Chinese Grand Prix
-(5, 28, '2024-05-05'), -- Miami Grand Prix
-(5, 20, '2024-05-19'), -- Emilia Romagna Grand Prix
-(5, 7, '2024-05-26'), -- Monaco Grand Prix
-(5, 9, '2024-06-09'), -- Canadian Grand Prix
-(5, 6, '2024-06-23'), -- Spanish Grand Prix
-(5, 11, '2024-06-30'), -- Austrian Grand Prix
-(5, 12, '2024-07-07'), -- British Grand Prix
-(5, 13, '2024-07-21'), -- Hungarian Grand Prix
-(5, 14, '2024-07-28'), -- Belgian Grand Prix
-(5, 5, '2024-08-25'), -- Dutch Grand Prix
-(5, 15, '2024-09-01'), -- Italian Grand Prix
-(5, 8, '2024-09-15'), -- Azerbaijan Grand Prix
-(5, 29, '2024-09-22'), -- Singapore Grand Prix
-(5, 23, '2024-10-20'), -- United States Grand Prix
-(5, 24, '2024-10-27'), -- Mexican Grand Prix
-(5, 25, '2024-11-03'), -- Brazilian Grand Prix
-(5, 32, '2024-11-24'), -- Las Vegas Grand Prix
-(5, 31, '2024-12-01'), -- Qatar Grand Prix
-(5, 22, '2024-12-08'); -- Abu Dhabi Grand Prix
-
-
--- Gare del 2025
--- Inserimento delle gare del campionato 2025
-INSERT INTO Gare (campionato_id, circuito_id, data)
-VALUES
-(6, 1, '2025-03-14'), -- Australian Grand Prix
-(6, 4, '2025-03-21'), -- Chinese Grand Prix
-(6, 30, '2025-04-04'), -- Japanese Grand Prix
-(6, 2, '2025-04-11'), -- Bahrain Grand Prix
-(6, 27, '2025-04-18'), -- Saudi Arabian Grand Prix
-(6, 28, '2025-05-02'), -- Miami Grand Prix
-(6, 20, '2025-05-16'), -- Emilia Romagna Grand Prix
-(6, 7, '2025-05-23'), -- Monaco Grand Prix
-(6, 6, '2025-05-30'), -- Spanish Grand Prix
-(6, 9, '2025-06-12'), -- Canadian Grand Prix
-(6, 11, '2025-06-28'), -- Austrian Grand Prix
-(6, 12, '2025-07-05'), -- British Grand Prix
-(6, 14, '2025-07-26'), -- Belgian Grand Prix
-(6, 13, '2025-08-02'), -- Hungarian Grand Prix
-(6, 5, '2025-08-30'), -- Dutch Grand Prix
-(6, 15, '2025-09-06'), -- Italian Grand Prix
-(6, 8, '2025-09-21'), -- Azerbaijan Grand Prix
-(6, 29, '2025-09-28'), -- Singapore Grand Prix
-(6, 23, '2025-10-19'), -- United States Grand Prix
-(6, 24, '2025-10-26'), -- Mexican Grand Prix
-(6, 25, '2025-11-02'), -- Brazilian Grand Prix
-(6, 32, '2025-11-23'), -- Las Vegas Grand Prix
-(6, 31, '2025-11-30'), -- Qatar Grand Prix
-(6, 22, '2025-12-07'); -- Abu Dhabi Grand Prix
-
-INSERT INTO Scuderie (nome_scuderia, nazionalita_scuderia, immagine_scuderia)
-VALUES
-    ('Mercedes', 'Tedesco', "https://media.formula1.com/image/upload/f_auto,c_limit,q_75,w_1320/content/dam/fom-website/2018-redesign-assets/team%20logos/mercedes"),
-    ('Red Bull Racing', 'Austriaco', "https://media.formula1.com/image/upload/f_auto,c_limit,q_75,w_1320/content/dam/fom-website/2018-redesign-assets/team%20logos/red%20bull"),
-    ('Ferrari', 'Italiano', "https://media.formula1.com/image/upload/f_auto,c_limit,q_auto,w_1320/content/dam/fom-website/2018-redesign-assets/team%20logos/ferrari"),
-    ('McLaren', 'Britannico', "https://media.formula1.com/image/upload/f_auto,c_limit,q_75,w_1320/content/dam/fom-website/2018-redesign-assets/team%20logos/mclaren"),
-    ('Alpine', 'Francese', "https://media.formula1.com/image/upload/f_auto,c_limit,q_75,w_1320/content/dam/fom-website/2018-redesign-assets/team%20logos/alpine"),
-    ('Aston Martin', 'Britannico', "https://media.formula1.com/image/upload/f_auto,c_limit,q_auto,w_1320/content/dam/fom-website/2018-redesign-assets/team%20logos/aston%20martin"),
-    ('Sauber F1 team', 'Svizzero', "https://media.formula1.com/image/upload/f_auto,c_limit,q_75,w_1320/content/dam/fom-website/2018-redesign-assets/team%20logos/kick%20sauber"),
-    ('Williams', 'Britannico', "https://media.formula1.com/image/upload/f_auto,c_limit,q_auto,w_1320/content/dam/fom-website/2018-redesign-assets/team%20logos/williams"),
-    ('Haas F1 Team', 'Americano', "https://media.formula1.com/image/upload/f_auto,c_limit,q_75,w_1320/content/dam/fom-website/2018-redesign-assets/team%20logos/haas"),
-    ('Racing bulls', 'Austriaco', "https://media.formula1.com/image/upload/f_auto,c_limit,q_auto,w_1320/fom-website/2018-redesign-assets/team%20logos/racing%20bulls");
-
+    ('Mercedes', 'Tedesco', "https://media.formula1.com/image/upload/f_auto,c_limit,q_75,w_1320/content/dam/fom-website/2018-redesign-assets/team%20logos/mercedes", 275, 125, 8, 'Ola Kallenius', 'Toto Wolff', 'James Allison'),
+    ('Red Bull Racing', 'Austriaco', "https://media.formula1.com/image/upload/f_auto,c_limit,q_75,w_1320/content/dam/fom-website/2018-redesign-assets/team%20logos/red%20bull", 270, 120, 6, 'Oliver Mintzlaff', 'Christian Horner', 'Pierre Wache'),
+    ('Ferrari', 'Italiano', "https://media.formula1.com/image/upload/f_auto,c_limit,q_auto,w_1320/content/dam/fom-website/2018-redesign-assets/team%20logos/ferrari", 800, 240, 16, 'John Elkann', 'Frederic Vasseur', 'Enrico Cardile'),
+    ('McLaren', 'Britannico', "https://media.formula1.com/image/upload/f_auto,c_limit,q_75,w_1320/content/dam/fom-website/2018-redesign-assets/team%20logos/mclaren", 490, 183, 8, 'Paul Walsh', 'Zak Brown', 'Peter Prodromou'),
+    ('Alpine', 'Francese', "https://media.formula1.com/image/upload/f_auto,c_limit,q_75,w_1320/content/dam/fom-website/2018-redesign-assets/team%20logos/alpine", 65, 21, 2, 'Luca de Meo', 'Bruno Famin', 'Matt Harman'),
+    ('Aston Martin', 'Britannico', "https://media.formula1.com/image/upload/f_auto,c_limit,q_auto,w_1320/content/dam/fom-website/2018-redesign-assets/team%20logos/aston%20martin", 10, 0, 0, 'Lawrence Stroll', 'Mike Krack', 'Dan Fallows'),
+    ('Sauber F1 team', 'Svizzero', "https://media.formula1.com/image/upload/f_auto,c_limit,q_75,w_1320/content/dam/fom-website/2018-redesign-assets/team%20logos/kick%20sauber", 27, 1, 0, 'Finn Rausing', 'Alessandro Alunni Bravi', 'James Key'),
+    ('Williams', 'Britannico', "https://media.formula1.com/image/upload/f_auto,c_limit,q_auto,w_1320/content/dam/fom-website/2018-redesign-assets/team%20logos/williams", 310, 114, 9, 'Matthew Savage', 'James Vowles', 'Francois-Xavier Demaison'),
+    ('Haas F1 Team', 'Americano', "https://media.formula1.com/image/upload/f_auto,c_limit,q_75,w_1320/content/dam/fom-website/2018-redesign-assets/team%20logos/haas", 2, 0, 0, 'Gene Haas', 'Ayao Komatsu', 'Andrea De Zordo'),
+    ('Racing bulls', 'Austriaco', "https://media.formula1.com/image/upload/f_auto,c_limit,q_auto,w_1320/fom-website/2018-redesign-assets/team%20logos/racing%20bulls", 5, 1, 0, 'Oliver Mintzlaff', 'Laurent Mekies', 'Jody Egginton');
 
 
 -- Inserimento dei piloti dal 2020 al 2025 con ID scuderie
@@ -925,19 +649,6 @@ INSERT INTO PunteggiGara_2025 (gara_id, pilota_id, posizione, punti, punteggio_s
     (2, 11, 18, 0, 0),    -- Fernando Alonso (Aston Martin), 10° nella Sprint
     (2, 5, 19, 0, 8),     -- Lewis Hamilton (Ferrari), 1° nella Sprint
     (2, 16, 20, 0, 0);    -- Pierre Gasly (Alpine), 12° nella Sprint
-    
-CREATE TABLE PasswordUtenti (
-	Email varchar(50) Primary KEY,
-    Password varchar(50)
-);
-CREATE TABLE Utenti (
-	Id_utenti int auto_increment primary key,
-	Email varchar(50) not null,
-    Nome varchar(50) not null,  
-    Cognome varchar(50) not null,  
-    Sesso varchar(10) not null,  
-    Nazione varchar(50) not null,
-    FOREIGN KEY (Email) REFERENCES PasswordUtenti(Email)
-);
+
 
 

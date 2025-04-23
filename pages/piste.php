@@ -18,7 +18,7 @@
                 </li>
                 <li class="nav-item dropdown px-2">
                     <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Classifiche
+                    Albo
                     </a>
                     <ul class="dropdown-menu bg-black">
                         <li><a class="dropdown-item visited dropdown-link" href="./classifiche.php?anno=2020">Classifica 2020</a></li>
@@ -26,7 +26,6 @@
                         <li><a class="dropdown-item visited dropdown-link" href="./classifiche.php?anno=2022">Classifica 2022</a></li>
                         <li><a class="dropdown-item visited dropdown-link" href="./classifiche.php?anno=2023">Classifica 2023</a></li>
                         <li><a class="dropdown-item visited dropdown-link" href="./classifiche.php?anno=2024">Classifica 2024</a></li>
-                        <li><a class="dropdown-item visited dropdown-link" href="./classifiche.php?anno=2024">Classifica 2025</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown px-2">
@@ -39,8 +38,6 @@
                         <li><a class="dropdown-item visited dropdown-link" href="./piste.php?anno=2022">Piste del 2022</a></li>
                         <li><a class="dropdown-item visited dropdown-link" href="./piste.php?anno=2023">Piste del 2023</a></li>
                         <li><a class="dropdown-item visited dropdown-link" href="./piste.php?anno=2024">Piste del 2024</a></li>
-                        <li><a class="dropdown-item visited dropdown-link" href="./piste.php?anno=2025"> Piste del 2025</a></li>
-                        <li><a class="dropdown-item visited dropdown-link" href="./piste.php?anno=all">Visualizza tutte</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown px-2">
@@ -53,7 +50,16 @@
                         <li><a class="dropdown-item visited dropdown-link" href="./piloti.php?anno=2022">Piloti del 2022</a></li>
                         <li><a class="dropdown-item visited dropdown-link" href="./piloti.php?anno=2023">Piloti del 2023</a></li>
                         <li><a class="dropdown-item visited dropdown-link" href="./piloti.php?anno=2024">Piloti del 2024</a></li>
-                        <li><a class="dropdown-item visited dropdown-link" href="./piloti.php?anno=2025"> Piloti del 2025</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown px-2">
+                    <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    2025
+                    </a>
+                    <ul class="dropdown-menu bg-black">
+                        <li><a class="dropdown-item visited dropdown-link" href="./classifiche.php?anno=2025">Classifica</a></li>
+                        <li><a class="dropdown-item visited dropdown-link" href="./piloti.php?anno=2025">Piloti</a></li>
+                        <li><a class="dropdown-item visited dropdown-link" href="./piste.php?anno=2025">Piste</a></li>
                     </ul>
                 </li>
             </ul>
@@ -91,8 +97,8 @@
 
             if(isset($_GET["id_circuito"])){
 
-                $queryScuderie = "SELECT * FROM Circuiti c INNER JOIN Gare g ON c.id = g.circuito_id 
-                WHERE g.id = $_GET[id_circuito]";
+                $queryScuderie = "SELECT * FROM Circuiti c INNER JOIN Gare g ON c.id = g.circuito_id INNER JOIN Piloti p ON g.vincitore_id = p.id
+                WHERE c.id = $_GET[id_circuito]";
                 $resultScuderie = mysqli_query($connessione, $queryScuderie)
                 or die ("<br>Errore di chiusura" . mysqli_error($connessione) . " ". mysqli_errno($connessione));
                 $resultQueryPiste = [];
@@ -103,33 +109,37 @@
         ?>
         <!-- MODAL (inizialmente nascosto finché una riga non viene cliccata) per le piste -->
         <?php if (isset($resultQueryPiste[0])): ?>
-                <div class="modal fade" id="modalPilota" tabindex="-1" aria-hidden="true">
+                <div class="modal fade" id="modalPista" tabindex="-1" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header row">
-                                <div class="col-6 text-start ps-4">
-                                    <h5 class="modal-title" id="modalPilotaLabel"><?= $resultQueryPiste[0]['nome'] ?>
+                                <div class="col-10 text-start ps-2">
+                                    <h5 class="modal-title" id="modalPilotaLabel"><?= $resultQueryPiste[0]['nome_circuito'] ?>
                                     <span class="nazionalita_id"><?= $resultQueryPiste[0]['paese'] ?></span></h5>
                                 </div>
-                                <div class="col-6 text-end">
+                                <div class="col-2 text-end">
                                     <a href="./piste.php"><button type="button" class="btn-close" data-bs-dismiss="modal"></button></a>
                                 </div>
                             </div>
                             <div class="modal-body">
                                 <div class="row">
-                                    <div class="col-6">
-                                        <img src="<?= $resultQueryPiste[0]['immagine_circuito'] ?>" alt="Immagine Pilota" class="img-fluid mt-3 dim_imm_piste"><br>
+                                    <div class="col-7 my-auto">
+                                        <img src="<?= $resultQueryPiste[0]['immagine_circuito'] ?>" alt="Immagine Pilota" class="img-fluid w-100"><br>
                                     </div>
-                                    <div class="col-6">
-                                        <p class="fw-bold">Statistiche:</p>
+                                    <div class="col-5">
+                                    <p class="fw-bold text-center">Vincitori:</p>
+                                        <?php foreach($resultQueryPiste as $dataPiste): ?>
+                                        <?php
+                                            $annoData = new DateTime($dataPiste['data']);
+                                            $annoCircuito = $annoData->format('Y');
+                                        ?>
+                                            <p><span class="fw-bold"><?= $annoCircuito?></span>: <?= $dataPiste['nome'] ?> <?= $dataPiste['cognome'] ?></p>
+                                    <?php endforeach; ?>
                                     </div>
                                 </div><br>
                                 <div class="row">
-                                    <div class="col-6">
-                                        <p class="fw-bold">Anno</p>
-                                    </div>
-                                    <div class="col-6">
-                                        <p class="fw-bold">Team</p>
+                                    <div class="col-6 text-start ps-3">
+                                        <p class="fw-bold">Date: </p>
                                     </div>
                                 </div>
                                 
@@ -153,13 +163,8 @@
                 
             }
 
-            if($anno == "all" || !isset($anno)){
-                $query = "SELECT * FROM Gare g INNER JOIN Circuiti c ON g.circuito_id = c.id ORDER BY g.data DESC";
-            }
-            else{
-                $query = "SELECT * FROM Gare g INNER JOIN Circuiti c ON g.circuito_id = c.id 
-                INNER JOIN Campionati ca ON g.campionato_id = ca.id WHERE ca.anno = '$anno' ORDER BY g.data DESC";
-            }
+            $query = "SELECT * FROM Gare g INNER JOIN Circuiti c ON g.circuito_id = c.id 
+                INNER JOIN Campionati ca ON g.campionato_id = ca.id WHERE ca.anno = '$anno' ORDER BY g.data ASC";
             $result = mysqli_query($connessione, $query)
             or die ("<br>Errore di chiusura" . mysqli_error($connessione) . " ". mysqli_errno($connessione));
             echo"<h1 class='mx-auto text-center'> Gare $anno</h1><br>";
@@ -178,7 +183,7 @@
                         while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) //solo associativo
                         {
                             echo"<tr onclick="."window.location.href='?id_circuito=$row[circuito_id]' style='cursor: pointer;''>";
-                                echo"<td class='px-3'>$row[nome]</td>";
+                                echo"<td class='px-3'>$row[nome_circuito]</td>";
                                 echo"<td class='px-3'>$row[lunghezza_km]</td>";
                                 echo"<td class='px-3'>$row[tipo_circuito]</td>";
                                 echo"<td class='px-3'>$row[data]</td>";
