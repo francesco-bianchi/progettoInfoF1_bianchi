@@ -330,7 +330,14 @@
                     }
                     echo"</tbody>";
                     echo"</table><br><br>";
-                echo"</div>";
+                echo"</div>"; 
+
+                if($anno == 2025 && isset($_SESSION["utenti"])){
+                    if($_SESSION["utenti"]["email"] == "fralu06@gmail.com"){
+                        echo"<span class='mx-auto text-center'>Accedi alla <a href='./paginaAmministratore.php?indice=cla' class='link-opacity-50-hover link-underline-danger link-offset-2 visited text-black'> pagina amministratore</a></span><br><br>";
+                    }
+                }
+                
                 echo "<span class='mx-auto text-center'>Torna alla <a href='../index.php' class='link-opacity-50-hover link-underline-danger link-offset-2 visited text-black'>home</a></span><br><br>";
                 echo "<span></span>";
             echo"</div>";

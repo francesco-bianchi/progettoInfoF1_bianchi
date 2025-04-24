@@ -1,12 +1,12 @@
 <html>
     <head>
-    <title>Piste</title>
+    <title>Classifiche</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
         <link rel="stylesheet" href="../css/style.css">
     </head>
 <body class="bg-body-pagine">
 <?php 
-        session_start();
+    session_start();
 ?>
 <nav class="navbar navbar-expand bg-black">
         <div class="container-fluid">
@@ -91,121 +91,96 @@
           </div>
         </div>
       </nav><br>
+
         <div class="container">
-        <?php
+            <h3 class="text-center">Bentornato nella pagina amministratore</h3><br><br>
+            <?php
             include("connessione.php");
-
-            if(isset($_GET["id_circuito"])){
-
-                $queryScuderie = "SELECT * FROM Circuiti c INNER JOIN Gare g ON c.id = g.circuito_id INNER JOIN Piloti p ON g.vincitore_id = p.id
-                WHERE c.id = $_GET[id_circuito]";
-                $resultScuderie = mysqli_query($connessione, $queryScuderie)
+            $query_scuderie = "SELECT * FROM Classifiche_Costruttori cc INNER JOIN Scuderie s ON cc.scuderia_id = s.id 
+                                INNER JOIN Campionati c ON cc.campionati_id = c.id WHERE c.anno = '2025'";
+            $result_scuderie = mysqli_query($connessione, $query_scuderie)
                 or die ("<br>Errore di chiusura" . mysqli_error($connessione) . " ". mysqli_errno($connessione));
-                $resultQueryPiste = [];
-                while ($row = mysqli_fetch_array($resultScuderie, MYSQLI_ASSOC)) {
-                    $resultQueryPiste[] = $row;
-                }
-            }
-        ?>
-        <!-- MODAL (inizialmente nascosto finché una riga non viene cliccata) per le piste -->
-        <?php if (isset($resultQueryPiste[0])): ?>
-                <div class="modal fade" id="modalPista" tabindex="-1" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header row">
-                                <div class="col-10 text-start ps-2">
-                                    <h5 class="modal-title" id="modalPilotaLabel"><?= $resultQueryPiste[0]['nome_circuito'] ?>
-                                    <span class="nazionalita_id"><?= $resultQueryPiste[0]['paese'] ?></span></h5>
-                                </div>
-                                <div class="col-2 text-end">
-                                    <a href="./piste.php"><button type="button" class="btn-close" data-bs-dismiss="modal"></button></a>
-                                </div>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row">
-                                    <div class="col-7 my-auto">
-                                        <img src="<?= $resultQueryPiste[0]['immagine_circuito'] ?>" alt="Immagine Pilota" class="img-fluid w-100"><br>
-                                    </div>
-                                    <div class="col-5">
-                                    <p class="fw-bold text-center">Vincitori:</p>
-                                        <?php foreach($resultQueryPiste as $dataPiste): ?>
-                                        <?php
-                                            $annoData = new DateTime($dataPiste['data']);
-                                            $annoCircuito = $annoData->format('Y');
-                                        ?>
-                                            <p><span class="fw-bold"><?= $annoCircuito?></span>: <?= $dataPiste['nome'] ?> <?= $dataPiste['cognome'] ?></p>
-                                    <?php endforeach; ?>
-                                    </div>
-                                </div><br>
-                                <div class="row">
-                                    <div class="col-6 text-start ps-3">
-                                        <p class="fw-bold">Date: </p>
-                                    </div>
-                                </div>
-                                
-                            </div>
-                            <div class="modal-footer">
-                            <a href="./piste.php"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button></a>
-                            </div>
-                        </div>
-                    </div>
-            <?php endif; ?>
-        </div>
-    <div class="container">
-        <?php
-        
-            if(isset($_GET["anno"])){
-                $anno = $_GET["anno"];
-                $_SESSION["anno"] = $anno;
+
+            if(isset($_GET["indice"])){
+                echo"<div class='row'>";
+                    if($_GET["indice"]=="cla"){
+                        echo"<div class='col-4'>
+                            <h6>Inserisci pilota nella classifica</h6>
+                            <form action='controlloAmm.php?indiceForm=claIns' method='POST'>
+                                <label for='nome'>Nome pilota:</label><br>
+                                <input type='text' name='nome' class='border-2 border-black rounded-2 col-9 height_input'><br><br>
+                                <label for='cognome'>Cognome pilota:</label><br>
+                                <input type='text' name='cognome' class='border-2 border-black rounded-2 col-9 height_input'><br><br>
+                                <label for='scuderia'>Nome scuderia:</label><br>
+                                <select name='scuderia' class='border-2 border-black rounded-2 col-9 height_input'>";
+                                    while ($row = mysqli_fetch_array($result_scuderie, MYSQLI_ASSOC))
+                                    {
+                                        echo"<option value='$row[scuderia_id]'>$row[nome_scuderia]</option>";
+                                    }
+                                echo"</select><br><br>
+                                <input type='submit' class='bg-success text-white rounded-2 border-1 border-success' value='Inserisci'>
+                            </form><br><br>
+                        </div>";
+                        echo"<div class='col-4'>
+                            <h6>Modifica pilota nella classifica</h6>
+                            <form action='controlloAmm.php?indiceForm=claUp' method='POST'>
+                                <label for='nome'>Nome pilota:</label><br>
+                                <input type='text' name='nome' class='border-2 border-black rounded-2 col-9 height_input'><br><br>
+                                <label for='cognome'>Cognome pilota:</label><br>
+                                <input type='text' name='cognome' class='border-2 border-black rounded-2 col-9 height_input'><br><br>
+                                <label for='punteggio'>Punteggio da aggiungere:</label><br>
+                                <input type='text' name='punteggio' class='border-2 border-black rounded-2 col-9 height_input'><br><br>
+                                <label for='scuderia'>Nome scuderia:</label><br>
+                                <select name='scuderia' class='border-2 border-black rounded-2 col-9 height_input'>";
+                                    // Azzera l'indice del risultato per riutilizzarlo
+                                    $result_scuderie->data_seek(0);
+                                    while ($row = mysqli_fetch_array($result_scuderie, MYSQLI_ASSOC))
+                                    {
+                                        echo"<option value='$row[scuderia_id]'>$row[nome_scuderia]</option>";
+                                    }
+                                echo"</select><br><br>
+                                <input type='submit' class='bg-primary text-white rounded-2 border-1 border-primary' value='Modifica'>
+                            </form><br><br>
+                        </div>";
+                        echo"<div class='col-4'>
+                            <h6>Rimozione pilota nella classifica</h6>
+                            <form action='controlloAmm.php?indiceForm=claRim' method='POST'>
+                                <label for='nome'>Nome pilota:</label><br>
+                                <input type='text' name='nome' class='border-2 border-black rounded-2 col-9 height_input'><br><br>
+                                <label for='cognome'>Cognome pilota:</label><br>
+                                <input type='text' name='cognome' class='border-2 border-black rounded-2 col-9 height_input'><br><br>
+                                <input type='submit' class='bg-danger text-white rounded-2 border-1 border-danger' value='Rimuovi'>
+                            </form><br><br>
+                        </div>";
+                    }
+                    else if($_GET["indice"]=="piste") {
+                        echo"<div class='col-4'>
+                        <h6>Inserisci pista</h6>
+                        <form action='controlloAmm.php?indiceForm=piste' method='POST'>
+                            <label for='nome'>Nome pista:</label><br>
+                            <input type='text' name='nome' class='border-2 border-black rounded-2 col-9 height_input'><br><br>
+                            <label for='paese'>Paese:</label><br>
+                            <input type='text' name='paese' class='border-2 border-black rounded-2 col-9 height_input'><br><br>
+                            <label for='lunghezza'>Lunghezza:</label><br>
+                            <input type='text' name='lunghezza' class='border-2 border-black rounded-2 col-9 height_input'><br><br>
+                            <label for='tipo'>Tipo circuito:</label><br>
+                            <select name='tipo' class='border-2 border-black rounded-2 col-9 height_input'>
+                                <option value='autodromo'>Autodromo</option>
+                                <option value='strada'>Strada</option>
+                            </select><br><br>
+                            <input type='submit' class='bg-danger text-white rounded-2 border-1 border-danger' value='Inserisci'>
+                        </form><br><br>
+                    </div>";
+                    }
+                    else if($_GET["indice"]=="piloti"){
+
+                    }
+                echo"</div>";
             }
             else{
-                $anno = $_SESSION["anno"];
-                
+                header("Location: ../index.php");
             }
-
-            $query = "SELECT * FROM Gare g INNER JOIN Circuiti c ON g.circuito_id = c.id 
-                INNER JOIN Campionati ca ON g.campionato_id = ca.id WHERE ca.anno = '$anno' ORDER BY g.data ASC";
-            $result = mysqli_query($connessione, $query)
-            or die ("<br>Errore di chiusura" . mysqli_error($connessione) . " ". mysqli_errno($connessione));
-            echo"<h1 class='mx-auto text-center'> Gare $anno</h1><br>";
-            echo"<div class='row'>
-                    <div class='col-12'>";
-                        echo "<table class='text-center mx-auto'>";
-                        echo"<thead>";
-                            echo"<tr class='table-header'>";
-                                echo"<td class='px-3 cell'>Nome gara</td>";
-                                echo"<td class='px-3 cell'>Lunghezza (in km)</td>";
-                                echo"<td class='px-3 cell'>Tipo circuito</td>";
-                                echo"<td class='px-3 cell'>Data</td>";
-                            echo"</tr>";
-                            echo"</thead>";
-                            echo"<tbody>";
-                        while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) //solo associativo
-                        {
-                            echo"<tr onclick="."window.location.href='?id_circuito=$row[circuito_id]' style='cursor: pointer;''>";
-                                echo"<td class='px-3'>$row[nome_circuito]</td>";
-                                echo"<td class='px-3'>$row[lunghezza_km]</td>";
-                                echo"<td class='px-3'>$row[tipo_circuito]</td>";
-                                echo"<td class='px-3'>$row[data]</td>";
-                            echo"</tr>";
-                        }
-                        echo"</tbody>";
-                        echo"</table>";
-                    echo"</div>";
-                echo"</div><br><br>";
-                if($anno == 2025 && isset($_SESSION["utenti"])){
-                    if($_SESSION["utenti"]["email"] == "fralu06@gmail.com"){
-                        echo"<div class='row'>
-                                <span class='mx-auto text-center'>Accedi alla <a href='./paginaAmministratore.php?indice=piste' class='link-opacity-50-hover link-underline-danger link-offset-2 visited text-black'> pagina amministratore</a></span><br><br>
-                            </div>";
-                    }
-                }
-                echo"<br><div class='row'>";
-                    echo "<span class='mx-auto text-center'>Torna alla <a href='../index.php' class='link-opacity-50-hover link-underline-danger link-offset-2 visited text-black'>home</a></span><br><br>";
-                    echo "<span></span>";
-                echo"</div>";
-
-        ?>
+            ?>
         </div>
 
 

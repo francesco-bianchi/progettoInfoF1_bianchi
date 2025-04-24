@@ -226,7 +226,14 @@
                     echo"</table>";
                 echo"</div>";
             echo"</div><br><br>";
-            echo"<div class='row'>";
+            if($anno == 2025 && isset($_SESSION["utenti"])){
+                if($_SESSION["utenti"]["email"] == "fralu06@gmail.com"){
+                    echo"<div class='row'>
+                            <span class='mx-auto text-center'>Accedi alla <a href='./paginaAmministratore.php?indice=piloti' class='link-opacity-50-hover link-underline-danger link-offset-2 visited text-black'> pagina amministratore</a></span><br><br>
+                        </div>";
+                }
+            }
+            echo"<br><div class='row'>";
                 echo "<span class='mx-auto text-center'>Torna alla <a href='../index.php' class='link-opacity-50-hover link-underline-danger link-offset-2 visited text-black'>home</a></span><br><br>";
                 echo "<span></span>";
             echo"</div>";
