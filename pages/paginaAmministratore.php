@@ -103,8 +103,9 @@
 
             if(isset($_GET["indice"])){
                 echo"<div class='row'>";
+                //classifiche
                     if($_GET["indice"]=="cla"){
-                        echo"<div class='col-4'>
+                        echo"<div class='col-sm-12 col-lg-4 ps-5'>
                             <h6>Inserisci pilota nella classifica</h6>
                             <form action='controlloAmm.php?indiceForm=claIns' method='POST'>
                                 <label for='nome'>Nome pilota:</label><br>
@@ -121,7 +122,7 @@
                                 <input type='submit' class='bg-success text-white rounded-2 border-1 border-success' value='Inserisci'>
                             </form><br><br>
                         </div>";
-                        echo"<div class='col-4'>
+                        echo"<div class='col-sm-12 col-lg-4 ps-5'>
                             <h6>Modifica pilota nella classifica</h6>
                             <form action='controlloAmm.php?indiceForm=claUp' method='POST'>
                                 <label for='nome'>Nome pilota:</label><br>
@@ -142,7 +143,7 @@
                                 <input type='submit' class='bg-primary text-white rounded-2 border-1 border-primary' value='Modifica'>
                             </form><br><br>
                         </div>";
-                        echo"<div class='col-4'>
+                        echo"<div class='col-sm-12 col-lg-4 ps-5'>
                             <h6>Rimozione pilota nella classifica</h6>
                             <form action='controlloAmm.php?indiceForm=claRim' method='POST'>
                                 <label for='nome'>Nome pilota:</label><br>
@@ -153,21 +154,39 @@
                             </form><br><br>
                         </div>";
                     }
+                    //piste
                     else if($_GET["indice"]=="piste") {
                         echo"<div class='col-4'>
                         <h6>Inserisci pista</h6>
-                        <form action='controlloAmm.php?indiceForm=piste' method='POST'>
-                            <label for='nome'>Nome pista:</label><br>
-                            <input type='text' name='nome' class='border-2 border-black rounded-2 col-9 height_input'><br><br>
-                            <label for='paese'>Paese:</label><br>
-                            <input type='text' name='paese' class='border-2 border-black rounded-2 col-9 height_input'><br><br>
-                            <label for='lunghezza'>Lunghezza:</label><br>
-                            <input type='text' name='lunghezza' class='border-2 border-black rounded-2 col-9 height_input'><br><br>
-                            <label for='tipo'>Tipo circuito:</label><br>
-                            <select name='tipo' class='border-2 border-black rounded-2 col-9 height_input'>
-                                <option value='autodromo'>Autodromo</option>
-                                <option value='strada'>Strada</option>
-                            </select><br><br>
+                        <form action='controlloAmm.php?indiceForm=pisteIns' method='POST'>
+                            <label for='nome_pista'>Nome pista:</label><br>
+                            <input type='text' name='nome_pista' class='border-2 border-black rounded-2 col-9 height_input' required><br><br>
+                            <label for='data'>Data:</label><br>
+                            <input type='date' name='data' class='border-2 border-black rounded-2 col-9 height_input' required><br><br>
+                            <input type='submit' class='bg-success text-white rounded-2 border-1 border-success' value='Inserisci'>
+                        </form><br><br>
+                    </div>";
+                    echo"<div class='col-4'>
+                        <h6>Modifica pista</h6>
+                        <form action='controlloAmm.php?indiceForm=pisteUp' method='POST'>
+                            <label for='nome_pista'>Nome pista:</label><br>
+                            <input type='text' name='nome_pista' class='border-2 border-black rounded-2 col-9 height_input'><br><br>
+                            <label for='data'>Data:</label><br>
+                            <input type='date' name='data' class='border-2 border-black rounded-2 col-9 height_input'><br><br>
+                            <label for='nome_vincitore'>Nome vincitore:</label><br>
+                            <input type='text' name='nome_vincitore' class='border-2 border-black rounded-2 col-9 height_input'><br><br>
+                            <label for='cognome_vincitore'>Cognome vincitore:</label><br>
+                            <input type='text' name='cognome_vincitore' class='border-2 border-black rounded-2 col-9 height_input'><br><br>
+                            <input type='submit' class='bg-primary text-white rounded-2 border-1 border-primary' value='Inserisci'>
+                        </form><br><br>
+                    </div>";
+                    echo"<div class='col-4'>
+                        <h6>Elimina pista</h6>
+                        <form action='controlloAmm.php?indiceForm=pisteRim' method='POST'>
+                            <label for='nome_pista'>Nome pista:</label><br>
+                            <input type='text' name='nome_pista' class='border-2 border-black rounded-2 col-9 height_input'><br><br>
+                            <label for='data'>Data:</label><br>
+                            <input type='date' name='data' class='border-2 border-black rounded-2 col-9 height_input' required><br><br>
                             <input type='submit' class='bg-danger text-white rounded-2 border-1 border-danger' value='Inserisci'>
                         </form><br><br>
                     </div>";
