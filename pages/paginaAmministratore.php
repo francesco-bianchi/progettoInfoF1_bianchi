@@ -192,7 +192,78 @@
                     </div>";
                     }
                     else if($_GET["indice"]=="piloti"){
-
+                        echo"<div class='col-4'>
+                        <h6>Inserisci pilota</h6>
+                        <form action='controlloAmm.php?indiceForm=pilotaIns' method='POST'>
+                            <label for='nome'>Nome pilota:</label><br>
+                            <input type='text' name='nome' class='border-2 border-black rounded-2 col-9 height_input' required><br><br>
+                            <label for='cognome'>Cognome pilota:</label><br>
+                            <input type='text' name='cognome' class='border-2 border-black rounded-2 col-9 height_input' required><br><br>
+                            <label for='nazionalita'>Nazionalita:</label><br>
+                            <input type='text' name='nazionalita' class='border-2 border-black rounded-2 col-9 height_input'><br><br>
+                            <label for='scuderia'>Scuderia attuale:</label><br>
+                            <select name='scuderia' class='border-2 border-black rounded-2 col-9 height_input'>";
+                                    // Azzera l'indice del risultato per riutilizzarlo
+                                    $result_scuderie->data_seek(0);
+                                    while ($row = mysqli_fetch_array($result_scuderie, MYSQLI_ASSOC))
+                                    {
+                                        echo"<option value='$row[scuderia_id]'>$row[nome_scuderia]</option>";
+                                    }
+                            echo"</select><br><br>
+                            <input type='submit' class='bg-success text-white rounded-2 border-1 border-success' value='Inserisci'>
+                        </form><br><br>
+                    </div>";
+                    echo"<div class='col-4'>
+                        <h6>Modifica pilota</h6>
+                        <form action='controlloAmm.php?indiceForm=pilotaUp' method='POST'>
+                            <label for='nome'>Nome pilota:</label><br>
+                            <input type='text' name='nome' class='border-2 border-black rounded-2 col-9 height_input'><br><br>
+                            <label for='cognome'>Cognome pilota:</label><br>
+                            <input type='text' name='cognome' class='border-2 border-black rounded-2 col-9 height_input'><br><br>
+                            <label for='nazionalita'>Nazionalita:</label><br>
+                            <input type='text' name='nazionalita' class='border-2 border-black rounded-2 col-9 height_input'><br><br>
+                            <label for='vittorie'>Vittorie:</label><br>
+                            <input type='number' name='vittorie' class='border-2 border-black rounded-2 col-9 height_input'><br><br>
+                            <label for='gare'>Gare svolte:</label><br>
+                            <input type='number' name='gare' class='border-2 border-black rounded-2 col-9 height_input'><br><br>
+                            <label for='podi'>Podi:</label><br>
+                            <input type='number' name='podi' class='border-2 border-black rounded-2 col-9 height_input'><br><br>
+                            <label for='scuderia'>Scuderia attuale:</label><br>
+                            <select name='scuderia' class='border-2 border-black rounded-2 col-9 height_input'>
+                            <option value='' selected></option>";
+                                    // Azzera l'indice del risultato per riutilizzarlo
+                                    $result_scuderie->data_seek(0);
+                                    while ($row = mysqli_fetch_array($result_scuderie, MYSQLI_ASSOC))
+                                    {
+                                        echo"<option value='$row[scuderia_id]'>$row[nome_scuderia]</option>";
+                                    }
+                                echo"</select><br><br>
+                            <label for='anno_inizio'>Anno di inizio:</label><br>
+                            <input type='number' name='anno_inizio' class='border-2 border-black rounded-2 col-9 height_input'><br><br>
+                            <label for='anno_fine'>Anno di fine:</label><br>
+                            <input type='number' name='anno_fine' class='border-2 border-black rounded-2 col-9 height_input'><br><br>
+                            <input type='submit' class='bg-primary text-white rounded-2 border-1 border-primary' value='Modifica'>
+                        </form><br><br>
+                    </div>";
+                    echo"<div class='col-4'>
+                        <h6>Elimina pilota</h6>
+                        <form action='controlloAmm.php?indiceForm=pilotaRim' method='POST'>
+                            <label for='nome'>Nome pilota:</label><br>
+                            <input type='text' name='nome' class='border-2 border-black rounded-2 col-9 height_input'><br><br>
+                            <label for='cognome'>Cognome pilota:</label><br>
+                            <input type='text' name='cognome' class='border-2 border-black rounded-2 col-9 height_input' required><br><br>
+                            <label for='scuderia'>Scuderia:</label><br>
+                            <select name='scuderia' class='border-2 border-black rounded-2 col-9 height_input'>";
+                                    // Azzera l'indice del risultato per riutilizzarlo
+                                    $result_scuderie->data_seek(0);
+                                    while ($row = mysqli_fetch_array($result_scuderie, MYSQLI_ASSOC))
+                                    {
+                                        echo"<option value='$row[scuderia_id]'>$row[nome_scuderia]</option>";
+                                    }
+                                echo"</select><br><br>
+                            <input type='submit' class='bg-danger text-white rounded-2 border-1 border-danger' value='Rimuovi'>
+                        </form><br><br>
+                    </div>";
                     }
                 echo"</div>";
             }

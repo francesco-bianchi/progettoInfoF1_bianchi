@@ -265,6 +265,162 @@
                 header("Location: ./paginaAmministratore.php?indice=piste&erroreRim=true");
             }
         }
+
+
+
+        //inserimento pilota
+        if($_GET["indiceForm"] == "pilotaIns"){ //da fare dopo l'inserimwnto di un pilota
+            //query per ottenere l'id del pilota selezionato
+            $query_pilota = "SELECT p.id FROM Piloti p WHERE p.nome = '$_POST[nome]' AND p.cognome='$_POST[cognome]'";
+            $result_pilota = mysqli_query($connessione, $query_pilota)
+                or die ("<br>Errore di chiusura" . mysqli_error($connessione) . " ". mysqli_errno($connessione));
+            
+            if(mysqli_num_rows($result_pilota) > 0){
+                header("Location: ./paginaAmministratore.php?indice=piloti&erroreInsPres=true");
+            }
+            else{
+
+                $query = "INSERT INTO Piloti (nome, cognome, nazionalita, immagine, vittorie, gare_svolte, podi) 
+                                    VALUES('$_POST[nome]', '$_POST[cognome]', '$_POST[nazionalita]', null, 0,0,0)";
+                $result = mysqli_query($connessione, $query)
+                    or die ("<br>Errore di chiusura" . mysqli_error($connessione) . " ". mysqli_errno($connessione));
+                
+                $query_pilota = "SELECT p.id FROM Piloti p WHERE p.nome = '$_POST[nome]' AND p.cognome='$_POST[cognome]'";
+                $result_pilota = mysqli_query($connessione, $query_pilota)
+                    or die ("<br>Errore di chiusura" . mysqli_error($connessione) . " ". mysqli_errno($connessione));
+
+                if(mysqli_num_rows($result_pilota) > 0){
+                    while ($row = mysqli_fetch_array($result_pilota)) {
+                        $id = $row;
+                    }
+                    
+                    $queryPilScud = "INSERT INTO Piloti_Scuderie (pilota_id, scuderia_id, anno_inizio, anno_fine) 
+                    VALUES($id[0], '$_POST[scuderia]', 2025, null)";
+    
+                    $resultPilScud = mysqli_query($connessione, $queryPilScud)
+                        or die ("<br>Errore di chiusura" . mysqli_error($connessione) . " ". mysqli_errno($connessione));
+                    header("Location: ./paginaAmministratore.php?indice=piloti&successoInsScud=true");
+                }
+                else{
+                    header("Location: ./paginaAmministratore.php?indice=piloti&erroreIns=true");
+                }
+                
+            }
+        }
+        //modifica pilota
+        if($_GET["indiceForm"] == "pilotaUp"){
+            $query_pilota = "SELECT p.id FROM Piloti p WHERE p.nome = '$_POST[nome]' AND p.cognome='$_POST[cognome]'";
+            $result_pilota = mysqli_query($connessione, $query_pilota)
+                or die ("<br>Errore di chiusura" . mysqli_error($connessione) . " ". mysqli_errno($connessione));
+    
+            
+            if(mysqli_num_rows($result_pilota) > 0){
+                
+                while ($row = mysqli_fetch_array($result_pilota)) {
+                    $id = $row;
+                }
+                
+                if($_POST["vittorie"]==null){
+                    $vittorie = 0;
+                }
+                else{
+                    $vittorie = $_POST["vittorie"];
+                }
+
+                if($_POST["gare"]==null){
+                    $gare = 0;
+                }
+                else{
+                    $gare = $_POST["gare"];
+                }
+
+                if($_POST["podi"]==null){
+                    $podi = 0;
+                }
+                else{
+                    $podi = $_POST["podi"];
+                }
+
+                $query = " UPDATE Piloti SET ";
+                if($_POST["nazionalita"]!=null){
+                    $query = $query . "nazionalita = '$_POST[nazionalita]', ";
+                }
+                $query = $query ."vittorie = vittorie + $vittorie, gare_svolte = gare_svolte + $gare, podi = podi + $podi WHERE id = $id[0]";
+
+                $result = mysqli_query($connessione, $query)
+                    or die ("<br>Errore di chiusura" . mysqli_error($connessione) . " ". mysqli_errno($connessione));
+
+                
+                if($_POST["scuderia"]!=null || $_POST["anno_inizio"]!=null || $_POST["anno_fine"]!=null){
+                    $queryScud = " UPDATE Piloti_Scuderie SET ";
+                    if($_POST["scuderia"]!=null){
+                        $queryScud = $queryScud . "scuderia_id = $_POST[scuderia]";
+                    }
+                    if($_POST["anno_inizio"]!=null || $_POST["anno_fine"]!=null){
+                        $queryScud = $queryScud . ", ";
+                    }
+                    if($_POST["anno_inizio"]!=null){
+                        $queryScud = $queryScud . "anno_inizio = $_POST[anno_inizio]";
+                        if($_POST["anno_fine"]!=null){
+                            $queryScud = $queryScud . ", ";
+                        }
+                    }
+                    if($_POST["anno_fine"]!=null){
+                        $queryScud = $queryScud . "anno_fine = $_POST[anno_fine]";
+                    }
+                    $queryScud = $queryScud ." WHERE pilota_id = $id[0]";
+    
+                    $resultScud = mysqli_query($connessione, $queryScud)
+                        or die ("<br>Errore di chiusura" . mysqli_error($connessione) . " ". mysqli_errno($connessione));
+                }
+               
+                
+                header("Location: ./paginaAmministratore.php?indice=piloti&successoUp=true");
+                
+            }
+            else{
+                
+                header("Location: ./paginaAmministratore.php?indice=piloti&erroreUp=true");
+            }
+        }
+        //rimozione pilota
+        if($_GET["indiceForm"] == "pilotaRim"){
+            $query_pilota = "SELECT p.id FROM Piloti p WHERE p.nome = '$_POST[nome]' AND p.cognome='$_POST[cognome]'";
+            $result_pilota = mysqli_query($connessione, $query_pilota)
+                or die ("<br>Errore di chiusura" . mysqli_error($connessione) . " ". mysqli_errno($connessione));
+
+            $query_scud = "SELECT * FROM Piloti_Scuderie ps WHERE ps.pilota_id = '$id[0]' AND ps.scuderia_id = '$_POST[scuderia]'";
+            $result_scud = mysqli_query($connessione, $query_pilota)
+                or die ("<br>Errore di chiusura" . mysqli_error($connessione) . " ". mysqli_errno($connessione));
+
+            
+            if(mysqli_num_rows($result_pilota) > 0 && mysqli_num_rows($result_scud)>0){
+                
+                while ($row = mysqli_fetch_array($result_pilota)) {
+                    $id = $row;
+                }
+
+                $queryRimScud = " DELETE FROM Piloti_Scuderie
+                WHERE pilota_id = $id[0] AND scuderia_id = $_POST[scuderia]";
+
+                $resultRimScud = mysqli_query($connessione, $queryRimScud)
+                    or die ("<br>Errore di chiusura" . mysqli_error($connessione) . " ". mysqli_errno($connessione));
+
+                $query = " DELETE FROM Piloti
+                    WHERE id = $id[0]";
+    
+                $result = mysqli_query($connessione, $query)
+                    or die ("<br>Errore di chiusura" . mysqli_error($connessione) . " ". mysqli_errno($connessione));
+    
+                header("Location: ./paginaAmministratore.php?indice=piloti&successoRim=true");
+
+                
+            }
+            else{
+                
+                header("Location: ./paginaAmministratore.php?indice=piloti&erroreRim=true");
+            }
+        }
     }
     else{
         header("Location: ../index.php");
