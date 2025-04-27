@@ -14,3 +14,9 @@ CREATE TABLE Utenti (
     Nazione varchar(50) not null,
     FOREIGN KEY (Email) REFERENCES PasswordUtenti(Email)
 );
+
+INSERT INTO PasswordUtenti(Email, PASSWORD)
+VALUES("fralu06@gmail.com", "fra");
+
+INSERT INTO Utenti(Email, Nome, Cognome, Sesso, Nazione)
+VALUES("fralu06@gmail.com", "Francesco", "Bianchi", "Uomo", "Italia");
