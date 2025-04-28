@@ -61,15 +61,11 @@
                         <li><a class="dropdown-item visited dropdown-link" href="./piloti.php?anno=2025">Piloti</a></li>
                         <li><a class="dropdown-item visited dropdown-link" href="./piste.php?anno=2025">Piste</a></li>
                     </ul>
-                </li>
-            </ul>
-          </div>
-          <div>
-            <ul class="navbar-nav">
-                <li class="nav-item">
+                    </li>
+                <li class="nav-item position-absolute top-50 start-100 pe-5 translate-middle pe-2">
                     <?php
                         if(isset($_SESSION["utenti"])){
-                            echo "<a href='./personale.php' class='nav-link active visited text-white' aria-label='Account'>
+                            echo "<a href='./pages/personale.php' class='nav-link active visited text-white' aria-label='Account'>
                                     <svg role='presentation' stroke-width='2' focusable='false' width='25' height='25' class='icon icon-account' viewBox='0 0 22 22'>
                                         <circle cx='11' cy='7' r='4' fill='none' stroke='currentColor'></circle>
                                         <path d='M3.5 19c1.421-2.974 4.247-5 7.5-5s6.079 2.026 7.5 5' fill='none' stroke='currentColor' stroke-linecap='round'></path>
@@ -77,7 +73,7 @@
                                   </a>";
                         }
                         else{
-                          echo "<a href='./accedi.php' class='nav-link active visited text-white' aria-label='Account'>
+                          echo "<a href='./pages/accedi.php' class='nav-link active visited text-white' aria-label='Account'>
                                     <svg role='presentation' stroke-width='2' focusable='false' width='25' height='25' class='icon icon-account' viewBox='0 0 22 22'>
                                         <circle cx='11' cy='7' r='4' fill='none' stroke='currentColor'></circle>
                                         <path d='M3.5 19c1.421-2.974 4.247-5 7.5-5s6.079 2.026 7.5 5' fill='none' stroke='currentColor' stroke-linecap='round'></path>
@@ -104,96 +100,173 @@
             if(isset($_GET["indice"])){
                 echo"<div class='row'>";
                 //classifiche
-                    if($_GET["indice"]=="cla"){
-                        echo"<div class='col-sm-12 col-lg-4 ps-5'>
-                            <h6>Inserisci pilota nella classifica</h6>
-                            <form action='controlloAmm.php?indiceForm=claIns' method='POST'>
-                                <label for='nome'>Nome pilota:</label><br>
-                                <input type='text' name='nome' class='border-2 border-black rounded-2 col-9 height_input'><br><br>
-                                <label for='cognome'>Cognome pilota:</label><br>
-                                <input type='text' name='cognome' class='border-2 border-black rounded-2 col-9 height_input'><br><br>
-                                <label for='scuderia'>Nome scuderia:</label><br>
-                                <select name='scuderia' class='border-2 border-black rounded-2 col-9 height_input'>";
-                                    while ($row = mysqli_fetch_array($result_scuderie, MYSQLI_ASSOC))
-                                    {
-                                        echo"<option value='$row[scuderia_id]'>$row[nome_scuderia]</option>";
-                                    }
-                                echo"</select><br><br>
-                                <input type='submit' class='bg-success text-white rounded-2 border-1 border-success' value='Inserisci'>
-                            </form><br><br>
-                        </div>";
-                        echo"<div class='col-sm-12 col-lg-4 ps-5'>
-                            <h6>Modifica pilota nella classifica</h6>
-                            <form action='controlloAmm.php?indiceForm=claUp' method='POST'>
-                                <label for='nome'>Nome pilota:</label><br>
-                                <input type='text' name='nome' class='border-2 border-black rounded-2 col-9 height_input'><br><br>
-                                <label for='cognome'>Cognome pilota:</label><br>
-                                <input type='text' name='cognome' class='border-2 border-black rounded-2 col-9 height_input'><br><br>
-                                <label for='punteggio'>Punteggio da aggiungere:</label><br>
-                                <input type='text' name='punteggio' class='border-2 border-black rounded-2 col-9 height_input'><br><br>
-                                <label for='scuderia'>Nome scuderia:</label><br>
-                                <select name='scuderia' class='border-2 border-black rounded-2 col-9 height_input'>";
-                                    // Azzera l'indice del risultato per riutilizzarlo
-                                    $result_scuderie->data_seek(0);
-                                    while ($row = mysqli_fetch_array($result_scuderie, MYSQLI_ASSOC))
-                                    {
-                                        echo"<option value='$row[scuderia_id]'>$row[nome_scuderia]</option>";
-                                    }
-                                echo"</select><br><br>
-                                <input type='submit' class='bg-primary text-white rounded-2 border-1 border-primary' value='Modifica'>
-                            </form><br><br>
-                        </div>";
-                        echo"<div class='col-sm-12 col-lg-4 ps-5'>
-                            <h6>Rimozione pilota nella classifica</h6>
-                            <form action='controlloAmm.php?indiceForm=claRim' method='POST'>
-                                <label for='nome'>Nome pilota:</label><br>
-                                <input type='text' name='nome' class='border-2 border-black rounded-2 col-9 height_input'><br><br>
-                                <label for='cognome'>Cognome pilota:</label><br>
-                                <input type='text' name='cognome' class='border-2 border-black rounded-2 col-9 height_input'><br><br>
-                                <input type='submit' class='bg-danger text-white rounded-2 border-1 border-danger' value='Rimuovi'>
-                            </form><br><br>
-                        </div>";
-                    }
-                    //piste
-                    else if($_GET["indice"]=="piste") {
-                        echo"<div class='col-4'>
-                        <h6>Inserisci pista</h6>
-                        <form action='controlloAmm.php?indiceForm=pisteIns' method='POST'>
-                            <label for='nome_pista'>Nome pista:</label><br>
-                            <input type='text' name='nome_pista' class='border-2 border-black rounded-2 col-9 height_input' required><br><br>
-                            <label for='data'>Data:</label><br>
-                            <input type='date' name='data' class='border-2 border-black rounded-2 col-9 height_input' required><br><br>
+                if($_GET["indice"]=="cla"){
+                    echo"<div class='col-sm-12 col-lg-4 ps-5'>
+                        <h6>Inserisci pilota nella classifica</h6>";
+                        if(isset($_GET["successoIns"])){
+                            echo"<p class='text-success'>Inserimento avvenuto correttamente</p>";
+                        }
+                        else if(isset($_GET["erroreIns"])){
+                            echo"<p class='text-danger'>Inserimento non avvenuto perché pilota inesistente</p>";
+                        }
+                        else if(isset($_GET["erroreInsCla"])){
+                            echo"<p class='text-danger'>Inserimento non avvenuto perché pilota già presente in classifica</p>";
+                        }
+                        echo"<form action='controlloAmm.php?indiceForm=claIns' method='POST'>
+                            <label for='nome'>Nome pilota:</label><br>
+                            <input type='text' name='nome' class='border-2 border-black rounded-2 col-9 height_input'><br><br>
+                            <label for='cognome'>Cognome pilota:</label><br>
+                            <input type='text' name='cognome' class='border-2 border-black rounded-2 col-9 height_input'><br><br>
+                            <label for='scuderia'>Nome scuderia:</label><br>
+                            <select name='scuderia' class='border-2 border-black rounded-2 col-9 height_input'>";
+                                while ($row = mysqli_fetch_array($result_scuderie, MYSQLI_ASSOC))
+                                {
+                                    echo"<option value='$row[scuderia_id]'>$row[nome_scuderia]</option>";
+                                }
+                            echo"</select><br><br>
                             <input type='submit' class='bg-success text-white rounded-2 border-1 border-success' value='Inserisci'>
                         </form><br><br>
                     </div>";
-                    echo"<div class='col-4'>
-                        <h6>Modifica pista</h6>
-                        <form action='controlloAmm.php?indiceForm=pisteUp' method='POST'>
-                            <label for='nome_pista'>Nome pista:</label><br>
-                            <input type='text' name='nome_pista' class='border-2 border-black rounded-2 col-9 height_input'><br><br>
-                            <label for='data'>Data:</label><br>
-                            <input type='date' name='data' class='border-2 border-black rounded-2 col-9 height_input'><br><br>
-                            <label for='nome_vincitore'>Nome vincitore:</label><br>
-                            <input type='text' name='nome_vincitore' class='border-2 border-black rounded-2 col-9 height_input'><br><br>
-                            <label for='cognome_vincitore'>Cognome vincitore:</label><br>
-                            <input type='text' name='cognome_vincitore' class='border-2 border-black rounded-2 col-9 height_input'><br><br>
-                            <input type='submit' class='bg-primary text-white rounded-2 border-1 border-primary' value='Inserisci'>
+                    echo"<div class='col-sm-12 col-lg-4 ps-5'>
+                        <h6>Modifica pilota nella classifica</h6>";
+                        if(isset($_GET["successoUp"])){
+                            echo"<p class='text-success'>Modifica avvenuta correttamente</p>";
+                        }
+                        else if(isset($_GET["erroreUpCla"])){
+                            echo"<p class='text-danger'>Modifiche non applicate perché pilota presente in una scuderia diversa</p>";
+                        }
+                        else if(isset($_GET["erroreUp"])){
+                            echo"<p class='text-danger'>Modifiche non applicate perché pilota non presente</p>";
+                        }
+                        echo"<form action='controlloAmm.php?indiceForm=claUp' method='POST'>
+                            <label for='nome'>Nome pilota:</label><br>
+                            <input type='text' name='nome' class='border-2 border-black rounded-2 col-9 height_input'><br><br>
+                            <label for='cognome'>Cognome pilota:</label><br>
+                            <input type='text' name='cognome' class='border-2 border-black rounded-2 col-9 height_input'><br><br>
+                            <label for='punteggio'>Punteggio da aggiungere:</label><br>
+                            <input type='text' name='punteggio' class='border-2 border-black rounded-2 col-9 height_input'><br><br>
+                            <label for='scuderia'>Nome scuderia:</label><br>
+                            <select name='scuderia' class='border-2 border-black rounded-2 col-9 height_input'>";
+                                // Azzera l'indice del risultato per riutilizzarlo
+                                $result_scuderie->data_seek(0);
+                                while ($row = mysqli_fetch_array($result_scuderie, MYSQLI_ASSOC))
+                                {
+                                    echo"<option value='$row[scuderia_id]'>$row[nome_scuderia]</option>";
+                                }
+                            echo"</select><br><br>
+                            <input type='submit' class='bg-primary text-white rounded-2 border-1 border-primary' value='Modifica'>
                         </form><br><br>
                     </div>";
-                    echo"<div class='col-4'>
-                        <h6>Elimina pista</h6>
-                        <form action='controlloAmm.php?indiceForm=pisteRim' method='POST'>
-                            <label for='nome_pista'>Nome pista:</label><br>
-                            <input type='text' name='nome_pista' class='border-2 border-black rounded-2 col-9 height_input'><br><br>
-                            <label for='data'>Data:</label><br>
-                            <input type='date' name='data' class='border-2 border-black rounded-2 col-9 height_input' required><br><br>
-                            <input type='submit' class='bg-danger text-white rounded-2 border-1 border-danger' value='Inserisci'>
+                    echo"<div class='col-sm-12 col-lg-4 ps-5'>
+                        <h6>Rimozione pilota nella classifica</h6>";
+                        if(isset($_GET["successoRim"])){
+                            echo"<p class='text-success'>Rimozione avvenuta correttamente</p>";
+                        }
+                        else if(isset($_GET["erroreRimCla"])){
+                            echo"<p class='text-danger'>Rimozione non avvenuta perché pilota presente in una scuderia diversa</p>";
+                        }
+                        else if(isset($_GET["erroreRim"])){
+                            echo"<p class='text-danger'>Rimozione non avvenuta perché pilota non presente</p>";
+                        }
+                        echo"
+                        <form action='controlloAmm.php?indiceForm=claRim' method='POST'>
+                            <label for='nome'>Nome pilota:</label><br>
+                            <input type='text' name='nome' class='border-2 border-black rounded-2 col-9 height_input'><br><br>
+                            <label for='cognome'>Cognome pilota:</label><br>
+                            <input type='text' name='cognome' class='border-2 border-black rounded-2 col-9 height_input'><br><br>
+                            <label for='scuderia'>Nome scuderia:</label><br>
+                            <select name='scuderia' class='border-2 border-black rounded-2 col-9 height_input'>";
+                                // Azzera l'indice del risultato per riutilizzarlo
+                                $result_scuderie->data_seek(0);
+                                while ($row = mysqli_fetch_array($result_scuderie, MYSQLI_ASSOC))
+                                {
+                                    echo"<option value='$row[scuderia_id]'>$row[nome_scuderia]</option>";
+                                }
+                            echo"</select><br><br>
+                            <input type='submit' class='bg-danger text-white rounded-2 border-1 border-danger' value='Rimuovi'>
                         </form><br><br>
                     </div>";
-                    }
-                    else if($_GET["indice"]=="piloti"){
-                        echo"<div class='col-4'>
-                        <h6>Inserisci pilota</h6>
+                }
+                //piste
+                else if($_GET["indice"]=="piste") {
+                    echo"<div class='col-4'>
+                    <h6>Inserisci pista</h6>";
+                        if(isset($_GET["successoPiste"])){
+                            echo"<p class='text-success'>Inserimento avvenuto correttamente</p>";
+                        }
+                        else if(isset($_GET["erroreInsPiste"])){
+                            echo"<p class='text-danger'>Inserimento non avvenuto perché pista già presente nella data selezionata</p>";
+                        }
+                        else if(isset($_GET["errorePiste"])){
+                            echo"<p class='text-danger'>Inserimento non avvenuto perché circuito non presente in archivio</p>"; // mettere la possibilità di inserire circuito e scuderia
+                        }
+                        echo"
+                    <form action='controlloAmm.php?indiceForm=pisteIns' method='POST'>
+                        <label for='nome_pista'>Nome pista:</label><br>
+                        <input type='text' name='nome_pista' class='border-2 border-black rounded-2 col-9 height_input' required><br><br>
+                        <label for='data'>Data:</label><br>
+                        <input type='date' name='data' class='border-2 border-black rounded-2 col-9 height_input' required><br><br>
+                        <input type='submit' class='bg-success text-white rounded-2 border-1 border-success' value='Inserisci'>
+                    </form><br><br>
+                </div>";
+                echo"<div class='col-4'>
+                    <h6>Modifica pista</h6>";
+                        if(isset($_GET["successoUp"])){
+                            echo"<p class='text-success'>Modifica avvenuta correttamente</p>";
+                        }
+                        else if(isset($_GET["erroreUpPisteDati"])){
+                            echo"<p class='text-danger'>Modifiche non applicate perché dati non inseriti correttamente</p>";
+                        }
+                        else if(isset($_GET["erroreUp"])){
+                            echo"<p class='text-danger'>Modifiche non applicate perché gara non presente</p>";
+                        }
+                        echo"
+                    <form action='controlloAmm.php?indiceForm=pisteUp' method='POST'>
+                        <label for='nome_pista'>Nome pista:</label><br>
+                        <input type='text' name='nome_pista' class='border-2 border-black rounded-2 col-9 height_input'><br><br>
+                        <label for='data'>Data:</label><br>
+                        <input type='date' name='data' class='border-2 border-black rounded-2 col-9 height_input'><br><br>
+                        <label for='nome_vincitore'>Nome vincitore:</label><br>
+                        <input type='text' name='nome_vincitore' class='border-2 border-black rounded-2 col-9 height_input'><br><br>
+                        <label for='cognome_vincitore'>Cognome vincitore:</label><br>
+                        <input type='text' name='cognome_vincitore' class='border-2 border-black rounded-2 col-9 height_input'><br><br>
+                        <input type='submit' class='bg-primary text-white rounded-2 border-1 border-primary' value='Inserisci'>
+                    </form><br><br>
+                </div>";
+                echo"<div class='col-4'>
+                    <h6>Elimina pista</h6>";
+                        if(isset($_GET["successoRim"])){
+                            echo"<p class='text-success'>Rimozione avvenuta correttamente</p>";
+                        }
+                        else if(isset($_GET["erroreRimPiste"])){
+                            echo"<p class='text-danger'>Rimozione non avvenuta perché gara presente in una data diversa</p>";
+                        }
+                        else if(isset($_GET["erroreRim"])){
+                            echo"<p class='text-danger'>Rimozione non avvenuta perché pilota non presente</p>";
+                        }
+                        echo"
+                    <form action='controlloAmm.php?indiceForm=pisteRim' method='POST'>
+                        <label for='nome_pista'>Nome pista:</label><br>
+                        <input type='text' name='nome_pista' class='border-2 border-black rounded-2 col-9 height_input'><br><br>
+                        <label for='data'>Data:</label><br>
+                        <input type='date' name='data' class='border-2 border-black rounded-2 col-9 height_input' required><br><br>
+                        <input type='submit' class='bg-danger text-white rounded-2 border-1 border-danger' value='Inserisci'>
+                    </form><br><br>
+                </div>";
+                }
+                else if($_GET["indice"]=="piloti"){
+                    echo"<div class='col-4'>
+                        <h6>Inserisci pilota</h6>";
+                        if(isset($_GET["successoInsScud"])){
+                            echo"<p class='text-success'>Inserimento avvenuto correttamente</p>";
+                        }
+                        else if(isset($_GET["erroreInsPres"])){
+                            echo"<p class='text-danger'>Inserimento non avvenuto perché pilota già presente nell'archivio</p>";
+                        }
+                        else if(isset($_GET["erroreInsScud"])){
+                            echo"<p class='text-danger'>Inserimento non avvenuto perché pilota già presente nella scuderia</p>"; // mettere la possibilità di inserire circuito e scuderia
+                        }
+                        echo"
                         <form action='controlloAmm.php?indiceForm=pilotaIns' method='POST'>
                             <label for='nome'>Nome pilota:</label><br>
                             <input type='text' name='nome' class='border-2 border-black rounded-2 col-9 height_input' required><br><br>
@@ -214,7 +287,14 @@
                         </form><br><br>
                     </div>";
                     echo"<div class='col-4'>
-                        <h6>Modifica pilota</h6>
+                        <h6>Modifica pilota</h6>";
+                        if(isset($_GET["successoUp"])){
+                            echo"<p class='text-success'>Modifica avvenuta correttamente</p>";
+                        }
+                        else if(isset($_GET["erroreUp"])){
+                            echo"<p class='text-danger'>Modifiche non applicate perché pilota non presente in archivio</p>";
+                        }
+                        echo"
                         <form action='controlloAmm.php?indiceForm=pilotaUp' method='POST'>
                             <label for='nome'>Nome pilota:</label><br>
                             <input type='text' name='nome' class='border-2 border-black rounded-2 col-9 height_input'><br><br>
@@ -246,7 +326,17 @@
                         </form><br><br>
                     </div>";
                     echo"<div class='col-4'>
-                        <h6>Elimina pilota</h6>
+                        <h6>Elimina pilota</h6>";
+                        if(isset($_GET["successoRim"])){
+                            echo"<p class='text-success'>Rimozione avvenuta correttamente</p>";
+                        }
+                        else if(isset($_GET["erroreRimScud"])){
+                            echo"<p class='text-danger'>Rimozione non avvenuta perché pilota non presente in nella scuderia selezionata</p>";
+                        }
+                        else if(isset($_GET["erroreRim"])){
+                            echo"<p class='text-danger'>Rimozione non avvenuta perché pilota non presente</p>";
+                        }
+                        echo"
                         <form action='controlloAmm.php?indiceForm=pilotaRim' method='POST'>
                             <label for='nome'>Nome pilota:</label><br>
                             <input type='text' name='nome' class='border-2 border-black rounded-2 col-9 height_input'><br><br>
@@ -266,6 +356,7 @@
                     </div>";
                     }
                 echo"</div>";
+
             }
             else{
                 header("Location: ../index.php");

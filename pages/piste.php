@@ -61,15 +61,11 @@
                         <li><a class="dropdown-item visited dropdown-link" href="./piloti.php?anno=2025">Piloti</a></li>
                         <li><a class="dropdown-item visited dropdown-link" href="./piste.php?anno=2025">Piste</a></li>
                     </ul>
-                </li>
-            </ul>
-          </div>
-          <div>
-            <ul class="navbar-nav">
-                <li class="nav-item">
+                    </li>
+                <li class="nav-item position-absolute top-50 start-100 pe-5 translate-middle pe-2">
                     <?php
                         if(isset($_SESSION["utenti"])){
-                            echo "<a href='./personale.php' class='nav-link active visited text-white' aria-label='Account'>
+                            echo "<a href='./pages/personale.php' class='nav-link active visited text-white' aria-label='Account'>
                                     <svg role='presentation' stroke-width='2' focusable='false' width='25' height='25' class='icon icon-account' viewBox='0 0 22 22'>
                                         <circle cx='11' cy='7' r='4' fill='none' stroke='currentColor'></circle>
                                         <path d='M3.5 19c1.421-2.974 4.247-5 7.5-5s6.079 2.026 7.5 5' fill='none' stroke='currentColor' stroke-linecap='round'></path>
@@ -77,7 +73,7 @@
                                   </a>";
                         }
                         else{
-                          echo "<a href='./accedi.php' class='nav-link active visited text-white' aria-label='Account'>
+                          echo "<a href='./pages/accedi.php' class='nav-link active visited text-white' aria-label='Account'>
                                     <svg role='presentation' stroke-width='2' focusable='false' width='25' height='25' class='icon icon-account' viewBox='0 0 22 22'>
                                         <circle cx='11' cy='7' r='4' fill='none' stroke='currentColor'></circle>
                                         <path d='M3.5 19c1.421-2.974 4.247-5 7.5-5s6.079 2.026 7.5 5' fill='none' stroke='currentColor' stroke-linecap='round'></path>
@@ -137,11 +133,6 @@
                                     <?php endforeach; ?>
                                     </div>
                                 </div><br>
-                                <div class="row">
-                                    <div class="col-6 text-start ps-3">
-                                        <p class="fw-bold">Date: </p>
-                                    </div>
-                                </div>
                                 
                             </div>
                             <div class="modal-footer">

@@ -18,7 +18,7 @@
                 <li class="nav-item px-2">
                     <a class="nav-link active visited text-white" aria-current="page" href="./index.html">Home</a>
                 </li>
-                <li class="nav-item dropdown px-2">
+                <li class="nav-item dropdown px-md-2 px-1">
                     <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Albo
                     </a>
@@ -30,7 +30,7 @@
                         <li><a class="dropdown-item visited dropdown-link" href="./pages/classifiche.php?anno=2024">Classifica 2024</a></li>
                     </ul>
                 </li>
-                <li class="nav-item dropdown px-2">
+                <li class="nav-item dropdown px-md-2 px-1">
                     <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Piste
                     </a>
@@ -42,7 +42,7 @@
                         <li><a class="dropdown-item visited dropdown-link" href="./pages/piste.php?anno=2024">Piste del 2024</a></li>
                     </ul>
                 </li>
-                <li class="nav-item dropdown px-2">
+                <li class="nav-item dropdown px-md-2 px-1">
                     <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Piloti
                     </a>
@@ -54,7 +54,7 @@
                         <li><a class="dropdown-item visited dropdown-link" href="./pages/piloti.php?anno=2024">Piloti del 2024</a></li>
                     </ul>
                 </li>
-                <li class="nav-item dropdown px-2">
+                <li class="nav-item dropdown px-md-2 px-1">
                     <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     2025
                     </a>
@@ -64,11 +64,7 @@
                         <li><a class="dropdown-item visited dropdown-link" href="./pages/piste.php?anno=2025">Piste</a></li>
                     </ul>
                 </li>
-            </ul>
-          </div>
-          <div>
-            <ul class="navbar-nav">
-                <li class="nav-item">
+                <li class="nav-item position-absolute top-50 start-100 pe-5 translate-middle pe-2">
                     <?php
                         if(isset($_SESSION["utenti"])){
                             echo "<a href='./pages/personale.php' class='nav-link active visited text-white' aria-label='Account'>
