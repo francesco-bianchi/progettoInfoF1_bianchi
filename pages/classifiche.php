@@ -65,7 +65,7 @@
                 <li class="nav-item position-absolute top-50 start-100 pe-5 translate-middle pe-2">
                     <?php
                         if(isset($_SESSION["utenti"])){
-                            echo "<a href='./pages/personale.php' class='nav-link active visited text-white' aria-label='Account'>
+                            echo "<a href='./personale.php' class='nav-link active visited text-white' aria-label='Account'>
                                     <svg role='presentation' stroke-width='2' focusable='false' width='25' height='25' class='icon icon-account' viewBox='0 0 22 22'>
                                         <circle cx='11' cy='7' r='4' fill='none' stroke='currentColor'></circle>
                                         <path d='M3.5 19c1.421-2.974 4.247-5 7.5-5s6.079 2.026 7.5 5' fill='none' stroke='currentColor' stroke-linecap='round'></path>
@@ -73,7 +73,7 @@
                                   </a>";
                         }
                         else{
-                          echo "<a href='./pages/accedi.php' class='nav-link active visited text-white' aria-label='Account'>
+                          echo "<a href='./accedi.php' class='nav-link active visited text-white' aria-label='Account'>
                                     <svg role='presentation' stroke-width='2' focusable='false' width='25' height='25' class='icon icon-account' viewBox='0 0 22 22'>
                                         <circle cx='11' cy='7' r='4' fill='none' stroke='currentColor'></circle>
                                         <path d='M3.5 19c1.421-2.974 4.247-5 7.5-5s6.079 2.026 7.5 5' fill='none' stroke='currentColor' stroke-linecap='round'></path>
@@ -339,7 +339,74 @@
             echo"</div>";
 
         ?>
-</div>
+</div><br><br>
+
+<footer class="racing-footer">
+  <div class="racing-stripe"></div>
+  
+  <div class="footer-content">
+    <div class="footer-section footer-brand">
+      <img src="../images/f1_logo_footer.svg" alt="F1 Logo" class="footer-logo">
+      <p class="copyright">© 2003–2025 Formula One World Championship Ltd.</p>
+    </div>
+
+    <div class="footer-section footer-links">
+      <h4>Esplora</h4>
+      <ul>
+        <li><a href="#">Calendario Gare</a></li>
+        <li><a href="#">Piloti</a></li>
+        <li><a href="#">Team</a></li>
+        <li><a href="#">Classifiche</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-section footer-support">
+      <h4>Supporto</h4>
+      <ul>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Termini d'Uso</a></li>
+        <li><a href="#">Cookies Policy</a></li>
+        <li><a href="#">FAQ</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-section footer-social">
+      <h4>Connettiti</h4>
+      <div class="social-icons">
+        <a href="#" aria-label="Instagram" class="social-icon instagram">
+          <i class="bi bi-instagram"></i>
+        </a>
+        <a href="#" aria-label="Twitter" class="social-icon twitter">
+          <i class="bi bi-twitter-x"></i>
+        </a>
+        <a href="#" aria-label="YouTube" class="social-icon youtube">
+          <i class="bi bi-youtube"></i>
+        </a>
+        <a href="#" aria-label="Facebook" class="social-icon facebook">
+          <i class="bi bi-facebook"></i>
+        </a>
+      </div>
+      <div class="newsletter">
+        <h5>Newsletter</h5>
+        <form class="newsletter-form">
+          <input type="email" placeholder="La tua email" required>
+          <button type="submit" aria-label="Subscribe">
+            <i class="bi bi-arrow-right"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  <div class="footer-bottom">
+    <div class="footer-bottom-content">
+      <p>Realizzato a scopo didattico per gli amanti della F1</p>
+      <a href="#" class="back-to-top">
+        Torna su <i class="bi bi-chevron-up"></i>
+      </a>
+    </div>
+  </div>
+</footer>
 
 
 <script src="../script.js"></script>

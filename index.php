@@ -16,7 +16,7 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav">
                 <li class="nav-item px-2">
-                    <a class="nav-link active visited text-white" aria-current="page" href="./index.html">Home</a>
+                    <a class="nav-link active visited text-white" aria-current="page" href="./index.php">Home</a>
                 </li>
                 <li class="nav-item dropdown px-md-2 px-1">
                     <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -195,31 +195,75 @@
             </div>
         </div>
     </div>
-     <!-- footer -->
-     <footer>
-	    <div class="footerWrapper sticky-bottom h-25">
-	        <div class="row footerNav">
-	            <div class="logo col-4 text-start">
-	                    <img src="./images/f1_logo_footer.svg" alt="Formula1" class="w-50 h-50">
-	            </div>
-	            <div class="col-8 text-center">
-	                <ul class="row">
-	                    <li class="col-4">Privacy Policy</li>
-	                    <li class="col-4">Subscription</li>
-	                    <li class="col-4">Terms Of Use</li>
-	                </ul><br>
-	                <ul class="row">
-	                    <li class="col-4">FAQs</li>
-	                    <li class="col-4">Cookies Policy</li>
-	                    <li class="col-4">Preferences</li>
-	                </ul>
-				</div>
-	        </div>
-	        <div class="row">
-	            <span class="col-12 text-center">©2003-2025 Formula One World Championship Limited</span>
-	        </div>
-	    </div>
-	</footer>
+    <footer class="racing-footer">
+  <div class="racing-stripe"></div>
+  
+  <div class="footer-content">
+    <div class="footer-section footer-brand">
+      <img src="./images/f1_logo_footer.svg" alt="F1 Logo" class="footer-logo">
+      <p class="copyright">© 2003–2025 Formula One World Championship Ltd.</p>
+    </div>
+
+    <div class="footer-section footer-links">
+      <h4>Esplora</h4>
+      <ul>
+        <li><a href="#">Calendario Gare</a></li>
+        <li><a href="#">Piloti</a></li>
+        <li><a href="#">Team</a></li>
+        <li><a href="#">Classifiche</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-section footer-support">
+      <h4>Supporto</h4>
+      <ul>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Termini d'Uso</a></li>
+        <li><a href="#">Cookies Policy</a></li>
+        <li><a href="#">FAQ</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-section footer-social">
+      <h4>Connettiti</h4>
+      <div class="social-icons">
+        <a href="#" aria-label="Instagram" class="social-icon instagram">
+          <i class="bi bi-instagram"></i>
+        </a>
+        <a href="#" aria-label="Twitter" class="social-icon twitter">
+          <i class="bi bi-twitter-x"></i>
+        </a>
+        <a href="#" aria-label="YouTube" class="social-icon youtube">
+          <i class="bi bi-youtube"></i>
+        </a>
+        <a href="#" aria-label="Facebook" class="social-icon facebook">
+          <i class="bi bi-facebook"></i>
+        </a>
+      </div>
+      <div class="newsletter">
+        <h5>Newsletter</h5>
+        <form class="newsletter-form">
+          <input type="email" placeholder="La tua email" required>
+          <button type="submit" aria-label="Subscribe">
+            <i class="bi bi-arrow-right"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  <div class="footer-bottom">
+    <div class="footer-bottom-content">
+      <p>Realizzato a scopo didattico per gli amanti della F1</p>
+      <a href="#" class="back-to-top">
+        Torna su <i class="bi bi-chevron-up"></i>
+      </a>
+    </div>
+  </div>
+</footer>
+
+
+
 
 
 
