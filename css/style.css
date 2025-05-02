@@ -3,19 +3,43 @@ body {
   background-color: #f8f9fa;
   font-family: 'Segoe UI', sans-serif;
 }
-
+/* Nav */
 .navbar {
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   position: sticky;
   top: 0;
   z-index: 1000;
 }
 
-.navbar-nav .nav-link {
+.nav-link {
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
   transition: color 0.3s ease;
 }
 
-.navbar-nav .nav-link:hover {
-  color: #dc3545;
+.nav-link:hover {
+  color: red !important;
+}
+
+.dropdown-menu {
+  border-radius: 0;
+  border: none;
+  padding: 0.5rem 0;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.dropdown-link {
+  color: #fff;
+  padding: 0.5rem 1.5rem;
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
+}
+
+.dropdown-item:hover {
+  background-color: red;
+  color: white;
 }
 
 .dropdown-menu a {
@@ -114,7 +138,7 @@ h2.text-danger {
   margin: 0.25rem 0;
 }
 
-/* Titoli delle sezioni */
+/* Titoli footer */
 .footer-section h4 {
   color: #ffffff;
   font-weight: 600;
@@ -282,46 +306,7 @@ h2.text-danger {
   font-family: 'Titillium Web', sans-serif;
 }
 
-/* Nav */
-.navbar {
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-}
-
-.nav-link {
-  font-weight: 600;
-  text-transform: uppercase;
-  font-size: 0.9rem;
-  padding: 0.5rem 1rem;
-  transition: color 0.3s ease;
-}
-
-.nav-link:hover {
-  color: red !important;
-}
-
-.dropdown-menu {
-  border-radius: 0;
-  border: none;
-  padding: 0.5rem 0;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-}
-
-.dropdown-link {
-  color: #fff;
-  padding: 0.5rem 1.5rem;
-  font-size: 0.85rem;
-  transition: all 0.2s ease;
-}
-
-.dropdown-item:hover {
-  background-color: red;
-  color: white;
-}
-
-/* Table styling */
+/* Tabella pagine */
 table {
   width: 90%;
   border-collapse: separate;
@@ -329,11 +314,6 @@ table {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   margin-bottom: 2rem;
-}
-
-thead {
-  background-color: black;
-  color: white;
 }
 
 td {
@@ -354,15 +334,17 @@ tbody tr:hover {
 
 .cell {
   font-weight: 600;
+  background-color: #000;
+  color: wheat;
 }
 
-/* Position colors */
+/* colore terzo */
 
 .text-brown-css {
   color: #cd7f32 !important;
 }
 
-/* Modal styling */
+/* Modal */
 .modal-content {
   border-radius: 8px;
   border: none;
@@ -378,10 +360,6 @@ tbody tr:hover {
 
 .modal-title {
   font-weight: 700;
-}
-
-.modal-body {
-  padding: 25px;
 }
 
 .modal-footer {
@@ -400,7 +378,7 @@ tbody tr:hover {
   transform: translateY(-2px);
 }
 
-/* Image sizing */
+/* Dimensioni img */
 .dim_imm_piloti {
   max-height: 200px;
   border-radius: 5px;
@@ -411,7 +389,7 @@ tbody tr:hover {
   max-height: 100px;
 }
 
-/* Section titles */
+/* Titoli */
 h1 {
   font-weight: 800;
   color: black;
@@ -430,4 +408,9 @@ h1::after {
   width: 150px;
   height: 3px;
   background-color: red;
+}
+
+/* accedi */
+.height_input{
+  height: 50px;
 }
