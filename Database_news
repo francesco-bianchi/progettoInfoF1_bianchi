@@ -4,16 +4,21 @@ USE Formula1_news;
 CREATE TABLE Card (
     id INT PRIMARY KEY AUTO_INCREMENT,
     Titolo VARCHAR(500),
-    Descrizione VARCHAR(1000)
+    Descrizione VARCHAR(1000), 
+    Immagine_news VARCHAR(5000)
 );
-INSERT INTO `card` (`Titolo`, `Descrizione`) 
+INSERT INTO `card` (`Titolo`, `Descrizione`, `Immagine_news`) 
 VALUES 
-("Tsunoda in Red Bull e' ufficiale. E' un compito che ora attende Yuki Tsunoda, con il 24enne pronto a correre al fianco di Verstappen alla Red Bull a partire dal Gran Premio di casa del Giappone! Come se la cavera' rispetto a coloro che hanno assunto quel ruolo prima di lui?", "La Red Bull ha deciso di agire rapidamente dopo il difficile inizio di stagione 2025 di Liam Lawson, declassandolo alla Racing Bulls e promuovendo Yuki Tsunoda al team senior insieme al campione del mondo in carica Max Verstappen."),
-("Oscar Piastri vince!", "Dominante in Barhain, l'australiano ottiene la sua seconda vittoria di quest' anno e conferma il grande momento della McLaren"),
-("Max vincee!", "Inaspettatamente Verstappen riesce a tenere a distanza i papaya, conquistando una grande rivincita nei confronti McLaren e avvicinandosi a Norris."),
-("Piastri vince il GP della Cina!", "Un super Piastri riesce a imporsi anche sul compagno di squadra e vince il suo terzo GP. Grande inizio per la McLaren che si riconferma la prima forza del campionato con un bellissimo 1-2"),
-("Lando vince il primo GP!", "Riparte bene la McLaren e soprattutto Lando Norris che riesce a battere i rivali. Sara' finalmente il suo anno?"),
-("Hamilton premiato pilota del giorno!", "Dopo una partenza in P9 Lewis riesce nella rimonta e ad arrivare al quinto posto"),
-("Yuky premiato pilota del giorno", "Il pubblica lo premia dopo una bella prestazione, nel GP di casa, nonostante la netta differenza con il suo compaagno di scuderia"),
-("Pilota del giorno!", "Importante traguardo per Antonelli che nel GP della Cina riesce a ottenere un grande risultato (P5 per lui)"),
-("Pilota del giorno!", "Dopo una stupenda e dominante vittoria, Lando viene premiato dal pubblico.");
+("Tsunoda in Red Bull e' ufficiale. E' un compito che ora attende Yuki Tsunoda, con il 24enne pronto a correre al fianco di Verstappen alla Red Bull a partire dal Gran Premio di casa del Giappone! Come se la cavera' rispetto a coloro che hanno assunto quel ruolo prima di lui?", "La Red Bull ha deciso di agire rapidamente dopo il difficile inizio di stagione 2025 di Liam Lawson, declassandolo alla Racing Bulls e promuovendo Yuki Tsunoda al team senior insieme al campione del mondo in carica Max Verstappen.", "https://media.formula1.com/image/upload/f_auto,c_limit,w_960,q_auto/f_auto/q_auto/fom-website/2025/Miscellaneous/tsunoda-red-bull-header-2"),
+("vince!", "A Miami non c'è storia, l'australiano ottiene la sua seconda vittoria di quest' anno e conferma il grande momento della McLaren", null),
+("Oscar Piastri vince!", "Dominante in Barhain, l'australiano ottiene la sua seconda vittoria di quest' anno e conferma il grande momento della McLaren", "https://tse4.mm.bing.net/th?id=OIP.mbMHw8ZCD4vlKhbIQ4lTHgHaD4&pid=Api&P=0&h=180"),
+("Max vincee!", "Inaspettatamente Verstappen riesce a tenere a distanza i papaya, conquistando una grande rivincita nei confronti McLaren e avvicinandosi a Norris.", "https://sport.quotidiano.net/image-service/version/c:NTg4MWM0YjMtYjFkNS00:OTQ4ZmU1/max-verstappen-vince-il-gp-del-giappone-2023.webp?f=16%3A9&q=1&w=768"),
+("Piastri vince il GP della Cina!", "Un super Piastri riesce a imporsi anche sul compagno di squadra e vince il suo terzo GP. Grande inizio per la McLaren che si riconferma la prima forza del campionato con un bellissimo 1-2", "https://wp.thenewdaily.com.au/wp-content/uploads/2023/09/1695541593-Oscar-Piastri-Suzuka-Getty.jpg?resize=1313,876&quality=90"),
+("Lando vince il primo GP!", "Riparte bene la McLaren e soprattutto Lando Norris che riesce a battere i rivali. Sara' finalmente il suo anno?", "https://tse2.mm.bing.net/th?id=OIP.pNq4HFNuWfCF4If9dKbbjgHaEK&pid=Api&P=0&h=180"),
+("Primo pilota McLaren", "Con la vittoria a Miami Piastri supera Norris nel campionato, ad oggi quindi chi e' il pilota di punta della McLaren?", "https://media.formula1.com/image/upload/f_auto,c_limit,w_630,q_auto/f_auto,c_fill,q_auto,w_420,g_faces,ar_16:9/fom-website/2025/Miscellaneous/norris-2025-feature-header"),
+("Antonelli il nuovo Iceman", "Il nuovo pilota Mercedes, viene soprannominato cosi' da Kimi Raikkonen per le sue grandi prestazioni in F1", "https://media.formula1.com/image/upload/f_auto,c_limit,w_630,q_auto/f_auto,c_fill,q_auto,w_420,t_16by9North,g_faces,ar_16:9/fom-website/2025/Miscellaneous/Antonelli%20Raikkonen%20header%20image"),
+("Inizio difficile per Ferrari", "Hamilton molto in difficolta' finora, mentre Leclerc prova ad adattarsi allo stile di guida della sua nuova sf-25 ottenendo il primo podio stagionale in Arabia", "https://media.formula1.com/image/upload/f_auto,c_limit,w_630,q_auto/f_auto,c_fill,q_auto,w_420,t_16by9North,g_faces,ar_16:9/fom-website/2025/Bahrain/Vasseur%20Hamilton%20Bahrain%20header%20image"),
+("Livree Speciali", "Nuova livrea per la Ferrari a Miami", "https://media.formula1.com/image/upload/f_auto,c_limit,w_630,q_auto/f_auto,c_fill,q_auto,w_420,g_faces,ar_16:9/fom-website/2025/Miami/Ferrari%202025%20Miami%20livery/F_677_stills_miami_01_v04_169_114f0b45-dbbd-4758-b33a-51738b2c2575"),
+("Hadjar grande lavoro finora", "Insieme ad Antonelli uno dei migliori rookie ad oggi, otenendo molti punti per la scuderia Redbull Racing", "https://media.formula1.com/image/upload/f_auto,c_limit,w_630,q_auto/f_auto,c_fill,q_auto,w_420,t_16by9North,g_faces,ar_16:9/trackside-images/2025/F1_Grand_Prix_Of_Japan___Practice/2208408402"),
+("Livree Speciali", "Nuova livrea per la Red bull in Giappone", "https://media.formula1.com/image/upload/f_auto,c_limit,w_630,q_auto/f_auto,c_fill,q_auto,w_420,t_16by9Centre,g_faces,ar_16:9/fom-website/2025/Japan/Red%20Bull%20livery/SI202503310636"),
+("Livree speciali", "Nuova livrea per la Haas in Giappone","https://media.formula1.com/image/upload/f_auto,c_limit,w_630,q_auto/f_auto,c_fill,q_auto,w_420,t_16by9Centre,g_faces,ar_16:9/fom-website/2025/Tech%20Weekly/Formula%201%20header%20templates%20-%202025-04-08T102226.402");
