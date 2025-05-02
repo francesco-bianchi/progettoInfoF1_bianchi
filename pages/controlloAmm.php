@@ -5,7 +5,7 @@
 
 
         //inserimento classifica
-        if($_GET["indiceForm"] == "claIns"){ //da fare dopo l'inserimwnto di un piolta
+        if($_GET["indiceForm"] == "claIns"){ //da fare dopo l'inserimento di un piolta
             //query per ottenere l'id del pilota selezionato
             $query_pilota = "SELECT p.id FROM Piloti p WHERE p.nome = '$_POST[nome]' AND p.cognome='$_POST[cognome]'";
             $result_pilota = mysqli_query($connessione, $query_pilota)

@@ -230,7 +230,7 @@
                         <input type='text' name='nome_vincitore' class='border-2 border-black rounded-2 col-9 height_input'><br><br>
                         <label for='cognome_vincitore'>Cognome vincitore:</label><br>
                         <input type='text' name='cognome_vincitore' class='border-2 border-black rounded-2 col-9 height_input'><br><br>
-                        <input type='submit' class='bg-primary text-white rounded-2 border-1 border-primary' value='Inserisci'>
+                        <input type='submit' class='bg-primary text-white rounded-2 border-1 border-primary' value='Modifica'>
                     </form><br><br>
                 </div>";
                 echo"<div class='col-4'>
@@ -250,7 +250,7 @@
                         <input type='text' name='nome_pista' class='border-2 border-black rounded-2 col-9 height_input'><br><br>
                         <label for='data'>Data:</label><br>
                         <input type='date' name='data' class='border-2 border-black rounded-2 col-9 height_input' required><br><br>
-                        <input type='submit' class='bg-danger text-white rounded-2 border-1 border-danger' value='Inserisci'>
+                        <input type='submit' class='bg-danger text-white rounded-2 border-1 border-danger' value='Rimuovi'>
                     </form><br><br>
                 </div>";
                 }
