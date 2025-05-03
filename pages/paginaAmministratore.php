@@ -317,6 +317,9 @@
                         else if(isset($_GET["erroreUp"])){
                             echo '<div class="alert-custom alert-danger-custom">Modifiche non applicate perché pilota non presente in archivio</div>';
                         }
+                        else if(isset($_GET["erroreUpDati"])){
+                            echo '<div class="alert-custom alert-danger-custom">Modifiche non applicate perché numero vittorie superiore ai podi o alle gare</div>';
+                        }
                         echo '<form action="controlloAmm.php?indiceForm=pilotaUp" method="POST" class="admin-form">
                             <label for="nome">Nome pilota:</label>
                             <input type="text" name="nome" class="form-control" required>

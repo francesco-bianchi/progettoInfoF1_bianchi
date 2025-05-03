@@ -325,21 +325,36 @@
                     $vittorie = 0;
                 }
                 else{
-                    $vittorie = $_POST["vittorie"];
+                    if($_POST["podi"]==null || $_POST["gare"]==null){
+                        header("Location: ./paginaAmministratore.php?indice=piloti&erroreUpDati=true");
+                    }
+                    else{
+                        $vittorie = $_POST["vittorie"];
+                    }
                 }
 
                 if($_POST["gare"]==null){
                     $gare = 0;
                 }
                 else{
-                    $gare = $_POST["gare"];
+                    if($_POST["vittorie"]==null || $_POST["gare"] >= $_POST["vittorie"]){
+                        $gare = $_POST["gare"];
+                    }
+                    else{
+                       header("Location: ./paginaAmministratore.php?indice=piloti&erroreUpDati=true");
+                    }
                 }
 
                 if($_POST["podi"]==null){
                     $podi = 0;
                 }
                 else{
-                    $podi = $_POST["podi"];
+                    if($_POST["vittorie"]==null || $_POST["podi"] >= $_POST["vittorie"]){
+                        $podi = $_POST["podi"];
+                    }
+                    else{
+                       header("Location: ./paginaAmministratore.php?indice=piloti&erroreUpDati=true");
+                    }
                 }
 
                 $query = " UPDATE Piloti SET ";

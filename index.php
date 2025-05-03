@@ -93,7 +93,18 @@
       <!--notizie-->
     
       <?php
-    $query = "SELECT * FROM Card";
+
+      
+    $query_grande = "SELECT * FROM Card WHERE id = 1";
+    $result_grande = mysqli_query($connessione2, $query_grande)
+        or die("<br>Errore nella query: " . mysqli_error($connessione2) . " " . mysqli_errno($connessione2));
+    
+    $ris_grande = [];
+    while ($row = mysqli_fetch_array($result_grande, MYSQLI_ASSOC)) {
+        $ris_grande[] = $row;
+    }
+
+    $query = "SELECT * FROM Card ORDER BY id DESC";
     $result = mysqli_query($connessione2, $query)
         or die("<br>Errore nella query: " . mysqli_error($connessione2) . " " . mysqli_errno($connessione2));
 
@@ -109,12 +120,12 @@
             <!-- Prima notizia grande -->
             <div class="col-sm-12 col-md-12 col-lg-6 mb-3">
                 <div class="card border-2 border-start-0 border-top-0 border-danger rounded-1 w-100 h-100">
-                    <?php if (isset($resultset[0])): ?>
-                        <img src="<?= $resultset[0]['Immagine_news'] ?>" class="border rounded-1 w-100">
+                    <?php if (isset($ris_grande[0])): ?>
+                        <img src="<?= $ris_grande[0]['Immagine_news'] ?>" class="border rounded-1 w-100">
                         <div class="card-body h-50">
                             <p class="card-text">
-                                <span class="fw-bold"><?= $resultset[0]['Titolo'] ?></span><br>
-                                <?= $resultset[0]['Descrizione'] ?>
+                                <span class="fw-bold"><?= $ris_grande[0]['Titolo'] ?></span><br>
+                                <?= $ris_grande[0]['Descrizione'] ?>
                             </p>
                         </div>
                     <?php endif; ?>
@@ -124,7 +135,7 @@
             <!-- Due notizie medie a destra -->
             <div class="col-12 col-md-12 col-lg-6">
                 <div class="row">
-                    <?php for ($i = 1; $i <= 4; $i++): ?>
+                    <?php for ($i = 0; $i <= 3; $i++): ?>
                         <?php if (isset($resultset[$i])): ?>
                             <div class="col-sm-6 mb-3">
                                 <div class="card border-2 border-start-0 border-top-0 border-danger rounded-1 w-100 h-100">
@@ -143,9 +154,12 @@
             </div>
 
             <!-- Seconda riga completa, 4 card piccole -->
+             <?php
+              $lunghezza_ris = count($resultset) -2;
+              ?>
             <div class="container">
                 <div class="row">
-                    <?php for ($i = 5; $i <= count($resultset); $i++): ?>
+                    <?php for ($i = 4; $i <= $lunghezza_ris; $i++): ?>
                         <?php if (isset($resultset[$i])): ?>
                             <div class="col-sm-6 col-lg-3 mb-3">
                                 <div class="card border-2 border-start-0 border-top-0 border-danger rounded-1 w-100 h-100">
