@@ -349,7 +349,7 @@
                     $podi = 0;
                 }
                 else{
-                    if($_POST["vittorie"]==null || $_POST["podi"] >= $_POST["vittorie"]){
+                    if($_POST["gare"]!=null && ($_POST["vittorie"]==null || $_POST["podi"] >= $_POST["vittorie"])){
                         $podi = $_POST["podi"];
                     }
                     else{

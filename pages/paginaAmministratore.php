@@ -98,6 +98,28 @@
         </div>
         <?php
         include("connessione.php");
+        $nazionalità_piloti = [
+            'Olandese',
+            'Messicano',
+            'Britannico',
+            'Australiano',
+            'Thailandese',
+            'Neozelandese',
+            'Finlandese',
+            'Italiano',
+            'Monegasco',
+            'Spagnolo',
+            'Tedesco',
+            'Francese',
+            'Canadese',
+            'Russo',
+            'Giapponese',
+            'Danese',
+            'Americano',
+            'Brasiliano',
+            'Cinese',
+            'Argentino'
+        ];
         $query_scuderie = "SELECT * FROM Classifiche_Costruttori cc INNER JOIN Scuderie s ON cc.scuderia_id = s.id 
                             INNER JOIN Campionati c ON cc.campionati_id = c.id WHERE c.anno = '2025'";
         $result_scuderie = mysqli_query($connessione, $query_scuderie)
@@ -330,7 +352,15 @@
                             <label for="cognome">Cognome pilota:</label>
                             <input type="text" name="cognome" class="form-control" required>
                             <label for="nazionalita">Nazionalita:</label>
-                            <input type="text" name="nazionalita" class="form-control">
+                            <select name="nazionalita" class="form-control">
+                                <option></option>';
+                            
+                            for ($i=0; $i<count($nazionalità_piloti); $i++)
+                            {
+                                
+                                echo '<option value="'.$nazionalità_piloti[$i].'">'.$nazionalità_piloti[$i].'</option>';
+                            }
+                            echo'</select>
                             <label for="vittorie">Vittorie:</label>
                             <input type="number" name="vittorie" class="form-control">
                             <label for="gare">Gare svolte:</label>
