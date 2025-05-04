@@ -10,85 +10,89 @@
 <body class="bg-body-pagine">
     <?php session_start(); include("connessione2.php");?>
     <!-- navbar -->
-    <nav class="navbar navbar-expand bg-black">
-        <div class="container-fluid">
-            <img src="./images/f1_logo_footer.svg" alt="Logo" width="60" height="50" class="d-inline-block align-text-top">
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav">
-                <li class="nav-item px-2">
-                    <a class="nav-link active visited text-white" aria-current="page" href="./index.php">Home</a>
-                </li>
-                <li class="nav-item dropdown px-md-2 px-1">
-                    <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Albo
-                    </a>
-                    <ul class="dropdown-menu bg-black">
-                        <li><a class="dropdown-item visited dropdown-link" href="./pages/classifiche.php?anno=2020">Classifica 2020</a></li>
-                        <li><a class="dropdown-item visited dropdown-link" href="./pages/classifiche.php?anno=2021">Classifica 2021</a></li>
-                        <li><a class="dropdown-item visited dropdown-link" href="./pages/classifiche.php?anno=2022">Classifica 2022</a></li>
-                        <li><a class="dropdown-item visited dropdown-link" href="./pages/classifiche.php?anno=2023">Classifica 2023</a></li>
-                        <li><a class="dropdown-item visited dropdown-link" href="./pages/classifiche.php?anno=2024">Classifica 2024</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item dropdown px-md-2 px-1">
-                    <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Piste
-                    </a>
-                    <ul class="dropdown-menu bg-black">
-                        <li><a class="dropdown-item visited dropdown-link" href="./pages/piste.php?anno=2020">Piste del 2020</a></li>
-                        <li><a class="dropdown-item visited dropdown-link" href="./pages/piste.php?anno=2021">Piste del 2021</a></li>
-                        <li><a class="dropdown-item visited dropdown-link" href="./pages/piste.php?anno=2022">Piste del 2022</a></li>
-                        <li><a class="dropdown-item visited dropdown-link" href="./pages/piste.php?anno=2023">Piste del 2023</a></li>
-                        <li><a class="dropdown-item visited dropdown-link" href="./pages/piste.php?anno=2024">Piste del 2024</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item dropdown px-md-2 px-1">
-                    <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Piloti
-                    </a>
-                    <ul class="dropdown-menu bg-black">
-                        <li><a class="dropdown-item visited dropdown-link" href="./pages/piloti.php?anno=2020">Piloti del 2020</a></li>
-                        <li><a class="dropdown-item visited dropdown-link" href="./pages/piloti.php?anno=2021">Piloti del 2021</a></li>
-                        <li><a class="dropdown-item visited dropdown-link" href="./pages/piloti.php?anno=2022">Piloti del 2022</a></li>
-                        <li><a class="dropdown-item visited dropdown-link" href="./pages/piloti.php?anno=2023">Piloti del 2023</a></li>
-                        <li><a class="dropdown-item visited dropdown-link" href="./pages/piloti.php?anno=2024">Piloti del 2024</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item dropdown px-md-2 px-1">
-                    <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    2025
-                    </a>
-                    <ul class="dropdown-menu bg-black">
-                        <li><a class="dropdown-item visited dropdown-link" href="./pages/classifiche.php?anno=2025">Classifica</a></li>
-                        <li><a class="dropdown-item visited dropdown-link" href="./pages/piloti.php?anno=2025">Piloti</a></li>
-                        <li><a class="dropdown-item visited dropdown-link" href="./pages/piste.php?anno=2025">Piste</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item position-absolute top-50 start-100 pe-5 translate-middle pe-2">
-                    <?php
-                        if(isset($_SESSION["utenti"])){
-                            echo "<a href='./pages/personale.php' class='nav-link active visited text-white' aria-label='Account'>
-                                    <svg role='presentation' stroke-width='2' focusable='false' width='25' height='25' class='icon icon-account' viewBox='0 0 22 22'>
-                                        <circle cx='11' cy='7' r='4' fill='none' stroke='currentColor'></circle>
-                                        <path d='M3.5 19c1.421-2.974 4.247-5 7.5-5s6.079 2.026 7.5 5' fill='none' stroke='currentColor' stroke-linecap='round'></path>
-                                    </svg>
-                                  </a>";
-                        }
-                        else{
-                          echo "<a href='./pages/accedi.php' class='nav-link active visited text-white' aria-label='Account'>
-                                    <svg role='presentation' stroke-width='2' focusable='false' width='25' height='25' class='icon icon-account' viewBox='0 0 22 22'>
-                                        <circle cx='11' cy='7' r='4' fill='none' stroke='currentColor'></circle>
-                                        <path d='M3.5 19c1.421-2.974 4.247-5 7.5-5s6.079 2.026 7.5 5' fill='none' stroke='currentColor' stroke-linecap='round'></path>
-                                    </svg>
-                                </a>";
-                        }
-                    ?>
-                    
-                  </li>
-            </ul>
-          </div>
-        </div>
-      </nav><br>
+    <nav class="navbar navbar-expand-sm bg-black">
+  <div class="container-fluid">
+    <img src="./images/f1_logo_footer.svg" alt="Logo" width="100" height="50" class="d-inline-block align-text-top mx-2">
+    
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-sm-0">
+        <li class="nav-item px-2">
+          <a class="nav-link active text-white" aria-current="page" href="./index.php">Home</a>
+        </li>
+        <li class="nav-item dropdown px-2">
+          <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Albo
+          </a>
+          <ul class="dropdown-menu bg-black">
+            <li><a class="dropdown-item dropdown-link" href="./pages/classifiche.php?anno=2020">Classifica 2020</a></li>
+            <li><a class="dropdown-item dropdown-link" href="./pages/classifiche.php?anno=2021">Classifica 2021</a></li>
+            <li><a class="dropdown-item dropdown-link" href="./pages/classifiche.php?anno=2022">Classifica 2022</a></li>
+            <li><a class="dropdown-item dropdown-link" href="./pages/classifiche.php?anno=2023">Classifica 2023</a></li>
+            <li><a class="dropdown-item dropdown-link" href="./pages/classifiche.php?anno=2024">Classifica 2024</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown px-2">
+          <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Piste
+          </a>
+          <ul class="dropdown-menu bg-black">
+            <li><a class="dropdown-item dropdown-link" href="./pages/piste.php?anno=2020">Piste del 2020</a></li>
+            <li><a class="dropdown-item dropdown-link" href="./pages/piste.php?anno=2021">Piste del 2021</a></li>
+            <li><a class="dropdown-item dropdown-link" href="./pages/piste.php?anno=2022">Piste del 2022</a></li>
+            <li><a class="dropdown-item dropdown-link" href="./pages/piste.php?anno=2023">Piste del 2023</a></li>
+            <li><a class="dropdown-item dropdown-link" href="./pages/piste.php?anno=2024">Piste del 2024</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown px-2">
+          <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Piloti
+          </a>
+          <ul class="dropdown-menu bg-black">
+            <li><a class="dropdown-item dropdown-link" href="./pages/piloti.php?anno=2020">Piloti del 2020</a></li>
+            <li><a class="dropdown-item dropdown-link" href="./pages/piloti.php?anno=2021">Piloti del 2021</a></li>
+            <li><a class="dropdown-item dropdown-link" href="./pages/piloti.php?anno=2022">Piloti del 2022</a></li>
+            <li><a class="dropdown-item dropdown-link" href="./pages/piloti.php?anno=2023">Piloti del 2023</a></li>
+            <li><a class="dropdown-item dropdown-link" href="./pages/piloti.php?anno=2024">Piloti del 2024</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown px-2">
+          <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            2025
+          </a>
+          <ul class="dropdown-menu bg-black">
+            <li><a class="dropdown-item dropdown-link" href="./pages/classifiche.php?anno=2025">Classifica</a></li>
+            <li><a class="dropdown-item dropdown-link" href="./pages/piloti.php?anno=2025">Piloti</a></li>
+            <li><a class="dropdown-item dropdown-link" href="./pages/piste.php?anno=2025">Piste</a></li>
+          </ul>
+        </li>
+      </ul>
+      <div class="navbar-nav">
+        <?php
+          if(isset($_SESSION["utenti"])){
+            echo "<a href='./pages/personale.php' class='nav-link active text-white' aria-label='Account'>
+                  <svg role='presentation' stroke-width='2' focusable='false' width='25' height='25' class='icon icon-account' viewBox='0 0 22 22'>
+                    <circle cx='11' cy='7' r='4' fill='none' stroke='currentColor'></circle>
+                    <path d='M3.5 19c1.421-2.974 4.247-5 7.5-5s6.079 2.026 7.5 5' fill='none' stroke='currentColor' stroke-linecap='round'></path>
+                  </svg>
+                </a>";
+          }
+          else{
+            echo "<a href='./pages/accedi.php' class='nav-link active text-white' aria-label='Account'>
+                  <svg role='presentation' stroke-width='2' focusable='false' width='25' height='25' class='icon icon-account' viewBox='0 0 22 22'>
+                    <circle cx='11' cy='7' r='4' fill='none' stroke='currentColor'></circle>
+                    <path d='M3.5 19c1.421-2.974 4.247-5 7.5-5s6.079 2.026 7.5 5' fill='none' stroke='currentColor' stroke-linecap='round'></path>
+                  </svg>
+                </a>";
+          }
+        ?>
+      </div>
+    </div>
+  </div>
+</nav><br>
 
       <!--notizie-->
     
