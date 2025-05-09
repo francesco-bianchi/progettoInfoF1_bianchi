@@ -58,7 +58,7 @@
         }
 
         echo "<form action='logout.php' method='POST'>
-                <input type='submit' class='bg-danger text-white rounded-2 border-1 border-danger' value='Logout'>
+                <input type='submit' class='bg-danger text-white rounded px-3 py-2 border border-danger' value='Logout'>
               </form><br><br>";
 
         echo "<span>Torna alla <a href='../index.php' class='link-opacity-50-hover link-underline-danger link-offset-2 visited text-black'>home</a></span>

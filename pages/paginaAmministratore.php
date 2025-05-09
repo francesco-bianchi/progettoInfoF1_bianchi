@@ -270,9 +270,9 @@
                             <label for="data">Data:</label>
                             <input type="date" name="data" class="form-control" required>
                             <label for="nome_vincitore">Nome vincitore:</label>
-                            <input type="text" name="nome_vincitore" class="form-control">
+                            <input type="text" name="nome_vincitore" class="form-control" required>
                             <label for="cognome_vincitore">Cognome vincitore:</label>
-                            <input type="text" name="cognome_vincitore" class="form-control">
+                            <input type="text" name="cognome_vincitore" class="form-control" required>
                             <button type="submit" class="btn-admin-blue"><i class="fas fa-sync-alt admin-icon"></i>Modifica</button>
                         </form>
                     </div>
@@ -319,7 +319,15 @@
                             <label for="cognome">Cognome pilota:</label>
                             <input type="text" name="cognome" class="form-control" required>
                             <label for="nazionalita">Nazionalita:</label>
-                            <input type="text" name="nazionalita" class="form-control">
+                            <select name="nazionalita" class="form-control">
+                                <option></option>';
+                            
+                            for ($i=0; $i<count($nazionalità_piloti); $i++)
+                            {
+                                
+                                echo '<option value="'.$nazionalità_piloti[$i].'">'.$nazionalità_piloti[$i].'</option>';
+                            }
+                            echo'</select>
                             <label for="scuderia">Scuderia attuale:</label>
                             <select name="scuderia" class="form-select">';
                                 // Azzera l'indice del risultato per riutilizzarlo

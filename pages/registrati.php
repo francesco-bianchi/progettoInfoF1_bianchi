@@ -52,7 +52,7 @@
 			<input type="email" name="email" class="border-2 border-black rounded-2 col-9 height_input" placeholder="Inserisci email"><br><br>
 			<label for="password">Password:</label><br>
 			<input type="password" name="password" class="border-2 border-black rounded-2 col-9 height_input" placeholder="Inserisci password"><br><br>
-			<input type="submit" class="bg-danger text-white rounded-2 border-1 border-danger" value="Registrati">
+			<input type="submit" class="bg-danger text-white rounded px-3 py-2 border border-danger" value="Registrati">
 		</form><br><br>
 		<span>Hai già effettuato l'accesso? <a href="./accedi.php" class="link-opacity-50-hover link-underline-danger link-offset-2 visited text-black">Accedi</a></span>
 	</div>
