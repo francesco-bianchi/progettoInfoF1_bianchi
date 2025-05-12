@@ -121,6 +121,20 @@
         </div>
     </nav><br>
 
+
+    <div class="container mb-3 ">
+        <div class="row">
+            <div class="col-12
+             mx-auto">
+                <iframe class="w-100 height_video" src="https://www.youtube.com/embed/HzZEWyjO_D8"
+                    title="Nuova F1 intro per il 2025 🎥🏎️" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+                </iframe>
+            </div>
+        </div>
+    </div>
+
     <!--notizie-->
 
     <?php
@@ -204,6 +218,7 @@
                     <?php endfor; ?>
                 </div>
             </div>
+
             <?php
               $lunghezza_ris = count($resultset) -2;
               ?>

@@ -344,13 +344,13 @@ INSERT INTO Piloti_Scuderie (pilota_id, scuderia_id, anno_inizio, anno_fine)
 VALUES
     (1, 2, 2020, NULL),  -- Max Verstappen in Red Bull Racing
     (5, 2, 2020, 2021),  -- Alexander Albon in Red Bull Racing
-    (7, 1, 2020, 2025),  -- Lewis Hamilton in Mercedes
+    (7, 1, 2020, 2024),  -- Lewis Hamilton in Mercedes
     (8, 1, 2020, 2022),  -- Valtteri Bottas in Mercedes
     (13, 3, 2020, 2021), -- Sebastian Vettel in Ferrari
     (11, 3, 2020, NULL), -- Charles Leclerc in Ferrari
     (12, 4, 2020, 2021), -- Carlos Sainz Jr. in McLaren
     (3, 4, 2020, NULL),  -- Lando Norris in McLaren
-    (15, 5, 2020, 2025), -- Esteban Ocon in Alpine
+    (15, 5, 2020, 2024), -- Esteban Ocon in Alpine
     (14, 5, 2020, 2021), -- Daniel Ricciardo in Alpine
     (2, 6, 2020, 2021),  -- Sergio Pérez in Aston Martin
     (19, 6, 2020, NULL), -- Lance Stroll in Aston Martin
@@ -359,14 +359,14 @@ VALUES
     (33, 7, 2020, 2022), -- Kimi Räikkönen in Alfa Romeo Racing
     (23, 7, 2020, 2022), -- Antonio Giovinazzi in Alfa Romeo Racing
     (22, 9, 2020, 2021), -- Romain Grosjean in Haas
-    (25, 9, 2020, 2025), -- Kevin Magnussen in Haas
+    (25, 9, 2020, 2024), -- Kevin Magnussen in Haas
     (9, 8, 2020, 2022), -- George Russell in Williams
     (34, 8, 2020, 2023),-- Nicholas Latifi in Williams
 
 -- 2021
-    (2, 2, 2021, 2025),  -- Sergio Pérez in Red Bull Racing
+    (2, 2, 2021, 2024),  -- Sergio Pérez in Red Bull Racing
     (14, 4, 2021, 2023), -- Daniel Ricciardo in McLaren
-    (12, 3, 2021, 2025), -- Carlos Sainz Jr. in Ferrari
+    (12, 3, 2021, 2024), -- Carlos Sainz Jr. in Ferrari
     (17, 5, 2021, 2023), -- Fernando Alonso in Alpine
     (13, 6, 2021, 2023), -- Sebastian Vettel in Aston Martin
     (21, 10, 2021, NULL), -- Yuki Tsunoda in AlphaTauri
@@ -375,8 +375,8 @@ VALUES
 
 -- 2022
     (9, 1, 2022, NULL),  -- George Russell in Mercedes
-    (8, 7, 2022, 2025),  -- Valtteri Bottas in Alfa Romeo Racing
-    (31, 7, 2022, 2025), -- Zhou Guanyu in Alfa Romeo Racing
+    (8, 7, 2022, 2024),  -- Valtteri Bottas in Alfa Romeo Racing
+    (31, 7, 2022, 2024), -- Zhou Guanyu in Alfa Romeo Racing
     (5, 8, 2022, NULL), -- Alexander Albon in Williams
 
 -- 2023
@@ -384,11 +384,12 @@ VALUES
     (16, 5, 2023, NULL), -- Pierre Gasly in Alpine
     (17, 6, 2023, NULL), -- Fernando Alonso in Aston Martin
     (22, 10, 2023, 2024), -- Nyck de Vries in AlphaTauri
-    (27, 9, 2023, 2025), -- Nico Hülkenberg in Haas
-    (29, 8, 2023, 2025),-- Logan Sargeant in Williams
+    (27, 9, 2023, 2024), -- Nico Hülkenberg in Haas
+    (29, 8, 2023, 2024),-- Logan Sargeant in Williams
 
 -- 2024
     (6, 10, 2024, 2025),  -- Liam Lawson in AlphaTauri
+	(36, 8, 2024, 2024),    -- Franco Colapinto in Williams Racing
 
 -- 2025
     (6, 2, 2025, 2025),  -- Liam Lawson in Red Bull Racing
@@ -397,12 +398,13 @@ VALUES
     (32, 10, 2025, NULL), -- Isack Hadjar in AlphaTauri
     (27, 7, 2025, NULL), -- Nico Hülkenberg in Sauber
     (30, 7, 2025, NULL), -- Gabriel Bortoleto in Sauber
-    (18, 5, 2025, NULL), -- Jack Doohan in Alpine
+    (18, 5, 2025, 2025), -- Jack Doohan in Alpine
     (28, 9, 2025, NULL), -- Oliver Bearman in Haas
     (15, 9, 2025, NULL), -- Esteban Ocon in Haas
     (12, 8, 2025, NULL), -- Carlos Sainz Jr. in Williams
     (21, 2, 2025, NULL), -- Yuki Tsunoda in RedBull
-    (6, 10, 2025, NULL);  -- Liam Lawson in Racing bull (Alpha Tauri)
+    (6, 10, 2025, NULL),  -- Liam Lawson in Racing bull (Alpha Tauri)
+	(36, 5, 2025, NULL);    -- Franco Colapinto in Alpine
 
 
 -- Inserimenti 2020
@@ -550,6 +552,7 @@ VALUES
   (6, 17,   0,  6),  -- Fernando Alonso     – Aston Martin F1 Team
   (6,  6,   0, 10),  -- Liam Lawson         – Racing Bulls
   (6, 18,   0,  5),  -- Jack Doohan         – Alpine F1 Team
+  (6, 36, 0, 5),    -- Franco Colapinto     - Alpine F1 Team
   (6, 30,   0,  7);  -- Gabriel Bortoleto   – Sauber F1 team
 
 -- Inserimento dati per il campionato 2020 (Costruttori)

@@ -75,6 +75,13 @@
 
                     $result = mysqli_query($connessione, $query)
                         or die ("<br>Errore di chiusura" . mysqli_error($connessione) . " ". mysqli_errno($connessione));
+
+                    $query_scud = " UPDATE Classifiche_Costruttori
+                    SET punteggio_totale = punteggio_totale + $punteggio
+                    WHERE scuderia_id = $_POST[scuderia]";
+                    
+                    $result_scud = mysqli_query($connessione, $query_scud)
+                        or die ("<br>Errore di chiusura" . mysqli_error($connessione) . " ". mysqli_errno($connessione));
                     header("Location: ./paginaAmministratore.php?indice=cla&successoUp=true");
                 }
                 else{
@@ -105,7 +112,7 @@
                 while ($row = mysqli_fetch_array($result_pilota)) {
                     $id = $row;
                 }
-                
+                // fare di eliminare il punteggio alla scuderia
                 if(mysqli_num_rows($result_claIns) > 0){
 
                     $query = " DELETE FROM Classifiche_piloti
@@ -113,6 +120,13 @@
 
                     $result = mysqli_query($connessione, $query)
                         or die ("<br>Errore di chiusura" . mysqli_error($connessione) . " ". mysqli_errno($connessione));
+
+                    $query_scud = " DELETE FROM Classifiche_piloti 
+                    WHERE pilota_id = $id[0]";
+
+                    $result_scud = mysqli_query($connessione, $query_scud)
+                        or die ("<br>Errore di chiusura" . mysqli_error($connessione) . " ". mysqli_errno($connessione));
+                        
                     header("Location: ./paginaAmministratore.php?indice=cla&successoRim=true");
                 }
                 else{

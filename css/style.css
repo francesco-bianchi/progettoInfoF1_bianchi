@@ -597,3 +597,7 @@ h1::after {
 .admin-tab.active:hover {
   background: #c10500;
 }
+
+.height_video{
+  height: 400px;
+}
