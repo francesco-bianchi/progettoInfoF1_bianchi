@@ -30,8 +30,8 @@ CREATE TABLE Piloti_Scuderie (
     scuderia_id INT,  
     anno_inizio INT,  
     anno_fine INT,  -- Anno in cui il pilota ha lasciato la scuderia (NULL se è ancora con la scuderia)
-    FOREIGN KEY (pilota_id) REFERENCES Piloti(id),  
-    FOREIGN KEY (scuderia_id) REFERENCES Scuderie(id),
+    FOREIGN KEY (pilota_id) REFERENCES Piloti(id) ON DELETE CASCADE,  
+    FOREIGN KEY (scuderia_id) REFERENCES Scuderie(id) ON DELETE CASCADE,
     PRIMARY KEY (pilota_id, scuderia_id, anno_inizio)
 );
 
@@ -46,9 +46,9 @@ CREATE TABLE Classifiche_Piloti (
     pilota_id INT,  
     punteggio_totale INT,  
     scuderia_id INT,  
-    FOREIGN KEY (campionati_id) REFERENCES Campionati(id),
-    FOREIGN KEY (pilota_id) REFERENCES Piloti(id),
-    FOREIGN KEY (scuderia_id) REFERENCES Scuderie(id),
+    FOREIGN KEY (campionati_id) REFERENCES Campionati(id) ON DELETE CASCADE,
+    FOREIGN KEY (pilota_id) REFERENCES Piloti(id) ON DELETE CASCADE,
+    FOREIGN KEY (scuderia_id) REFERENCES Scuderie(id) ON DELETE CASCADE,
     PRIMARY KEY (campionati_id, pilota_id, scuderia_id)
 );
 
@@ -56,8 +56,9 @@ CREATE TABLE Classifiche_Costruttori (
     campionati_id INT NOT NULL,
     scuderia_id INT NOT NULL,
     punteggio_totale INT NOT NULL,
-    PRIMARY KEY (campionati_id, scuderia_id),
-    FOREIGN KEY (scuderia_id) REFERENCES Scuderie(id)
+    FOREIGN KEY (scuderia_id) REFERENCES Scuderie(id) ON DELETE CASCADE,
+    FOREIGN KEY (campionati_id) REFERENCES Campionati(id) ON DELETE CASCADE,
+    PRIMARY KEY (campionati_id, scuderia_id)
 );
 
 CREATE TABLE Circuiti (
@@ -75,20 +76,9 @@ CREATE TABLE Gare (
     circuito_id INT, 
     data DATE,
     vincitore_id INT,
-	 FOREIGN KEY (campionato_id) REFERENCES Campionati(id),
-    FOREIGN KEY (circuito_id) REFERENCES Circuiti(id),
-    FOREIGN KEY (vincitore_id) REFERENCES Piloti(id)
-);
-
-CREATE TABLE PunteggiGara_2025 (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    gara_id INT, 
-    pilota_id INT,  
-    punti INT,  
-    posizione INT, 
-	 punteggio_sprint INT, 
-    FOREIGN KEY (gara_id) REFERENCES Gare(id),  
-    FOREIGN KEY (pilota_id) REFERENCES Piloti(id)  
+	 FOREIGN KEY (campionato_id) REFERENCES Campionati(id) ON DELETE CASCADE,
+    FOREIGN KEY (circuito_id) REFERENCES Circuiti(id) ON DELETE CASCADE,
+    FOREIGN KEY (vincitore_id) REFERENCES Piloti(id) ON DELETE CASCADE
 );
 
 INSERT INTO Campionati (anno)

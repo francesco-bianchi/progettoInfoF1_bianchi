@@ -100,31 +100,37 @@
                 or die ("<br>Errore di chiusura" . mysqli_error($connessione) . " ". mysqli_errno($connessione));
     
             //query per controllare se presente in classifica
-            $query_claIns = "SELECT * FROM Classifiche_Piloti cp INNER JOIN Piloti p ON cp.pilota_id = p.id 
-                                            INNER JOIN Scuderie s ON cp.scuderia_id = s.id INNER JOIN Campionati c ON cp.campionati_id = c.id
+            $query_claIns = "SELECT cp.punteggio_totale FROM Classifiche_Piloti cp INNER JOIN Piloti p ON cp.pilota_id = p.id 
+                                            INNER JOIN Scuderie s ON cp.scuderia_id = s.id 
+                                            INNER JOIN Campionati c ON cp.campionati_id = c.id
                                             WHERE c.anno = '2025' AND p.nome = '$_POST[nome]' AND p.cognome='$_POST[cognome]' AND s.id = $_POST[scuderia]";
             
             $result_claIns = mysqli_query($connessione, $query_claIns)
                 or die ("<br>Errore di chiusura" . mysqli_error($connessione) . " ". mysqli_errno($connessione));
+
             
             if(mysqli_num_rows($result_pilota) > 0){
                 
                 while ($row = mysqli_fetch_array($result_pilota)) {
                     $id = $row;
                 }
-                // fare di eliminare il punteggio alla scuderia
                 if(mysqli_num_rows($result_claIns) > 0){
-
+                    //eliminazione dalla classifica
                     $query = " DELETE FROM Classifiche_piloti
                     WHERE pilota_id = $id[0]";
 
                     $result = mysqli_query($connessione, $query)
                         or die ("<br>Errore di chiusura" . mysqli_error($connessione) . " ". mysqli_errno($connessione));
+                    // aggiorna punteggio scuderia dopo la rimozione
+                    while ($row = mysqli_fetch_array($result_claIns)) {
+                        $punt_tot_rim = $row;
+                    }
 
-                    $query_scud = " DELETE FROM Classifiche_piloti 
-                    WHERE pilota_id = $id[0]";
+                    $query_punt = " UPDATE Classifiche_Costruttori
+                    SET punteggio_totale = punteggio_totale - $punt_tot_rim[0]
+                    WHERE scuderia_id = $_POST[scuderia] AND campionati_id = 6";
 
-                    $result_scud = mysqli_query($connessione, $query_scud)
+                    $result_punt = mysqli_query($connessione, $query_punt)
                         or die ("<br>Errore di chiusura" . mysqli_error($connessione) . " ". mysqli_errno($connessione));
                         
                     header("Location: ./paginaAmministratore.php?indice=cla&successoRim=true");
@@ -460,5 +466,4 @@
     else{
         header("Location: ../index.php");
     }
-
 ?>
