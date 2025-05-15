@@ -7,7 +7,8 @@
         //inserimento classifica
         if($_GET["indiceForm"] == "claIns"){ //da fare dopo l'inserimento di un piolta
             //query per ottenere l'id del pilota selezionato
-            $query_pilota = "SELECT p.id FROM Piloti p WHERE p.nome = '$_POST[nome]' AND p.cognome='$_POST[cognome]'";
+            $query_pilota = "SELECT p.id FROM Piloti p INNER JOIN Piloti_Scuderie ps on p.id = ps.pilota_id
+            WHERE p.nome = '$_POST[nome]' AND p.cognome='$_POST[cognome]' AND ps.scuderia_id = '$_POST[scuderia]'";
             $result_pilota = mysqli_query($connessione, $query_pilota)
                 or die ("<br>Errore di chiusura" . mysqli_error($connessione) . " ". mysqli_errno($connessione));
     
