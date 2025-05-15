@@ -338,7 +338,7 @@
             
             if(mysqli_num_rows($result_pilota) > 0){
                 
-                while ($row = mysqli_fetch_array($result_pilota)) {
+                while ($row = mysqli_fetch_array($result_pilota)) { //ottenere l'id del pilota
                     $id = $row;
                 }
                 
@@ -433,17 +433,12 @@
                 while ($row = mysqli_fetch_array($result_pilota)) {
                     $id = $row;
                 }
-
+                //si cerca il pilota appartenente alla scuderia
                 $query_scud = "SELECT * FROM Piloti_Scuderie ps WHERE ps.pilota_id = '$id[0]' AND ps.scuderia_id = '$_POST[scuderia]'";
                 $result_scud = mysqli_query($connessione, $query_scud)
                     or die ("<br>Errore di chiusura" . mysqli_error($connessione) . " ". mysqli_errno($connessione));
 
                 if(mysqli_num_rows($result_scud)>0){
-                    $queryRimScud = " DELETE FROM Piloti_Scuderie
-                    WHERE pilota_id = $id[0] AND scuderia_id = $_POST[scuderia]";
-    
-                    $resultRimScud = mysqli_query($connessione, $queryRimScud)
-                        or die ("<br>Errore di chiusura" . mysqli_error($connessione) . " ". mysqli_errno($connessione));
     
                     $queryPil = " DELETE FROM Piloti
                         WHERE id = $id[0]";

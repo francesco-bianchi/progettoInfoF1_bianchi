@@ -165,15 +165,17 @@
             <!-- Prima notizia grande -->
             <div class="col-sm-12 col-md-12 col-lg-6 mb-3">
                 <div class="card border-2 border-start-0 border-top-0 border-danger rounded-1 w-100 h-100">
-                    <?php if (isset($ris_grande[0])): ?>
-                    <img src="<?= $ris_grande[0]['Immagine_news'] ?>" class="border rounded-1 w-100">
+                 <?php for ($i = 0; $i <= count($resultset)-1; $i++): ?>
+                    <?php if ($resultset[$i]['id']==1): ?>
+                    <img src="<?= $resultset[$i]['Immagine_news'] ?>" class="border rounded-1 w-100">
                     <div class="card-body h-50">
                         <p class="card-text">
-                            <span class="fw-bold"><?= $ris_grande[0]['Titolo'] ?></span><br>
-                            <?= $ris_grande[0]['Descrizione'] ?>
+                            <span class="fw-bold"><?= $resultset[$i]['Titolo'] ?></span><br>
+                            <?= $resultset[$i]['Descrizione'] ?>
                         </p>
                     </div>
                     <?php endif; ?>
+                 <?php endfor; ?>
                 </div>
             </div>
 
@@ -219,9 +221,7 @@
                 </div>
             </div>
 
-            <?php
-              $lunghezza_ris = count($resultset) -2;
-              ?>
+            
             <div>
                 <button id="clickExtra" class="btn btn-danger text-white rounded px-3 py-2 border border-danger">Mostra
                     altro <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -230,6 +230,10 @@
                             d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1" />
                     </svg></button>
             </div>
+
+            <?php
+              $lunghezza_ris = count($resultset) -2;
+            ?>
             <div id="extraContainer" class="container d-none">
                 <div class="row">
                     <?php for ($i = 8; $i <= $lunghezza_ris; $i++): ?>

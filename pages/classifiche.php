@@ -122,6 +122,7 @@
         <?php
             include("connessione.php");
             if(isset($_GET["id"])){
+                //prendo tutti il pilota selezionato
                 $queryPiloti = "SELECT * FROM Classifiche_Piloti cp INNER JOIN Piloti p ON cp.pilota_id = p.id 
                 INNER JOIN Scuderie s ON cp.scuderia_id = s.id
                 WHERE p.id = $_GET[id]";
@@ -131,7 +132,7 @@
                 while ($row = mysqli_fetch_array($resultPiloti, MYSQLI_ASSOC)) {
                     $resultQueryPiloti[] = $row;
                 }
-
+                //prendo la scuderia del pilota per controllare per quanto tempo ci è stato o se c'è ancora
                 $queryPilScuderie = "SELECT p.*, s.* FROM Piloti_Scuderie p inner join Piloti pi ON p.pilota_id = pi.id 
                 inner join Scuderie s ON s.id = p.scuderia_id 
                 WHERE pi.id = $_GET[id]
@@ -145,7 +146,7 @@
             }
 
             if(isset($_GET["id_scuderia"])){
-
+                //prendo le scuderie per sapere di più su di esse e i relativi piloti
                 $queryScuderie = "SELECT * FROM Classifiche_Piloti cp INNER JOIN Piloti p ON cp.pilota_id = p.id 
                 INNER JOIN Scuderie s ON cp.scuderia_id = s.id
                 WHERE s.id = $_GET[id_scuderia]";
@@ -219,7 +220,7 @@
             <?php    
                 if(isset($_GET["anno"])){
                     $anno = $_GET["anno"];
-                    $_SESSION["anno"] = $anno;
+                    $_SESSION["anno"] = $anno; // per salvare l'anno al refresh della pagina con il modal
                 }
                 else{
                     $anno = $_SESSION["anno"];
@@ -271,7 +272,7 @@
                         }
                         echo"</tbody>";
                         echo"</table>";
-                    echo"</div>"; // Chiude il div table-responsive
+                    echo"</div>"; 
                     echo"</div>";
                 echo"</div>";
                 echo"<div class='mt-4 mb-4'></div>";

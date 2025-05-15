@@ -1,3 +1,4 @@
+//per rendere cliccabili le righe (una volta cliccate la pagina si aggiorna e si carica il modal)
 document.addEventListener("DOMContentLoaded", function () {
   var rows = document.querySelectorAll(".clickable-row");
   rows.forEach(function (row) {
@@ -8,6 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+//per sostituire l'immagine della bandiera con la nazionalità 
 document.addEventListener("DOMContentLoaded", function () {
   const nazionalita_id = document.querySelector(".nazionalita_id");
   const nazionalita = nazionalita_id.textContent.trim().toLowerCase();
@@ -60,6 +62,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
+//per far vedere i modal delle pagine al click
 document.addEventListener('DOMContentLoaded', () => {
   const modalPilota = document.getElementById('modalPilota');
   const pilotaModal = new bootstrap.Modal(modalPilota, {
@@ -84,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
   pilotaModal.show();
 });
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function () { //per far diventare visibile il div e invisibile il bottone
   const clickExtra = document.getElementById("clickExtra");
   const extraContainer = document.getElementById("extraContainer");
 
